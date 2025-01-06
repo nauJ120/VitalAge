@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "486620965098",
+    "project_id": "vitalage-33e78",
+    "storage_bucket": "vitalage-33e78.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486620965098:android:b5b2f12c08fd3ccae7cf93",
+        "android_client_info": {
+          "package_name": "com.example.vitalage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoE133TWw57JPrOnEnK21INM1wSpKoJe0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
