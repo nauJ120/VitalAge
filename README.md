@@ -1,114 +1,105 @@
-📖 Descripción del Proyecto
+# VitalAge
 
-VitalAge es una aplicación móvil diseñada para gestionar diversos aspectos relacionados con el cuidado y la administración de un hogar geriátrico. La solución busca optimizar procesos clave como el monitoreo de pacientes, la administración de medicamentos, la gestión nutricional y la supervisión de actividades.
+## 📖 Descripción del Proyecto
+
+**VitalAge** es una aplicación móvil diseñada para gestionar diversos aspectos relacionados con el cuidado y la administración de un hogar geriátrico. La solución busca optimizar procesos clave como el monitoreo de pacientes, la administración de medicamentos, la gestión nutricional y la supervisión de actividades.
 
 El desarrollo se realiza como parte de una tesis de ingeniería de sistemas, enfocándose tanto en la funcionalidad del sistema como en la demostración de habilidades técnicas y metodológicas.
 
-🚀 Tecnologías Utilizadas
+---
 
-Firebase:
+## 🚀 Tecnologías Utilizadas
 
-Autenticación: Gestor de usuarios con soporte para email/password y otros proveedores.
+- **Firebase**:
+  - **Autenticación**: Gestor de usuarios con soporte para email/password y otros proveedores.
+  - **Base de datos en tiempo real**: Sincronización de datos entre clientes.
+  - **Almacenamiento**: Solución escalable para almacenar y servir archivos.
+- **Kotlin y Android Studio**: Herramientas para el desarrollo de la aplicación móvil en la plataforma Android.
 
-Base de datos en tiempo real: Sincronización de datos entre clientes.
+---
 
-Almacenamiento: Solución escalable para almacenar y servir archivos.
+## ✨ Características Principales
 
-Kotlin y Android Studio: Herramientas para el desarrollo de la aplicación móvil en la plataforma Android.
+### Administración de Residentes:
+- Registro, consulta y actualización de información de los residentes, incluyendo datos personales, historial médico y necesidades especiales.
 
-✨ Características Principales
+### Control de Medicamentos:
+- Registro de medicamentos, programación de horarios para su administración y generación de alertas para el personal de enfermería.
 
-Administración de Residentes:
+### Gestión Nutricional:
+- Registro y monitoreo de indicadores clave como peso, índice de masa corporal (IMC) e historial nutricional.
 
-Registro, consulta y actualización de información de los residentes, incluyendo datos personales, historial médico y necesidades especiales.
+### Dashboard Informativo:
+- Presentación de datos relevantes sobre la situación del hogar geriátrico (número de residentes, alertas, etc.).
 
-Control de Medicamentos:
+### Agenda y Actividades:
+- Programación y registro de actividades recreativas y terapias grupales.
 
-Registro de medicamentos, programación de horarios para su administración y generación de alertas para el personal de enfermería.
+---
 
-Gestión Nutricional:
+## 🛠️ Configuración Inicial
 
-Registro y monitoreo de indicadores clave como peso, índice de masa corporal (IMC) e historial nutricional.
-
-Dashboard Informativo:
-
-Presentación de datos relevantes sobre la situación del hogar geriátrico (número de residentes, alertas, etc.).
-
-Agenda y Actividades:
-
-Programación y registro de actividades recreativas y terapias grupales.
-
-🛠️ Configuración Inicial
-
-Clonar el repositorio:
-
+### Clonar el repositorio:
+```bash
 git clone https://github.com/usuario/proyecto-tesis.git
+```
 
-Abrir el proyecto en Android Studio.
+### Abrir el proyecto en Android Studio.
 
-Configurar Firebase:
+### Configurar Firebase:
+1. Crear un proyecto en [Firebase Console](https://console.firebase.google.com/).
+2. Obtener las credenciales desde la sección Configuración del proyecto.
+3. Descargar el archivo `google-services.json` y colocarlo en la carpeta `app` del proyecto.
 
-Crear un proyecto en Firebase Console.
+### Ejecutar la aplicación:
+1. Conecta un dispositivo físico o utiliza un emulador de Android.
+2. Haz clic en **Run** dentro de Android Studio para iniciar la aplicación.
 
-Obtener las credenciales desde la sección Configuración del proyecto.
+---
 
-Descargar el archivo google-services.json y colocarlo en la carpeta app del proyecto.
+## 👥 Usuarios del Sistema
 
-Ejecutar la aplicación:
+### Enfermeras:
+- Registrar información médica y nutricional.
+- Administrar medicamentos y coordinar actividades.
 
-Conecta un dispositivo físico o utiliza un emulador de Android.
+### Administradores:
+- Gestionar residentes y supervisar el personal.
+- Generar reportes y supervisar las operaciones generales.
 
-Haz clic en Run dentro de Android Studio para iniciar la aplicación.
+---
 
-👥 Usuarios del Sistema
+## 🗂️ Fases del Desarrollo
 
-Enfermeras:
+### Planificación:
+- Identificación de requisitos funcionales y no funcionales.
+- Creación de diagramas de casos de uso y diseño inicial de la arquitectura.
 
-Registrar información médica y nutricional.
+### Diseño e Implementación:
+- Desarrollo de módulos clave de la aplicación móvil.
+- Integración con Firebase para almacenamiento y autenticación.
 
-Administrar medicamentos y coordinar actividades.
+### Pruebas y Validación:
+- Pruebas unitarias y funcionales para verificar el cumplimiento de los requisitos.
+- Validación con el personal del hogar geriátrico.
 
-Administradores:
+### Entrega Final y Documentación:
+- Generación de manuales técnicos y guías de usuario.
+- Presentación del proyecto a los supervisores y el hogar geriátrico.
 
-Gestionar residentes y supervisar el personal.
+---
 
-Generar reportes y supervisar las operaciones generales.
-
-🗂️ Fases del Desarrollo
-
-Planificación:
-
-Identificación de requisitos funcionales y no funcionales.
-
-Creación de diagramas de casos de uso y diseño inicial de la arquitectura.
-
-Diseño e Implementación:
-
-Desarrollo de módulos clave de la aplicación móvil.
-
-Integración con Firebase para almacenamiento y autenticación.
-
-Pruebas y Validación:
-
-Pruebas unitarias y funcionales para verificar el cumplimiento de los requisitos.
-
-Validación con el personal del hogar geriátrico.
-
-Entrega Final y Documentación:
-
-Generación de manuales técnicos y guías de usuario.
-
-Presentación del proyecto a los supervisores y el hogar geriátrico.
-
-🤝 Contribución
+## 🤝 Contribución
 
 Si deseas contribuir al proyecto:
 
-Realiza un fork del repositorio.
+1. Realiza un fork del repositorio.
+2. Crea una nueva rama para tus cambios:
+   ```bash
+   git checkout -b feature/nueva-funcionalidad
+   ```
+3. Realiza un pull request con una descripción detallada de los cambios.
 
-Crea una nueva rama para tus cambios:
+---
 
-git checkout -b feature/nueva-funcionalidad
-
-Realiza un pull request con una descripción detallada de los cambios.
-
+¡Gracias por tu interés en VitalAge! 😊
