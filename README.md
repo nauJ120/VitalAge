@@ -103,3 +103,4 @@ Si deseas contribuir al proyecto:
 ---
 
 ¡Gracias por tu interés en VitalAge! 😊
+:)
