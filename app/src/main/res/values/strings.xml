@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">VitalAge</string>
+    <string name="background">Background</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="correo">Correo:</string>
+    <string name="digite_su_email">Digite su email</string>
+    <string name="contrasena">Contraseña:</string>
+    <string name="digite_contra">Digite su contraseña</string>
+    <string name="no_tienes_cuenta">¿No tienes una cuenta?</string>
+    <string name="registrarme">Registrarme</string>
 </resources>
