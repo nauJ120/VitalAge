@@ -12,4 +12,6 @@
     <string name="user_icon">Ícono de usuario</string>
     <string name="menu_icon">Ícono de menú</string>
     <string name="option_icon">Descripción del icono</string>
+    <string name="add_note">Añadir nota</string>
+    <string name="back_icon">Ícono de regreso</string>
 </resources>

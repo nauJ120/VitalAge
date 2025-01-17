@@ -1,5 +1,6 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,13 +27,14 @@ class MenuActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.rv_menu_options)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MenuAdapter(menuOptions) { menuOption ->
-            // Acción al hacer clic en una opción
+            // Acción al hacer clic en una opción del menú
             when (menuOption.title) {
                 "Notas de enfermería" -> {
-                    // Implementar funcionalidad para esta opción
+                    val intent = Intent(this, NursingNotesActivity::class.java)
+                    startActivity(intent)
                 }
                 else -> {
-                    // Implementar otras opciones
+                    // Puedes agregar más acciones aquí para otras opciones del menú
                 }
             }
         }
