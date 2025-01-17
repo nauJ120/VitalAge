@@ -1,8 +1,8 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,10 +26,17 @@ class PatientListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         adapter = PatientAdapter(patients) { patient ->
-            Toast.makeText(this, "Seleccionaste a ${patient.name}", Toast.LENGTH_SHORT).show()
+            // Redirigir a la pantalla de Menú
+            val intent = Intent(this, MenuActivity::class.java)
+            intent.putExtra("patient_name", patient.name)
+            intent.putExtra("patient_id", patient.id)
+            intent.putExtra("patient_gender", patient.gender)
+            intent.putExtra("patient_age", patient.age)
+            startActivity(intent)
         }
         recyclerView.adapter = adapter
 
+        // Filtrar pacientes
         val searchField = findViewById<EditText>(R.id.et_search)
         searchField.addTextChangedListener { editable ->
             val query = editable?.toString() ?: ""
