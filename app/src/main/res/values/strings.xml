@@ -8,4 +8,7 @@
     <string name="digite_contra">Digite su contraseña</string>
     <string name="no_tienes_cuenta">¿No tienes una cuenta?</string>
     <string name="registrarme">Registrarme</string>
+    <string name="menu">Menú</string>
+    <string name="user_icon">Ícono de usuario</string>
+    <string name="menu_icon">Ícono de menú</string>
 </resources>
