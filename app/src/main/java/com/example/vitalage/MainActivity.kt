@@ -6,6 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
+
+//Kotlin create a data class with name and age and a function to print out the name and age
+
+
+
+
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,3 +25,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IniciarSesionActivity">
+
+    <ImageView
+        android:id="@+id/main_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/background"
+        android:scaleType="fitXY" />
+    <ImageView
+        android:id="@+id/Javeriana"
+        android:layout_width="wrap_content"
+        android:layout_height="190dp"
+        android:src="@drawable/pontificia_universidad_javeriana"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:background="@drawable/title_bg"
+        android:paddingHorizontal="207dp"
+        android:paddingVertical="332dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/VitalBrain"
+        android:layout_width="wrap_content"
+        android:layout_height="280dp"
+        android:src="@drawable/imagen_2"
+        android:layout_gravity="center"
+        android:scaleType="fitStart"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/correo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="310dp"
+        android:layout_marginStart="50dp"
+        android:text="@string/correo"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/main_background"
+        app:layout_constraintTop_toTopOf="@+id/main_background"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/correo_form"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/formato_entrada"
+        android:hint="@string/digite_su_email"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:textColorHint="@color/md_grey_500"
+        app:circularflow_radiusInDP="10dp"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="@id/main_background"
+        app:layout_constraintStart_toStartOf="@id/correo"
+        app:layout_constraintTop_toBottomOf="@id/correo" />
+
+    <TextView
+        android:id="@+id/contraseña"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="50dp"
+        android:text="@string/contrasena"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/main_background"
+        app:layout_constraintTop_toBottomOf="@id/correo_form" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/contra_form"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="250dp"
+        android:background="@drawable/formato_entrada"
+        android:hint="@string/digite_contra"
+        android:inputType="textPassword"
+        android:textColorHint="@color/md_grey_500"
+        app:layout_constraintEnd_toEndOf="@id/main_background"
+        app:layout_constraintStart_toStartOf="@id/correo"
+        app:layout_constraintTop_toBottomOf="@id/contraseña" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginBottom="160dp"
+        android:text="@string/iniciar_sesion"
+        android:background="@drawable/boton1"
+        android:textStyle="normal"
+        android:textSize="20sp"
+        android:textColor="@color/md_light_blue_600"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/main_background"
+        app:layout_constraintStart_toStartOf="@id/main_background" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/registrarme"
+        android:background="@drawable/boton2"
+        android:textStyle="normal"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/main_background"
+        app:layout_constraintStart_toStartOf="@id/main_background" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
