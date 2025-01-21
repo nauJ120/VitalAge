@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".NursingNotesActivity" />
+        <activity android:name=".AddNursingNoteActivity" />
 
     </application>
 

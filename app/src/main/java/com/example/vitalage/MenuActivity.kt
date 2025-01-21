@@ -2,6 +2,7 @@ package com.example.vitalage
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,12 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        // Botón de retroceso
+        val backButton = findViewById<ImageView>(R.id.iv_back)
+        backButton.setOnClickListener {
+            finish() // Cierra esta actividad y regresa a la anterior
+        }
 
         // Opciones del menú
         val menuOptions = listOf(
@@ -27,14 +34,14 @@ class MenuActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.rv_menu_options)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MenuAdapter(menuOptions) { menuOption ->
-            // Acción al hacer clic en una opción del menú
             when (menuOption.title) {
                 "Notas de enfermería" -> {
+                    // Redirigir a la actividad de "Notas de enfermería"
                     val intent = Intent(this, NursingNotesActivity::class.java)
                     startActivity(intent)
                 }
                 else -> {
-                    // Puedes agregar más acciones aquí para otras opciones del menú
+                    // Acciones para otras opciones
                 }
             }
         }
