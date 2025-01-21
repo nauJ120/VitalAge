@@ -21,8 +21,8 @@ class ScaleResultActivity : AppCompatActivity() {
         val btnBack: Button = findViewById(R.id.btn_back)
 
         // Obtener datos del Intent
-        val scaleType = intent.getStringExtra("scaleType") ?: "Sin información"
-        val totalScore = intent.getIntExtra("totalScore", 0)
+        val scaleType = intent.getStringExtra("scale_type") ?: "Sin información"
+        val totalScore = intent.getIntExtra("score", 0)
         val encargado = intent.getStringExtra("encargado") ?: "Sin información"
         val fecha = intent.getStringExtra("fecha") ?: "Sin información"
 

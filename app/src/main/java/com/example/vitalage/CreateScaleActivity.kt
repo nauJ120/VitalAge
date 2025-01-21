@@ -2,6 +2,7 @@ package com.example.vitalage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -26,6 +27,7 @@ class CreateScaleActivity : AppCompatActivity() {
     private lateinit var tvEncargado: TextView
     private lateinit var tvFecha: TextView
     private lateinit var questionsContainer: LinearLayout
+    private lateinit var btnSave: Button
 
     private val scales = listOf(
         Scale(
@@ -214,21 +216,21 @@ class CreateScaleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_scale)
 
-
         // Inicializar vistas
         spinnerScaleType = findViewById(R.id.spinner_scale_type)
         tvEncargado = findViewById(R.id.tv_encargado)
         tvFecha = findViewById(R.id.tv_fecha)
         questionsContainer = findViewById(R.id.questions_container)
+        btnSave = findViewById(R.id.btn_save)
 
         // Datos automáticos
-        val encargado = "Pepe Gonzalez" // Este valor debe venir del usuario actual
-        val fecha = "14/01/2025" // Obtener la fecha actual dinámicamente
+        val encargado = "Pepe Gonzalez" // Esto debe venir del usuario actual
+        val fecha = "14/01/2025" // Fecha dinámica
         tvEncargado.text = "Encargado: $encargado"
         tvFecha.text = "Fecha: $fecha"
 
         // Configurar Spinner
-        val scaleTypes = listOf("Braden", "Barthel", "Glasgow")
+        val scaleTypes = scales.map { it.name }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, scaleTypes)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerScaleType.adapter = adapter
@@ -244,22 +246,23 @@ class CreateScaleActivity : AppCompatActivity() {
         }
 
         // Configurar botón Guardar
-        val btnSave: Button = findViewById(R.id.btn_save)
         btnSave.setOnClickListener {
-            saveScale()
+            saveScale(encargado, fecha)
         }
-
     }
 
     private fun loadQuestions(scaleType: String) {
         questionsContainer.removeAllViews()
 
         // Encontrar la escala seleccionada
-        val selectedScale = scales.find { it.name == scaleType } ?: return
+        val selectedScale = scales.find { it.name == scaleType }
+        if (selectedScale == null) {
+            Log.e("CreateScaleActivity", "No se encontró la escala seleccionada: $scaleType")
+            return
+        }
 
         // Generar vistas dinámicamente
         selectedScale.questions.forEach { question ->
-            // Título de la categoría
             val textView = TextView(this).apply {
                 text = question.category
                 textSize = 16f
@@ -267,7 +270,6 @@ class CreateScaleActivity : AppCompatActivity() {
             }
             questionsContainer.addView(textView)
 
-            // Opciones como RadioButtons
             val radioGroup = RadioGroup(this)
             question.options.forEach { option ->
                 val radioButton = RadioButton(this).apply {
@@ -286,37 +288,47 @@ class CreateScaleActivity : AppCompatActivity() {
             val view = questionsContainer.getChildAt(i)
             if (view is RadioGroup) {
                 val selectedId = view.checkedRadioButtonId
-                if (selectedId != -1) {
+                val questionTextView = questionsContainer.getChildAt(i - 1) as? TextView
+
+                if (selectedId != -1 && questionTextView != null) {
                     val selectedOption = findViewById<RadioButton>(selectedId).text.toString()
-                    val question = (questionsContainer.getChildAt(i - 1) as TextView).text.toString()
+                    val question = questionTextView.text.toString()
                     answers[question] = selectedOption
                 }
             }
         }
 
+        Log.d("CreateScaleActivity", "Answers collected: $answers")
         return answers
     }
 
-    private fun saveScale() {
+    private fun saveScale(encargado: String, fecha: String) {
         val answers = collectAnswers()
 
-        // Verificar si todas las preguntas tienen una respuesta
         val totalQuestions = scales.find { it.name == spinnerScaleType.selectedItem.toString() }?.questions?.size ?: 0
-
         if (answers.size != totalQuestions) {
             Toast.makeText(this, "Por favor responde todas las preguntas antes de continuar.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Redirigir a la pantalla de resultados
+        val scaleType = spinnerScaleType.selectedItem?.toString() ?: ""
+        if (scaleType.isEmpty()) {
+            Toast.makeText(this, "Por favor selecciona un tipo de escala.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val score = calculateTotalScore(answers)
+        Log.d("CreateScaleActivity", "Saving scale: Type=$scaleType, Score=$score, Encargado=$encargado, Fecha=$fecha")
+
         val intent = Intent(this, ScaleResultActivity::class.java).apply {
-            putExtra("scale_type", spinnerScaleType.selectedItem.toString())
-            putExtra("score", calculateTotalScore(answers)) // Implementa tu lógica de cálculo
+            putExtra("scale_type", scaleType)
+            putExtra("score", score)
+            putExtra("encargado", encargado)
+            putExtra("fecha", fecha)
         }
         startActivity(intent)
         finish()
     }
-
 
     private fun calculateTotalScore(answers: Map<String, String>): Int {
         var totalScore = 0
@@ -327,6 +339,4 @@ class CreateScaleActivity : AppCompatActivity() {
         }
         return totalScore
     }
-
-
 }
