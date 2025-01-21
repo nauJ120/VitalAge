@@ -8,37 +8,38 @@
     tools:context=".SignosVitalesActivity">
 
     <!-- Título Principal -->
-    <TextView
-        android:id="@+id/tituloSignosVitales"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Signos vitales"
-        android:textColor="#000000"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Información del Usuario -->
-    <TextView
-        android:id="@+id/informacionUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
-        android:textColor="#666666"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloSignosVitales" />
 
     <!-- Botón para Toma de Signos Vitales -->
 
     <!-- Botón para Historial -->
 
     <!-- Menú Desplegable -->
+
+    <TextView
+        android:id="@+id/tituloSignosVitales"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Signos vitales"
+        android:textColor="#000000"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="14dp" />
+
+    <TextView
+        android:id="@+id/informacionUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
+        android:textColor="#666666"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.811"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloSignosVitales" />
 
     <LinearLayout
         android:id="@+id/btnTomaSignosContainer"
@@ -113,6 +114,21 @@
         android:contentDescription="Icono de menú"
         android:src="@drawable/ic_menu"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/nurseIcon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginEnd="350dp"
+        android:layout_marginBottom="612dp"
+        android:contentDescription="Icono de enfermera"
+        android:src="@drawable/ic_nurse"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
