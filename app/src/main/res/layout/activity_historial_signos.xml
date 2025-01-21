@@ -1,9 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="#FFFFFF"
+    tools:context=".SignosVitalesActivity">
+
+    <!-- Título Principal -->
+    <TextView
+        android:id="@+id/tituloSignosVitales"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Signos vitales"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Información del Usuario -->
+    <TextView
+        android:id="@+id/informacionUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
+        android:textColor="#666666"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloSignosVitales" />
+
+    <!-- Botón para Toma de Signos Vitales -->
+
+    <!-- Botón para Historial -->
+
+    <!-- Menú Desplegable -->
+
+    <LinearLayout
+        android:id="@+id/btnTomaSignosContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="44dp"
+        android:background="#EEEEEE"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.921"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/informacionUsuario">
+
+        <ImageView
+            android:id="@+id/iconStethoscope"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Icono de estetoscopio"
+            android:src="@drawable/ic_stethoscope" />
+
+        <TextView
+            android:id="@+id/textTomaSignos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Toma Signos vitales"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btnHistorialContainer"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="231dp"
+        android:background="#EEEEEE"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iconCalendar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Icono de calendario"
+            android:src="@drawable/ic_calendar" />
+
+        <TextView
+            android:id="@+id/textHistorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Historial"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/menuIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="16dp"
+        android:contentDescription="Icono de menú"
+        android:src="@drawable/ic_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
