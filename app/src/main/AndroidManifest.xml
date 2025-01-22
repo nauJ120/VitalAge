@@ -15,8 +15,9 @@
         <activity android:name=".TomaSignosActivity" />
         <activity android:name=".HistorialSignosActivity" />
         <activity android:name=".HistorialFechaActivity" />
-        <activity android:name=".SignosVitalesActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SignosVitalesActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
