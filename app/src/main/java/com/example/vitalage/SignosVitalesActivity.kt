@@ -1,5 +1,6 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,10 +15,9 @@ class SignosVitalesActivity : AppCompatActivity() {
 
         // Acciones para el menú desplegable
         menuIcon.setOnClickListener {
-            // Aquí puedes abrir un menú o realizar alguna acción
-            // Por ejemplo:
-            // val intent = Intent(this, MenuActivity::class.java)
-            // startActivity(intent)
+// Hacer menu desplegable
+            //val intent = Intent(this, MenuActivity::class.java)
+            //startActivity(intent)
         }
     }
 }

@@ -7,6 +7,7 @@
     android:background="#FFFFFF"
     android:padding="16dp"
     tools:context=".HistorialSignosActivity">
+
     <!-- Barra superior con color -->
     <View
         android:id="@+id/barraTitulo"
@@ -16,48 +17,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Título Principal -->
-
-    <!-- Información del Usuario -->
-
     <TextView
         android:id="@+id/tituloSignosVitales"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Historial signos vitales"
-        android:textColor="#000000"
-        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/barraTitulo" />
 
     <!-- Menú Desplegable -->
-    <TextView
-        android:id="@+id/informacionUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
-        android:textColor="#666666"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tituloSignosVitales" />
-
     <ImageView
         android:id="@+id/menuIcon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="Menú"
         android:src="@drawable/ic_menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tituloSignosVitales" />
+        app:layout_constraintTop_toTopOf="@id/barraTitulo"
+        app:layout_constraintBottom_toBottomOf="@id/barraTitulo" />
+
+    <!-- Información del Usuario -->
 
     <!-- Tarjeta de Signos Vitales -->
+    <TextView
+        android:id="@+id/informacionUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
+        android:textColor="#666666"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.633"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barraTitulo" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardSignosVitales"
         android:layout_width="0dp"
@@ -72,7 +75,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -97,6 +100,7 @@
 
             <!-- Lista de Signos Vitales -->
             <TextView
+                android:id="@+id/textFrecuenciaCardiaca"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -105,6 +109,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/textFrecuenciaRespiratoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -113,6 +118,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/textSaturacionOxigeno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -121,6 +127,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/textPresionArterial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -129,6 +136,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/textTemperaturaCorporal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -153,5 +161,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.406" />
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,21 +56,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tituloSignosVitales" />
 
+    <!-- Botón para Toma de Signos Vitales -->
+
+    <!-- Botón para Historial -->
+
+    <!-- Botón para Toma de Signos Vitales -->
     <LinearLayout
-        android:id="@+id/btnTomaSignosContainer"
+        android:id="@+id/btnTomaSignos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
         android:background="#EEEEEE"
         android:elevation="4dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.921"
+        app:layout_constraintTop_toBottomOf="@id/informacionUsuario"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/informacionUsuario">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/iconStethoscope"
@@ -89,20 +93,21 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+    <!-- Botón para Historial -->
     <LinearLayout
-        android:id="@+id/btnHistorialContainer"
-        android:layout_width="347dp"
+        android:id="@+id/btnHistorial"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="231dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
         android:background="#EEEEEE"
         android:elevation="4dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/btnTomaSignos"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/iconCalendar"

@@ -8,7 +8,7 @@ package com.example.vitalage
     class HistorialFechaActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_signos_vitales)
+            setContentView(R.layout.activity_signos_vitales_historial_fecha)
 
             // Elementos del layout
             val menuIcon = findViewById<ImageView>(R.id.menuIcon)
