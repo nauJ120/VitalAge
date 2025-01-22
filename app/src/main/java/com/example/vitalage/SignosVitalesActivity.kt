@@ -1,7 +1,7 @@
 package com.example.vitalage
-import android.content.Intent
+
 import android.os.Bundle
-import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 class SignosVitalesActivity : AppCompatActivity() {
@@ -9,20 +9,15 @@ class SignosVitalesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signos_vitales)
 
-        // Botones
-        val btnTomaSignos = findViewById<Button>(R.id.btnTomaSignos)
-        val btnHistorial = findViewById<Button>(R.id.btnHistorial)
+        // Elementos del layout
+        val menuIcon = findViewById<ImageView>(R.id.menuIcon)
 
-        // Navegación a la pantalla de toma de signos vitales
-        btnTomaSignos.setOnClickListener {
-            val intent = Intent(this, TomaSignosActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Navegación a la pantalla de historial
-        btnHistorial.setOnClickListener {
-            val intent = Intent(this, HistorialActivity::class.java)
-            startActivity(intent)
+        // Acciones para el menú desplegable
+        menuIcon.setOnClickListener {
+            // Aquí puedes abrir un menú o realizar alguna acción
+            // Por ejemplo:
+            // val intent = Intent(this, MenuActivity::class.java)
+            // startActivity(intent)
         }
     }
 }
