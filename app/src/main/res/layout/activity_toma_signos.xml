@@ -15,14 +15,6 @@
     <!-- Menú Desplegable -->
 
     <!-- Barra superior con color -->
-    <View
-        android:id="@+id/barraTitulo"
-        android:layout_width="0dp"
-        android:layout_height="76dp"
-        android:background="@color/light_blue_500"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/tituloTomaSignos"
@@ -46,14 +38,17 @@
         android:id="@+id/informacionUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="73dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="598dp"
         android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
         android:textColor="#666666"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.644"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tituloTomaSignos" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Campos de Entrada -->
 
     <ImageView
         android:id="@+id/menuIcon"
@@ -65,14 +60,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tituloTomaSignos" />
 
-    <!-- Campos de Entrada -->
-
     <EditText
         android:id="@+id/inputFrecuenciaRespiratoria"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
-        android:background="@drawable/input_background"
+        android:background="@color/light_grey_200"
         android:hint="Frecuencia Respiratoria (res/min)"
         android:inputType="number"
         android:padding="12dp"
@@ -86,7 +79,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:background="@drawable/input_background"
+        android:background="@color/light_grey_200"
         android:hint="Saturación Oxígeno (%)"
         android:inputType="number"
         android:padding="12dp"
@@ -99,7 +92,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:background="@drawable/input_background"
+        android:background="@color/light_grey_200"
         android:hint="Presión Arterial (mm Hg)"
         android:inputType="text"
         android:padding="12dp"
@@ -112,7 +105,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:background="@drawable/input_background"
+        android:background="@color/light_grey_200"
         android:hint="Temperatura Corporal (°C)"
         android:inputType="number"
         android:padding="12dp"
@@ -123,6 +116,7 @@
     <!-- Fecha -->
     <LinearLayout
         android:id="@+id/fechaContainer"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -134,6 +128,7 @@
 
         <Button
             android:id="@+id/btnDia"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -143,6 +138,7 @@
 
         <Button
             android:id="@+id/btnMes"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -154,6 +150,7 @@
 
         <Button
             android:id="@+id/btnAnio"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -196,17 +193,11 @@
         android:id="@+id/nurseIcon"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="350dp"
-        android:layout_marginBottom="601dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="68dp"
         android:contentDescription="Icono de enfermera"
         android:src="@drawable/ic_nurse"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.312" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
