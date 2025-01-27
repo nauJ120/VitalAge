@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/marcoSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@drawable/marco_registrarse"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/textoregistrarse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registrarme"
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="20.3dp"
+            android:layout_marginStart="50dp"
+            android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/flechitaatras"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginStart="10dp"
+
+            app:layout_constraintStart_toStartOf="@id/marcoSuperior"
+            app:layout_constraintTop_toTopOf="@id/marcoSuperior"
+            app:layout_constraintEnd_toEndOf="@id/marcoSuperior"
+            android:src="@drawable/baseline_arrow_back_24" />
+
+
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/marcoSuperior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Ejemplo de contenido -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tipo_de_doc"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:background="@drawable/formato_entrada_list"
+                android:hint="Cédula de Ciudadanía"
+                android:inputType="textEmailAddress"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="20dp"
+                android:minHeight="48dp"
+                android:textColorHint="@color/md_grey_600"
+                android:drawableStart="@drawable/baseline_contact_emergency_24"
+                android:drawableEnd="@drawable/baseline_keyboard_arrow_down_24"
+                app:circularflow_radiusInDP="10dp"
+                app:endIconMode="clear_text" />
+
+
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/numero_de_doc"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/formato_entrada2"
+                android:hint="Número de documento"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:layout_marginBottom="30dp"
+                android:textColorHint="@color/md_grey_600"
+                app:circularflow_radiusInDP="10dp"
+                android:drawableStart="@drawable/outline_person_24"
+                app:endIconMode="clear_text" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/correo"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/formato_entrada2"
+                android:hint="Correo"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:layout_marginBottom="30dp"
+                android:textColorHint="@color/md_grey_600"
+                app:circularflow_radiusInDP="10dp"
+                android:drawableStart="@drawable/baseline_email_24"
+                app:endIconMode="clear_text" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contraseña"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/formato_entrada2"
+                android:drawableStart="@drawable/outline_lock_24"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:textColorHint="@color/md_grey_600"
+                app:circularflow_radiusInDP="10dp"
+                app:endIconMode="clear_text" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contraseña2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/formato_entrada2"
+                android:drawableStart="@drawable/outline_lock_24"
+                android:hint="Confirmación contraseña"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:textColorHint="@color/md_grey_600"
+                app:circularflow_radiusInDP="10dp"
+                app:endIconMode="clear_text" />
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="30dp"
+                android:drawableLeft="@drawable/baseline_medical_services_24"
+                android:paddingHorizontal="10dp"
+                android:text="Enfermera" />
+            <CheckBox
+                android:id="@+id/checkbox2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="30dp"
+                android:drawableLeft="@drawable/baseline_engineering_24"
+                android:paddingHorizontal="10dp"
+                android:text="Administrador" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="100dp"
+                android:text="@string/continuar"
+                android:background="@drawable/boton3"
+                android:textStyle="normal"
+                android:textSize="20sp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
