@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F4F9FD"
+    tools:context=".MedicationCardActivity">
+
+    <!-- Encabezado de la pantalla -->
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tarjeta de Medicamentos"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#333333"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Información del paciente -->
+    <LinearLayout
+        android:id="@+id/cardResident"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/card_background"
+        android:elevation="4dp"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:layout_below="@id/header">
+
+        <!-- Foto del residente -->
+        <ImageView
+            android:id="@+id/imgResident"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_resident"
+            android:contentDescription="Resident Photo"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:tint="#4A90E2" />
+
+        <!-- Información del residente -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvResidentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Joaquín Gomez"
+                android:textSize="20sp"
+                android:textColor="#333333"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:id="@+id/tvResidentInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: 123456789 • Sexo: Hombre • Edad: 74"
+                android:textSize="14sp"
+                android:textColor="#777777"
+                android:fontFamily="sans-serif-light" />
+        </LinearLayout>
+
+        <!-- Botón de acción -->
+        <ImageView
+            android:id="@+id/btnAddInfo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/note"
+            android:contentDescription="Add Info"
+            app:tint="#4A90E2" />
+    </LinearLayout>
+
+    <!-- Tabla de Medicamentos -->
+    <TextView
+        android:id="@+id/tvMedicationHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medicamentos"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#333333"
+        android:layout_marginBottom="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMedications"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        tools:listitem="@layout/item_medication_card" />
+
+    <!-- Botón Agregar Medicamento -->
+    <Button
+        android:id="@+id/btnAddMedication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agregar Medicamento"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#4A90E2"
+        android:textColor="#FFFFFF"
+        android:elevation="4dp"
+        android:fontFamily="sans-serif-medium" />
+</LinearLayout>

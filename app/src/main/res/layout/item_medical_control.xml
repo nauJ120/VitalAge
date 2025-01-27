@@ -1,0 +1,243 @@
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="#FFFFFF"
+    android:layout_marginBottom="8dp"
+    android:elevation="4dp">
+
+    <!-- Título General -->
+    <TextView
+        android:id="@+id/tvSectionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Medicamento"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#4A90E2"
+        android:paddingBottom="8dp" />
+
+    <!-- Fila 1: Nombre, Lote e INVIMA -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <!-- Encabezados -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Nombre"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#777777" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Lote"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#777777" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="INVIMA"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#777777" />
+    </TableRow>
+
+    <!-- Datos Fila 1 -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <!-- Nombre del Medicamento -->
+        <TextView
+            android:id="@+id/tvMedicationName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Paracetamol"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#333333" />
+
+        <!-- Lote -->
+        <TextView
+            android:id="@+id/tvMedicationLot"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Lote1234"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#333333" />
+
+        <!-- INVIMA -->
+        <TextView
+            android:id="@+id/tvMedicationInvima"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="INV1234"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#333333" />
+    </TableRow>
+
+    <!-- Título Fechas -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fechas"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#4A90E2"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <!-- Fila 2: Cantidad y Fechas -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <!-- Cantidad -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Cantidad"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#777777" />
+
+        <!-- Fecha de Vencimiento -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Vencimiento"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#777777" />
+
+        <!-- Fecha de Inicio -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Inicio"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#777777" />
+
+        <!-- Fecha de Finalización -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Finalización"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#777777" />
+    </TableRow>
+
+    <!-- Datos Fila 2 -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <!-- Cantidad -->
+        <TextView
+            android:id="@+id/tvMedicationQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="10"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#333333" />
+
+        <!-- Fecha de Vencimiento -->
+        <TextView
+            android:id="@+id/tvMedicationExpirationDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="12/2025"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#333333" />
+
+        <!-- Fecha de Inicio -->
+        <TextView
+            android:id="@+id/tvMedicationStartDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="01/2023"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#333333" />
+
+        <!-- Fecha de Finalización -->
+        <TextView
+            android:id="@+id/tvMedicationEndDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="02/2023"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#333333" />
+    </TableRow>
+
+    <!-- Título Observaciones y Auxiliar -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Observaciones y Auxiliar"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#4A90E2"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+    <!-- Fila 3: Observaciones y Auxiliar -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Observaciones -->
+        <TextView
+            android:id="@+id/tvMedicationObservations"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Ninguna"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#333333" />
+
+        <!-- Auxiliar -->
+        <TextView
+            android:id="@+id/tvMedicationNurse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Ana López"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#333333" />
+    </TableRow>
+</TableLayout>
