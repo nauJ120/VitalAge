@@ -182,10 +182,9 @@
         android:orientation="horizontal"
         android:elevation="8dp"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:weightSum="3">
+        android:weightSum="2">
 
-        <!-- Botón de Inicio -->
+        <!-- Contenedor del Botón de Inicio -->
         <LinearLayout
             android:id="@+id/btnHomeContainer"
             android:layout_width="0dp"
@@ -197,18 +196,18 @@
                 android:id="@+id/btnHome"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_home"
                 android:contentDescription="Home"
+                android:src="@drawable/ic_home"
                 app:tint="#4A90E2" />
         </LinearLayout>
 
-        <!-- Espacio entre íconos -->
+        <!-- Separador entre los íconos -->
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#DDDDDD" />
 
-        <!-- Botón de Perfil -->
+        <!-- Contenedor del Botón de Perfil -->
         <LinearLayout
             android:id="@+id/btnProfileContainer"
             android:layout_width="0dp"
@@ -225,5 +224,6 @@
                 app:tint="#4A90E2" />
         </LinearLayout>
     </LinearLayout>
+
 
 </RelativeLayout>

@@ -112,19 +112,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMedicalControl"
         android:layout_width="match_parent"
-        android:layout_height="334dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="8dp"
         tools:listitem="@layout/item_medical_control" />
 
     <!-- Botón Agregar Medicamento -->
     <!-- Barra de navegación inferior -->
-
     <Button
         android:id="@+id/btnAddMedication"
-        android:layout_width="327dp"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:backgroundTint="#4A90E2"
         android:elevation="4dp"
