@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">VitalAge</string>
+    <string name="a_o">Año</string>
+    <string name="toma_de_signos_vitales">Toma de Signos Vitales</string>
+    <string name="men">Menú</string>
+    <string name="frecuencia_respiratoria_res_min">Frecuencia Respiratoria (res/min)</string>
+    <string name="saturaci_n_ox_geno">Saturación Oxígeno (%)</string>
+    <string name="presi_n_arterial_mm_hg">Presión Arterial (mm Hg)</string>
+    <string name="temperatura_corporal_c">Temperatura Corporal (°C)</string>
+    <string name="d_a">Día</string>
+    <string name="mes">Mes</string>
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="icono_de_enfermera">Icono de enfermera</string>
+    <string name="historial_signos_vitales">Historial Signos Vitales</string>
 </resources>

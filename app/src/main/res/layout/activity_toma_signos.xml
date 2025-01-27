@@ -16,57 +16,85 @@
 
     <!-- Barra superior con color -->
 
+    <View
+        android:id="@+id/barraTitulo"
+        android:layout_width="404dp"
+        android:layout_height="102dp"
+        android:layout_marginTop="-30dp"
+        android:background="@color/light_blue_500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Campos de Entrada -->
+
     <TextView
         android:id="@+id/tituloTomaSignos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="67dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="82dp"
         android:layout_marginBottom="643dp"
-        android:text="Toma de Signos vitales"
-        android:textColor="#000000"
-        android:textSize="30sp"
+        android:text="@string/toma_de_signos_vitales"
+        android:textColor="@color/white"
+        android:textSize="29sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.26"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.941" />
 
     <TextView
         android:id="@+id/informacionUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="73dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="33dp"
         android:layout_marginBottom="598dp"
         android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
-        android:textColor="#666666"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- Campos de Entrada -->
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.882" />
 
     <ImageView
         android:id="@+id/menuIcon"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:contentDescription="Menú"
+        android:contentDescription="@string/men"
         android:src="@drawable/ic_menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tituloTomaSignos" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/labelFrecuenciaRespiratoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/frecuencia_respiratoria_res_min"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/informacionUsuario" />
 
     <EditText
         android:id="@+id/inputFrecuenciaRespiratoria"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="68dp"
         android:background="@color/light_grey_200"
-        android:hint="Frecuencia Respiratoria (res/min)"
+        android:hint="@string/frecuencia_respiratoria_res_min"
         android:inputType="number"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,46 +102,88 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/informacionUsuario" />
 
-    <EditText
-        android:id="@+id/inputSaturacionOxigeno"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/labelSaturacionOxigeno"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:background="@color/light_grey_200"
-        android:hint="Saturación Oxígeno (%)"
-        android:inputType="number"
-        android:padding="12dp"
+        android:text="@string/saturaci_n_ox_geno"
+        android:textColor="#000000"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inputFrecuenciaRespiratoria" />
 
     <EditText
+        android:id="@+id/inputSaturacionOxigeno"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:background="@color/light_grey_200"
+        android:hint="@string/saturaci_n_ox_geno"
+        android:inputType="number"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputFrecuenciaRespiratoria" />
+
+    <TextView
+        android:id="@+id/labelPresionArterial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/presi_n_arterial_mm_hg"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputSaturacionOxigeno" />
+
+    <!-- Fecha -->
+    <EditText
         android:id="@+id/inputPresionArterial"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="44dp"
         android:background="@color/light_grey_200"
-        android:hint="Presión Arterial (mm Hg)"
+        android:hint="@string/presi_n_arterial_mm_hg"
         android:inputType="text"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inputSaturacionOxigeno" />
+
+    <TextView
+        android:id="@+id/labelTemperaturaCorporal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/temperatura_corporal_c"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputPresionArterial" />
 
     <EditText
         android:id="@+id/inputTemperaturaCorporal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="44dp"
         android:background="@color/light_grey_200"
-        android:hint="Temperatura Corporal (°C)"
+        android:hint="@string/temperatura_corporal_c"
         android:inputType="number"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inputPresionArterial" />
 
-    <!-- Fecha -->
     <LinearLayout
         android:id="@+id/fechaContainer"
         style="?android:attr/buttonBarStyle"
@@ -133,7 +203,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/light_blue_500"
-            android:text="Día"
+            android:text="@string/d_a"
             android:textColor="@android:color/white" />
 
         <Button
@@ -145,23 +215,24 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:backgroundTint="@color/light_blue_500"
-            android:text="Mes"
+            android:text="@string/mes"
             android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btnAnio"
-            style="?android:attr/buttonBarButtonStyle"
+            style="?android:attr/buttonBarStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/light_blue_500"
-            android:text="Año"
+            android:text="@string/a_o"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
     <!-- Botones Guardar y Cancelar -->
     <LinearLayout
         android:id="@+id/actionButtons"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -177,7 +248,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:backgroundTint="@color/light_blue_500"
-            android:text="Guardar"
+            android:text="@string/guardar"
             android:textColor="@android:color/white" />
 
         <Button
@@ -185,7 +256,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/light_blue_500"
-            android:text="Cancelar"
+            android:text="@string/cancelar"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
@@ -195,9 +266,11 @@
         android:layout_height="45dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="68dp"
-        android:contentDescription="Icono de enfermera"
+        android:contentDescription="@string/icono_de_enfermera"
         android:src="@drawable/ic_nurse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

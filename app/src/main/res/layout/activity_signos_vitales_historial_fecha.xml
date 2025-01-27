@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:padding="16dp"
-    tools:context=".SignosVitalesActivity">
+    tools:context=".HistorialFechaActivity">
     <!-- Barra superior con color -->
     <View
         android:id="@+id/barraTitulo"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:background="@color/light_blue_500"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
     <!-- Título Principal -->
 
     <!-- Información del Usuario -->
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Historial signos vitales"
-        android:textColor="#000000"
+        android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,16 +37,17 @@
     <!-- Menú Desplegable -->
 
     <!-- Selector de Fecha -->
+
     <TextView
         android:id="@+id/informacionUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
-        android:textColor="#666666"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.622"
+        app:layout_constraintHorizontal_bias="0.677"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tituloSignosVitales" />
 
@@ -65,8 +66,8 @@
         android:id="@+id/labelFecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="196dp"
         android:text="Seleccione la fecha"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -78,7 +79,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:orientation="horizontal"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="mm/dd/yyyy"
-            android:textColorHint="#888888"
+            android:textColorHint="@color/black"
             android:textSize="20sp" />
 
         <ImageView
@@ -108,16 +109,10 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="74dp"
-        android:layout_marginEnd="350dp"
-        android:layout_marginBottom="612dp"
+        android:layout_marginTop="60dp"
         android:contentDescription="Icono de enfermera"
         android:src="@drawable/ic_nurse"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.687"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.531" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

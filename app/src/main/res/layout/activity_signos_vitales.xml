@@ -5,147 +5,150 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:padding="16dp"
-    tools:context=".HistorialSignosActivity">
+    tools:context=".SignosVitalesActivity">
 
     <!-- Barra superior con color -->
     <View
         android:id="@+id/barraTitulo"
         android:layout_width="0dp"
-        android:layout_height="77dp"
+        android:layout_height="76dp"
+        android:layout_marginBottom="655dp"
         android:background="@color/light_blue_500"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <!-- Título Principal -->
+
+    <!-- Información del Usuario -->
+
+    <!-- Botón para Toma de Signos Vitales -->
+
+    <!-- Botón para Historial -->
+
+    <!-- Menú Desplegable -->
+
     <TextView
         android:id="@+id/tituloSignosVitales"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Historial signos vitales"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginBottom="670dp"
+        android:text="Signos vitales"
+        android:textColor="@color/white"
+        android:textSize="35dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/barraTitulo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Menú Desplegable -->
-    <ImageView
-        android:id="@+id/menuIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="Menú"
-        android:src="@drawable/ic_menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/barraTitulo"
-        app:layout_constraintBottom_toBottomOf="@id/barraTitulo" />
-
-    <!-- Información del Usuario -->
-
-    <!-- Tarjeta de Signos Vitales -->
     <TextView
         android:id="@+id/informacionUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="20dp"
         android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
-        android:textColor="#666666"
-        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.633"
+        app:layout_constraintHorizontal_bias="0.811"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barraTitulo" />
+        app:layout_constraintTop_toBottomOf="@+id/tituloSignosVitales" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardSignosVitales"
+    <!-- Botón para Toma de Signos Vitales -->
+
+    <!-- Botón para Historial -->
+
+    <!-- Botón para Toma de Signos Vitales -->
+
+    <!-- Botón para Historial -->
+
+    <LinearLayout
+        android:id="@+id/btnTomaSignos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginBottom="449dp"
+        android:background="#EEEEEE"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/informacionUsuario">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+        <ImageView
+            android:id="@+id/iconStethoscope"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Icono de estetoscopio"
+            android:src="@drawable/ic_stethoscope" />
 
-            <!-- Encabezado -->
-            <TextView
-                android:id="@+id/pacienteNombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Paciente Gerardo Ruiz"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textTomaSignos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Toma Signos vitales"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/ultimoRegistro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Último registro: 29/10/2024"
-                android:textColor="#666666"
-                android:textSize="14sp" />
+    <LinearLayout
+        android:id="@+id/btnHistorial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="377dp"
+        android:background="#EEEEEE"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnTomaSignos"
+        app:layout_constraintVertical_bias="0.0">
 
-            <!-- Lista de Signos Vitales -->
-            <TextView
-                android:id="@+id/textFrecuenciaCardiaca"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="• Frecuencia Cardíaca - Normal"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+        <ImageView
+            android:id="@+id/iconCalendar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Icono de calendario"
+            android:src="@drawable/ic_calendar" />
 
-            <TextView
-                android:id="@+id/textFrecuenciaRespiratoria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="• Frecuencia Respiratoria - Normal"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/textHistorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Historial"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/textSaturacionOxigeno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="• Saturación Oxígeno - Normal"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/textPresionArterial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="• Presión Arterial - Elevada"
-                android:textColor="#FF0000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/textTemperaturaCorporal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="• Temperatura Corporal - Elevada"
-                android:textColor="#FF0000"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/menuIcon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="350dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="670dp"
+        android:contentDescription="Icono de menú"
+        android:src="@drawable/ic_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/nurseIcon"
@@ -160,7 +163,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

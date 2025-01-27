@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_item_toma_signos"
+        android:title="Toma Signos Vitales" />
+    <item
+        android:id="@+id/menu_item_historial_fecha"
+        android:title="Historial por Fecha" />
+    <item
+        android:id="@+id/menu_item_MenuPrincipal"
+        android:title="Menu Principal" />
+    <item
+        android:id="@+id/menu_item_historial_signos"
+        android:title="Historial Signos" />
+    <item
+        android:id="@+id/menu_item_signos_vitales"
+        android:title="Signos Vitales" />
+
+</menu>

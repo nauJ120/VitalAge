@@ -12,12 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VitalAge"
         tools:targetApi="31">
-        <activity android:name=".HistorialSignosActivity" />
+        <activity android:name=".SignosVitalesActivity" />
         <activity android:name=".TomaSignosActivity" />
-        <activity android:name=".HistorialFechaActivity" />
-        <activity android:name=".SignosVitalesActivity"
+        <activity android:name=".HistorialFechaActivity"/>
+        <activity android:name=".HistorialSignosActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
