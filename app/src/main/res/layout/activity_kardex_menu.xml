@@ -1,0 +1,229 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F9FD"
+    tools:context=".KardexMenuActivity">
+
+    <!-- Encabezado -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_light_blue_300"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Kardex"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/tvUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="Pepe Gonzalez"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- Tarjeta del Residente -->
+    <LinearLayout
+        android:id="@+id/cardResident"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/card_background"
+        android:elevation="4dp"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:layout_below="@id/header">
+
+        <!-- Foto del residente -->
+        <ImageView
+            android:id="@+id/imgResident"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_resident"
+            android:contentDescription="Resident Photo"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:tint="#4A90E2" />
+
+        <!-- Información del residente -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvResidentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Joaquín Gomez"
+                android:textSize="20sp"
+                android:textColor="#333333"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:id="@+id/tvResidentInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: 123456789 • Sexo: Hombre • Edad: 74"
+                android:textSize="14sp"
+                android:textColor="#777777"
+                android:fontFamily="sans-serif-light" />
+        </LinearLayout>
+
+        <!-- Botón de acción -->
+        <ImageView
+            android:id="@+id/btnAddInfo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/note"
+            android:contentDescription="Add Info"
+            app:tint="#4A90E2" />
+    </LinearLayout>
+
+    <!-- Botones de menú -->
+    <LinearLayout
+        android:id="@+id/menuButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/cardResident"
+        android:layout_marginTop="16dp"
+        android:padding="16dp">
+
+
+        <!-- Botón Tarjeta de Medicamentos -->
+        <!-- Botón Inventario de Medicamentos -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnInventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:text="Inventario de medicamentos"
+            app:icon="@drawable/ic_checklist"
+            app:iconSize="24dp"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/md_cyan_400"
+            android:textColor="#333333"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="16dp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
+            android:gravity="center_vertical" />
+
+        <!-- Botón Tarjeta de Medicamentos -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMedCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:text="Tarjeta de medicamentos"
+            app:icon="@drawable/ic_pills"
+            app:iconSize="24dp"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/md_cyan_400"
+            android:textColor="#333333"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="16dp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
+            android:gravity="center_vertical" />
+
+        <!-- Botón Formato Ingreso y Control Médico -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnControl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:text="Formato ingreso y control médico"
+            app:icon="@drawable/ic_medical_form"
+            app:iconSize="24dp"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/md_cyan_400"
+            android:textColor="#333333"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
+            android:gravity="center_vertical" />
+
+
+
+    </LinearLayout>
+
+    <!-- Barra de navegación inferior -->
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:elevation="8dp"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2">
+
+        <!-- Contenedor del Botón de Inicio -->
+        <LinearLayout
+            android:id="@+id/btnHomeContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Home"
+                android:src="@drawable/ic_home"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+
+        <!-- Separador entre los íconos -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#DDDDDD" />
+
+        <!-- Contenedor del Botón de Perfil -->
+        <LinearLayout
+            android:id="@+id/btnProfileContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_profile"
+                android:contentDescription="Profile"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
