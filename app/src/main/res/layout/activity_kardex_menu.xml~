@@ -1,12 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-
     android:background="#F4F9FD"
-    tools:context=".MedicalControlActivity">
+    tools:context=".KardexMenuActivity">
 
     <!-- Encabezado -->
     <LinearLayout
@@ -23,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Formato de Ingreso de Medicamentos"
+            android:text="Kardex"
             android:textColor="#FFFFFF"
             android:textSize="28sp" />
 
@@ -37,8 +36,7 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-
-    <!-- Información del Paciente -->
+    <!-- Tarjeta del Residente -->
     <LinearLayout
         android:id="@+id/cardResident"
         android:layout_width="match_parent"
@@ -97,42 +95,85 @@
             app:tint="#4A90E2" />
     </LinearLayout>
 
-    <!-- Lista de Medicamentos -->
-    <TextView
-        android:id="@+id/tvMedicationList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medicamentos Registrados"
-        android:textSize="18sp"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="#333333"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="18dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMedicalControl"
+    <!-- Botones de menú -->
+    <LinearLayout
+        android:id="@+id/menuButtons"
         android:layout_width="match_parent"
-        android:layout_height="334dp"
-        android:layout_weight="1"
-        android:padding="8dp"
-        tools:listitem="@layout/item_medical_control" />
-
-    <!-- Botón Agregar Medicamento -->
-    <!-- Barra de navegación inferior -->
-
-    <Button
-        android:id="@+id/btnAddMedication"
-        android:layout_width="327dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_below="@id/cardResident"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#4A90E2"
-        android:elevation="4dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Agregar Medicamento"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:padding="16dp">
 
+
+        <!-- Botón Tarjeta de Medicamentos -->
+        <!-- Botón Inventario de Medicamentos -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnInventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:text="Inventario de medicamentos"
+            app:icon="@drawable/ic_inventory"
+            app:iconSize="24dp"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/md_cyan_400"
+            android:textColor="#333333"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="16dp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
+            android:gravity="center_vertical" />
+
+        <!-- Botón Tarjeta de Medicamentos -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMedCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:text="Tarjeta de medicamentos"
+            app:icon="@drawable/ic_pills"
+            app:iconSize="24dp"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/md_cyan_400"
+            android:textColor="#333333"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="16dp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
+            android:gravity="center_vertical" />
+
+        <!-- Botón Formato Ingreso y Control Médico -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnControl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:text="Formato ingreso y control médico"
+            app:icon="@drawable/ic_medical_form"
+            app:iconSize="24dp"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/md_cyan_400"
+            android:textColor="#333333"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
+            android:gravity="center_vertical" />
+
+
+
+    </LinearLayout>
+
+    <!-- Barra de navegación inferior -->
     <LinearLayout
         android:id="@+id/navigationBar"
         android:layout_width="match_parent"
@@ -141,9 +182,10 @@
         android:orientation="horizontal"
         android:elevation="8dp"
         android:layout_alignParentBottom="true"
-        android:weightSum="2">
+        android:gravity="center"
+        android:weightSum="3">
 
-        <!-- Contenedor del Botón de Inicio -->
+        <!-- Botón de Inicio -->
         <LinearLayout
             android:id="@+id/btnHomeContainer"
             android:layout_width="0dp"
@@ -155,18 +197,18 @@
                 android:id="@+id/btnHome"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Home"
                 android:src="@drawable/ic_home"
+                android:contentDescription="Home"
                 app:tint="#4A90E2" />
         </LinearLayout>
 
-        <!-- Separador entre los íconos -->
+        <!-- Espacio entre íconos -->
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#DDDDDD" />
 
-        <!-- Contenedor del Botón de Perfil -->
+        <!-- Botón de Perfil -->
         <LinearLayout
             android:id="@+id/btnProfileContainer"
             android:layout_width="0dp"
@@ -184,4 +226,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
