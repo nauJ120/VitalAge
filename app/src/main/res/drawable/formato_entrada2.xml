@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Fondo gris claro -->
+    <item>
+        <shape>
+            <solid android:color="@color/md_grey_200" />
+            <padding
+                android:left="10dp"
+                android:right="5dp"
+                android:top="5dp" />
+        </shape>
+    </item>
+
+    <!-- Línea azul abajo -->
+    <item
+        android:gravity="bottom|start|end|left|right">
+        <shape>
+            <size android:height="2dp" />
+            <solid android:color="@color/md_blue_500" />
+        </shape>
+    </item>
+
+</layer-list>
