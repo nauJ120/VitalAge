@@ -1,5 +1,6 @@
 package com.example.vitalage
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class HistorialFechaActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signos_vitales_historial_fecha)
@@ -18,15 +20,38 @@ class HistorialFechaActivity : AppCompatActivity() {
         val iconCalendar = findViewById<ImageView>(R.id.iconCalendar)
         val textFecha = findViewById<TextView>(R.id.textFecha)
 
+        // Base de datos simulada (esto debe ser reemplazado con una real en el futuro)
+        val registrosMock = mapOf(
+            "28/01/2025" to true,  // Fecha con registro
+            "29/01/2025" to false  // Fecha sin registro
+        )
+
         // Acciones para el menú desplegable
         menuIcon.setOnClickListener {
             showPopupMenu(menuIcon)
         }
 
-        // Selector de fecha (puedes integrar un DatePickerDialog aquí)
+        // Selector de fecha con verificación en la base de datos simulada
         iconCalendar.setOnClickListener {
             val datePicker = DatePickerFragment { selectedDate ->
                 textFecha.text = selectedDate
+
+                // Verificar si la fecha tiene registros en la base de datos simulada
+                val existeRegistro = registrosMock[selectedDate] ?: false
+
+                if (existeRegistro) {
+                    // Si hay un registro, ir a la pantalla de historial con los detalles
+                    val intent = Intent(this, HistorialSignosActivity::class.java)
+                    intent.putExtra("fechaSeleccionada", selectedDate) // Pasar la fecha
+                    startActivity(intent)
+                } else {
+                    // Si no hay registro, mostrar un mensaje de alerta
+                    AlertDialog.Builder(this)
+                        .setTitle("Sin registros")
+                        .setMessage("No se encontraron registros para la fecha seleccionada.")
+                        .setPositiveButton("Aceptar", null)
+                        .show()
+                }
             }
             datePicker.show(supportFragmentManager, "datePicker")
         }

@@ -8,14 +8,7 @@
     android:padding="16dp"
     tools:context=".HistorialFechaActivity">
     <!-- Barra superior con color -->
-    <View
-        android:id="@+id/barraTitulo"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@color/light_blue_500"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Título Principal -->
 
     <!-- Información del Usuario -->
@@ -25,9 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Historial signos vitales"
-        android:textColor="@color/white"
-        android:textSize="30dp"
+        android:text="@string/historial_signos_vitales"
+        android:textColor="@color/black"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -57,52 +50,41 @@
         android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:contentDescription="Icono de menú"
+        android:contentDescription="@string/men"
         android:src="@drawable/ic_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <!-- Selector de Fecha -->
+
+    <!-- Contenedor de selección de fecha -->
 
     <TextView
-        android:id="@+id/labelFecha"
+        android:id="@+id/textSeleccionarFecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="196dp"
-        android:text="Seleccione la fecha"
-        android:textColor="#000000"
-        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="236dp"
+        android:text="@string/seleccione_la_fecha"
+        android:textColor="@color/black"
+        android:textSize="23sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/informacionUsuario" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/fechaContainer"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="32dp"
-        android:orientation="horizontal"
-        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labelFecha">
+        app:layout_constraintTop_toBottomOf="@id/textSeleccionarFecha">
 
-        <TextView
-            android:id="@+id/textFecha"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="mm/dd/yyyy"
-            android:textColorHint="@color/black"
-            android:textSize="20sp" />
+    </androidx.cardview.widget.CardView>
 
-        <ImageView
-            android:id="@+id/iconCalendar"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="Icono de calendario"
-            android:src="@drawable/ic_calendar" />
-
-    </LinearLayout>
 
     <ImageView
         android:id="@+id/nurseIcon"
@@ -110,9 +92,36 @@
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
-        android:contentDescription="Icono de enfermera"
+        android:contentDescription="@string/icono_de_enfermera"
         android:src="@drawable/ic_nurse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="292dp"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textFecha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/mm_dd_yyyy"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:id="@+id/iconCalendar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/calendario"
+            android:src="@drawable/ic_calendar" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

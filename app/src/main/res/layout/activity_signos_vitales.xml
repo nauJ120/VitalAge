@@ -36,9 +36,9 @@
         android:layout_marginTop="14dp"
         android:layout_marginEnd="104dp"
         android:layout_marginBottom="670dp"
-        android:text="Signos vitales"
+        android:text="@string/signos_vitales"
         android:textColor="@color/white"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,14 +88,14 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="8dp"
-            android:contentDescription="Icono de estetoscopio"
+            android:contentDescription="@string/icono_de_estetoscopio"
             android:src="@drawable/ic_stethoscope" />
 
         <TextView
             android:id="@+id/textTomaSignos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Toma Signos vitales"
+            android:text="@string/toma_signos_vitales"
             android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
@@ -123,14 +123,14 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="8dp"
-            android:contentDescription="Icono de calendario"
+            android:contentDescription="@string/icono_de_calendario"
             android:src="@drawable/ic_calendar" />
 
         <TextView
             android:id="@+id/textHistorial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Historial"
+            android:text="@string/historial"
             android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
@@ -143,7 +143,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="670dp"
-        android:contentDescription="Icono de menú"
+        android:contentDescription="@string/men"
         android:src="@drawable/ic_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -158,7 +158,7 @@
         android:layout_marginTop="74dp"
         android:layout_marginEnd="350dp"
         android:layout_marginBottom="612dp"
-        android:contentDescription="Icono de enfermera"
+        android:contentDescription="@string/icono_de_enfermera"
         android:src="@drawable/ic_nurse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

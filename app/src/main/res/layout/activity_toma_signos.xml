@@ -7,12 +7,9 @@
     android:background="#FFFFFF"
     android:padding="16dp"
     tools:context=".TomaSignosActivity">
-    <!-- Barra superior con color -->
-    <!-- Título Principal -->
 
-    <!-- Información del Usuario -->
 
-    <!-- Menú Desplegable -->
+
 
     <!-- Barra superior con color -->
 
@@ -31,38 +28,28 @@
         android:id="@+id/tituloTomaSignos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="82dp"
-        android:layout_marginBottom="643dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/toma_de_signos_vitales"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:textSize="29sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintBottom_toBottomOf="@id/barraTitulo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.941" />
+        app:layout_constraintTop_toTopOf="@id/barraTitulo" />
+
 
     <TextView
         android:id="@+id/informacionUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="73dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="33dp"
-        android:layout_marginBottom="598dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="16dp"
         android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.882" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/menuIcon"
@@ -228,17 +215,32 @@
             android:text="@string/a_o"
             android:textColor="@android:color/white" />
     </LinearLayout>
+    <!-- Texto para mostrar la fecha seleccionada -->
 
     <!-- Botones Guardar y Cancelar -->
+
+    <TextView
+        android:id="@+id/textFechaSeleccionada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Fecha seleccionada: "
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fechaContainer" />
+
     <LinearLayout
         android:id="@+id/actionButtons"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="56dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fechaContainer">
 

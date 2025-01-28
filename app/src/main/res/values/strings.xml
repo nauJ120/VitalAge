@@ -13,4 +13,12 @@
     <string name="cancelar">Cancelar</string>
     <string name="icono_de_enfermera">Icono de enfermera</string>
     <string name="historial_signos_vitales">Historial Signos Vitales</string>
+    <string name="historial">Historial</string>
+    <string name="icono_de_calendario">Icono de calendario</string>
+    <string name="toma_signos_vitales">Toma Signos vitales</string>
+    <string name="icono_de_estetoscopio">Icono de estetoscopio</string>
+    <string name="signos_vitales">Signos vitales</string>
+    <string name="mm_dd_yyyy">mm/dd/yyyy</string>
+    <string name="seleccione_la_fecha">Seleccione la fecha</string>
+    <string name="calendario">Calendario</string>
 </resources>
