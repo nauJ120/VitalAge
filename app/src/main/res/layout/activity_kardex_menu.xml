@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:minHeight="64dp"
             android:text="Inventario de medicamentos"
-            app:icon="@drawable/ic_inventory"
+            app:icon="@drawable/ic_checklist"
             app:iconSize="24dp"
             app:iconGravity="start"
             app:iconPadding="12dp"
