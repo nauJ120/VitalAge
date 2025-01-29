@@ -13,14 +13,46 @@
         android:theme="@style/Theme.VitalAge"
         tools:targetApi="31">
         <activity
+            android:name=".MedicalControlActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MedicationCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InventoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".KardexMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PatientListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IniciarSesionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegistarseActivityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TipoDocumentoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
+
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".NursingNotesActivity" />
+        <activity android:name=".AddNursingNoteActivity" />
+        <activity android:name=".TomaSignosActivity" />
+        <activity android:name=".HistorialFechaActivity"/>
+        <activity android:name=".HistorialSignosActivity" />
     </application>
 
 </manifest>
