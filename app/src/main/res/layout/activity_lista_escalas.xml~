@@ -171,7 +171,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="#F44336"
+                android:backgroundTint="@color/md_red_500"
                 android:text="Reiniciar"
                 android:textColor="@android:color/white"
                 android:padding="12dp" />

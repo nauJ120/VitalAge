@@ -61,5 +61,6 @@
 
     <!-- Indigo -->
     <color name="md_indigo_500">#3F51B5</color>
+    <color name="md_indigo_700">#303F9F</color>
 
 </resources>
