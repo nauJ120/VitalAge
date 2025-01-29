@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="#FFFFFF"
+    android:layout_marginBottom="8dp"
+    android:elevation="4dp"
+    android:gravity="center_vertical">
+
+    <!-- Nombre del Medicamento -->
+    <TextView
+        android:id="@+id/tvMedicationName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Medicamento"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- Cantidad Disponible -->
+    <TextView
+        android:id="@+id/tvMedicationQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10"
+        android:textSize="14sp"
+        android:textColor="#777777"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginEnd="16dp" />
+
+    <!-- Botón Administrar -->
+    <Button
+        android:id="@+id/btnAdminister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Administrar"
+        android:textSize="14sp"
+        android:backgroundTint="#4A90E2"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="12dp"
+        android:fontFamily="sans-serif-medium" />
+</LinearLayout>

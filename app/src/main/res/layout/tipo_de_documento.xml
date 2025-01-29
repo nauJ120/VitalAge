@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:id="@+id/marcoSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@drawable/marco_registrarse"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/textoregistrarse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tipo_de_documento"
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="20.3dp"
+            android:layout_marginStart="50dp"
+            android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/flechitaatras"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="@id/marcoSuperior"
+            app:layout_constraintTop_toTopOf="@id/marcoSuperior"
+            app:layout_constraintEnd_toEndOf="@id/marcoSuperior"
+            android:src="@drawable/baseline_arrow_back_24" />
+    </FrameLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lista"
+        app:layout_constraintTop_toBottomOf="@id/marcoSuperior"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

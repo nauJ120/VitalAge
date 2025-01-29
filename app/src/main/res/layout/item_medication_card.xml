@@ -1,0 +1,84 @@
+<TableRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="#FFFFFF">
+
+    <!-- Nombre del Medicamento -->
+    <TextView
+        android:id="@+id/tvMedicationName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Paracetamol"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#333333" />
+
+    <!-- Dosis -->
+    <TextView
+        android:id="@+id/tvMedicationDose"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="500mg"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#777777" />
+
+    <!-- Vía -->
+    <TextView
+        android:id="@+id/tvMedicationVia"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Oral"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#777777" />
+
+    <!-- Frecuencia -->
+    <TextView
+        android:id="@+id/tvMedicationFrequency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Cada 8 horas"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#777777" />
+
+    <!-- Horario Mañana -->
+    <TextView
+        android:id="@+id/tvMedicationMorning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="8:00 AM"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#777777" />
+
+    <!-- Horario Tarde -->
+    <TextView
+        android:id="@+id/tvMedicationAfternoon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="2:00 PM"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#777777" />
+
+    <!-- Horario Noche -->
+    <TextView
+        android:id="@+id/tvMedicationNight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="10:00 PM"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#777777" />
+</TableRow>
