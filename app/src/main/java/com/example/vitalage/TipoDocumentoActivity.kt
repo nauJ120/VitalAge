@@ -32,6 +32,7 @@ class TipoDocumentoActivity : AppCompatActivity(), AdapterView.OnItemClickListen
             val intent = Intent(this,RegistarseActivityActivity::class.java)
             startActivity(intent)
         }
+
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

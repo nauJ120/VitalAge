@@ -2,6 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_blue_500">#FF03A9F4</color>
+
 
     <!--blue-->
     <color name="md_blue_50">#E3F2FD</color>
@@ -50,6 +52,7 @@
     <color name="md_cyan_A200">#18FFFF</color>
     <color name="md_cyan_A400">#00E5FF</color>
     <color name="md_cyan_A700">#00B8D4</color>
+
 
     <!-- indigo -->
     <color name="md_indigo_50">#E8EAF6</color>
