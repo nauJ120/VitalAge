@@ -27,6 +27,11 @@ class TipoDocumentoActivity : AppCompatActivity(), AdapterView.OnItemClickListen
         listView?.adapter = arrayAdapter
         listView?.choiceMode = ListView.CHOICE_MODE_SINGLE
         listView?.onItemClickListener = this
+
+        binding.flechitaatras.setOnClickListener(){
+            val intent = Intent(this,RegistarseActivityActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
