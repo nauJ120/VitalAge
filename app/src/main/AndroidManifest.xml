@@ -24,7 +24,7 @@
         <activity
             android:name=".KardexMenuActivity"
             android:exported="false" />
-       <activity
+        <activity
             android:name=".PatientListActivity"
             android:exported="false" />
         <activity
@@ -50,7 +50,9 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".NursingNotesActivity" />
         <activity android:name=".AddNursingNoteActivity" />
-
+        <activity android:name=".TomaSignosActivity" />
+        <activity android:name=".HistorialFechaActivity"/>
+        <activity android:name=".HistorialSignosActivity" />
     </application>
 
 </manifest>
