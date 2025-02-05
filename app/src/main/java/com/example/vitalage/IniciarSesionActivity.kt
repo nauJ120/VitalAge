@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.databinding.IniciarSesionBinding
 
 class IniciarSesionActivity : AppCompatActivity() {
+
     private lateinit var binding: IniciarSesionBinding
 
 

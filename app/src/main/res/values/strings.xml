@@ -29,22 +29,32 @@
     <string name="digite_contra">Digite su contraseña</string>
     <string name="no_tienes_cuenta">¿No tienes una cuenta?</string>
     <string name="registrarme">Registrarme</string>
+    
+   
+    <string name="continuar">Continuar</string>
+    <string name="tipo_de_documento">Tipo de documento</string>
+    <string name="escaneo_medi">Escaneo de medicamento</string>
+    <string name="tomar_foto">Tomar foto</string>
+    <string name="descartar">Descartar</string>
+    <string name="atras">Atrás</string>
+    <string name="analizar">Analizar</string>
+
+    
     <string name="menu">Menú</string>
     <string name="user_icon">Ícono de usuario</string>
     <string name="menu_icon">Ícono de menú</string>
     <string name="option_icon">Descripción del icono</string>
     <string name="add_note">Añadir nota</string>
     <string name="back_icon">Ícono de regreso</string>
-    <string name="continuar">Continuar</string>
-    <string name="tipo_de_documento">Tipo de documento</string>
+
     <string-array name="Tipos_de_documentos">
-    <item>CÉDULA DE CIUDADANIA</item>
-    <item>CÉDULA DE EXTRANJERÍA</item>
+        <item>CÉDULA DE CIUDADANIA</item>
+        <item>CÉDULA DE EXTRANJERÍA</item>
         <item>MENOR SIN DOCUMENTO DE IDENTIFACIÓN</item>
         <item>NÚMERO UNICO DE IDENTIFICACIÓN PERSONAL</item>
-    <item>PASAPORTE</item>
-    <item>NIT</item>
-    <item>TARJETA DE IDENTIDAD</item>
+        <item>PASAPORTE</item>
+        <item>NIT</item>
+        <item>TARJETA DE IDENTIDAD</item>
         <item>REGISTRO CIVIL DE NACIMIENTO</item>
         <item>CARNÉ DIPLOMÁTICO</item>
         <item>CERTIFICADO DE NACIDO VIVO</item>
