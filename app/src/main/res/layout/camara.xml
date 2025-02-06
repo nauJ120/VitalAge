@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="@id/marcoSuperior"
             app:layout_constraintTop_toTopOf="@id/marcoSuperior"
             app:layout_constraintEnd_toEndOf="@id/marcoSuperior"
-            android:src="@drawable/hamburguesa" />
+            android:src="@drawable/ic_menu_icon" />
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enfermera"
             android:layout_width="430dp"

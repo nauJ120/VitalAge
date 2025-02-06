@@ -52,15 +52,7 @@
         <activity
             android:name=".PatientListActivity"
             android:exported="false" />
-        <activity
-            android:name=".IniciarSesionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegistarseActivityActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TipoDocumentoActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
 

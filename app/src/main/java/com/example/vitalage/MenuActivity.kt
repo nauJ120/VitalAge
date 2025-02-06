@@ -40,6 +40,13 @@ class MenuActivity : AppCompatActivity() {
                     val intent = Intent(this, NursingNotesActivity::class.java)
                     startActivity(intent)
                 }
+
+
+                "Cámara" -> {
+                    val intent = Intent(this, CamaraActivity::class.java)
+                    startActivity(intent)
+                }
+
                 else -> {
                     // Acciones para otras opciones
                 }
