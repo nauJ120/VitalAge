@@ -27,10 +27,6 @@ class MedicationCardActivity : AppCompatActivity() {
         // Configurar RecyclerView
         setupRecyclerView()
 
-        // Botón para agregar un nuevo medicamento
-        binding.btnAddMedication.setOnClickListener {
-            showAddMedicationDialog()
-        }
     }
 
     private fun setupRecyclerView() {
@@ -39,40 +35,6 @@ class MedicationCardActivity : AppCompatActivity() {
         binding.rvMedications.adapter = medicationAdapter
     }
 
-    private fun showAddMedicationDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_add_medication, null)
-        val dialogBuilder = AlertDialog.Builder(this).setView(dialogView)
-
-        val dialog = dialogBuilder.create()
-        dialog.show()
-
-        // Configurar botones del diálogo (en el diseño del diálogo)
-        dialogView.findViewById<android.widget.Button>(R.id.btnDialogAdd).setOnClickListener {
-            // Obtener datos ingresados por el usuario
-            val name = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationName).text.toString()
-            val dose = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationDose).text.toString()
-            val via = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationVia).text.toString()
-            val frequency = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationFrequency).text.toString()
-            val morning = dialogView.findViewById<android.widget.EditText>(R.id.etMorningTime).text.toString()
-            val afternoon = dialogView.findViewById<android.widget.EditText>(R.id.etAfternoonTime).text.toString()
-            val night = dialogView.findViewById<android.widget.EditText>(R.id.etNightTime).text.toString()
-
-            // Validar que el nombre y dosis no estén vacíos
-            if (name.isNotEmpty() && dose.isNotEmpty()) {
-                val newMedication = MedicationCard(name, dose, via, frequency, morning, afternoon, night)
-                medicationList.add(newMedication)
-                medicationAdapter.notifyItemInserted(medicationList.size - 1)
-                dialog.dismiss()
-                Toast.makeText(this, "Medicamento agregado", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "El nombre y la dosis son obligatorios", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        dialogView.findViewById<android.widget.Button>(R.id.btnDialogCancel).setOnClickListener {
-            dialog.dismiss()
-        }
-    }
 }
 
 data class MedicationCard(
