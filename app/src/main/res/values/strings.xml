@@ -62,5 +62,13 @@
         <item>ADULTO SIN DOCUMENTO DE IDENTIFICACIÓN</item>
         <item>PERMISO ESPECIAL DE PERMANENCIA</item>
         <item>PERMISO POR PROTECCIÓN TEMPORAL</item>
+        <item>CARNÉ DE IDENTIDAD</item>
+        <item>CARNÉ DE AFILIACIÓN A EPS</item>
+        <item>CARNÉ DE MIGRANTE</item>
+        <item>CERTIFICADO DE MOVILIDAD FRONTERIZA</item>
+        <item>PEP RAMV </item>
+        <item>PEP-FF </item>
+        <item>DOCUMENTO NACIONAL DE IDENTIFICACIÓN  </item>
+
     </string-array>
 </resources>
