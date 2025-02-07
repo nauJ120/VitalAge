@@ -29,6 +29,12 @@ class IniciarSesionActivity : AppCompatActivity() {
             val intent = Intent(this, RegistarseActivityActivity::class.java)
             startActivity(intent)
         }
+
+        boton.setOnClickListener{
+            val intent = Intent(this, PatientListActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 }
