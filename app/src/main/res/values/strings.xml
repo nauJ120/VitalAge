@@ -1,4 +1,10 @@
 <resources>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="paciente_nombre">Paciente: Juan Pérez</string>
+    <string name="enfermera_nombre">Enfermera: María Rodríguez</string>
+    <string name="historial_signos_title">Historial de Signos Vitales</string>
+    <string name="inventario_medicamentos_title">Inventario de Medicamentos</string>
+    <string name="agregar_signo_vital">Agregar signo vital</string>
     <string name="app_name">VitalAge</string>
     <string name="a_o">Año</string>
     <string name="toma_de_signos_vitales">Toma de Signos Vitales</string>
