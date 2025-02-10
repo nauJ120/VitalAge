@@ -27,6 +27,8 @@ class RegistarseActivityActivity : AppCompatActivity() {
 
         val checkb = findViewById<CheckBox>(R.id.checkbox)
         val checkbo = findViewById<CheckBox>(R.id.checkbox2)
+        val checkbox3 = findViewById<CheckBox>(R.id.checkbox3)
+
         val editable = findViewById<TextInputEditText>(R.id.tipo_de_doc)
         editable.isFocusable = false
         editable.isFocusableInTouchMode = false
@@ -55,12 +57,21 @@ class RegistarseActivityActivity : AppCompatActivity() {
         checkb.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 checkbo.isChecked = false
+                checkbox3.isChecked = false
             }
         }
 
         checkbo.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 checkb.isChecked = false
+                checkbox3.isChecked = false
+            }
+        }
+
+        checkbox3.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                checkb.isChecked = false
+                checkbo.isChecked = false
             }
         }
     }
