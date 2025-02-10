@@ -1,6 +1,8 @@
 package com.example.vitalage
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,9 +25,13 @@ class MedicalControlActivity : AppCompatActivity() {
             startDate = "01/2023",
             endDate = "02/2023",
             observations = "Ninguna",
-            nurse = "Auxiliar: Ana López"
+            nurse = "Auxiliar: Ana López",
+            morningTime = "08:00 AM",
+            afternoonTime = "02:00 PM",
+            nightTime = "08:00 PM"
         )
     )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,25 +56,47 @@ class MedicalControlActivity : AppCompatActivity() {
     private fun showAddMedicationDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_medical_control, null)
         val dialogBuilder = AlertDialog.Builder(this).setView(dialogView)
-
         val dialog = dialogBuilder.create()
         dialog.show()
 
-        // Configurar botones del diálogo
-        dialogView.findViewById<android.widget.Button>(R.id.btnDialogAdd).setOnClickListener {
-            // Obtener datos ingresados por el usuario
-            val name = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationName).text.toString()
-            val lot = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationLot).text.toString()
-            val invima = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationInvima).text.toString()
-            val quantity = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationQuantity).text.toString().toIntOrNull()
-            val expirationDate = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationExpirationDate).text.toString()
-            val startDate = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationStartDate).text.toString()
-            val endDate = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationEndDate).text.toString()
-            val observations = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationObservations).text.toString()
-            val nurse = dialogView.findViewById<android.widget.EditText>(R.id.etMedicationNurse).text.toString()
+        // Referencias a los campos de texto
+        val etName = dialogView.findViewById<EditText>(R.id.etMedicationName)
+        val etLot = dialogView.findViewById<EditText>(R.id.etMedicationLot)
+        val etInvima = dialogView.findViewById<EditText>(R.id.etMedicationInvima)
+        val etQuantity = dialogView.findViewById<EditText>(R.id.etMedicationQuantity)
+        val etExpirationDate = dialogView.findViewById<EditText>(R.id.etMedicationExpirationDate)
+        val etStartDate = dialogView.findViewById<EditText>(R.id.etMedicationStartDate)
+        val etEndDate = dialogView.findViewById<EditText>(R.id.etMedicationEndDate)
+        val etObservations = dialogView.findViewById<EditText>(R.id.etMedicationObservations)
+        val etNurse = dialogView.findViewById<EditText>(R.id.etMedicationNurse)
+        val etMorningTime = dialogView.findViewById<EditText>(R.id.etMedicationMorningTime)
+        val etAfternoonTime = dialogView.findViewById<EditText>(R.id.etMedicationAfternoonTime)
+        val etNightTime = dialogView.findViewById<EditText>(R.id.etMedicationNightTime)
 
-            // Validar campos obligatorios
-            if (name.isNotEmpty() && lot.isNotEmpty() && invima.isNotEmpty() && quantity != null) {
+        // Botón para agregar el medicamento
+        dialogView.findViewById<Button>(R.id.btnDialogAdd).setOnClickListener {
+            val name = etName.text.toString().trim()
+            val lot = etLot.text.toString().trim()
+            val invima = etInvima.text.toString().trim()
+            val quantity = etQuantity.text.toString().trim().toIntOrNull()
+            val expirationDate = etExpirationDate.text.toString().trim()
+            val startDate = etStartDate.text.toString().trim()
+            val endDate = etEndDate.text.toString().trim()
+            val observations = etObservations.text.toString().trim()
+            val nurse = etNurse.text.toString().trim()
+
+            // Obtener las horas de administración
+            val morningTime = etMorningTime.text.toString().trim()
+            val afternoonTime = etAfternoonTime.text.toString().trim()
+            val nightTime = etNightTime.text.toString().trim()
+
+            // Validación de campos obligatorios
+            if (name.isEmpty() || lot.isEmpty() || invima.isEmpty() || quantity == null ||
+                expirationDate.isEmpty() || startDate.isEmpty() || endDate.isEmpty() || nurse.isEmpty() ||
+                morningTime.isEmpty() || afternoonTime.isEmpty() || nightTime.isEmpty()) {
+
+                Toast.makeText(this, "Por favor completa todos los campos obligatorios", Toast.LENGTH_SHORT).show()
+            } else {
                 val newMedication = MedicalControl(
                     name = name,
                     lot = lot,
@@ -78,21 +106,25 @@ class MedicalControlActivity : AppCompatActivity() {
                     startDate = startDate,
                     endDate = endDate,
                     observations = observations,
-                    nurse = "Auxiliar: $nurse"
+                    nurse = "Auxiliar: $nurse",
+                    morningTime = morningTime,
+                    afternoonTime = afternoonTime,
+                    nightTime = nightTime
                 )
+
                 medicationList.add(newMedication)
                 medicalControlAdapter.notifyItemInserted(medicationList.size - 1)
                 dialog.dismiss()
-                Toast.makeText(this, "Medicamento agregado", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Por favor completa los campos obligatorios", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Medicamento agregado correctamente", Toast.LENGTH_SHORT).show()
             }
         }
 
-        dialogView.findViewById<android.widget.Button>(R.id.btnDialogCancel).setOnClickListener {
+        // Botón para cancelar
+        dialogView.findViewById<Button>(R.id.btnDialogCancel).setOnClickListener {
             dialog.dismiss()
         }
     }
+
 }
 
 data class MedicalControl(
@@ -104,8 +136,12 @@ data class MedicalControl(
     val startDate: String,
     val endDate: String,
     val observations: String,
-    val nurse: String
+    val nurse: String,
+    val morningTime: String,
+    val afternoonTime: String,
+    val nightTime: String
 )
+
 
 class MedicalControlAdapter(private val medications: List<MedicalControl>) :
     androidx.recyclerview.widget.RecyclerView.Adapter<MedicalControlAdapter.MedicalControlViewHolder>() {

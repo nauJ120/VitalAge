@@ -12,111 +12,218 @@
         android:paddingBottom="16dp">
 
         <!-- Nombre del Medicamento -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre del Medicamento"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
         <EditText
             android:id="@+id/etMedicationName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre del Medicamento"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: Paracetamol"
+            android:padding="12dp"
+            android:textSize="14sp"
             android:inputType="text" />
 
         <!-- Lote -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lote"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
         <EditText
             android:id="@+id/etMedicationLot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Lote"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: L12345"
+            android:padding="12dp"
+            android:textSize="14sp"
             android:inputType="text" />
 
         <!-- INVIMA -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="INVIMA"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
         <EditText
             android:id="@+id/etMedicationInvima"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="INVIMA"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: INV1234"
+            android:padding="12dp"
+            android:textSize="14sp"
             android:inputType="text" />
 
         <!-- Cantidad -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cantidad"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
         <EditText
             android:id="@+id/etMedicationQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Cantidad"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: 10"
+            android:padding="12dp"
+            android:textSize="14sp"
             android:inputType="number" />
 
-        <!-- Fecha de Vencimiento -->
-        <EditText
-            android:id="@+id/etMedicationExpirationDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Fecha de Vencimiento (DD/MM/AAAA)"
-            android:inputType="date" />
-
-        <!-- Fecha de Inicio -->
-        <EditText
-            android:id="@+id/etMedicationStartDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Fecha de Inicio (DD/MM/AAAA)"
-            android:inputType="date" />
-
-        <!-- Fecha de Finalización -->
-        <EditText
-            android:id="@+id/etMedicationEndDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Fecha de Finalización (DD/MM/AAAA)"
-            android:inputType="date" />
-
         <!-- Observaciones -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Observaciones"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
         <EditText
             android:id="@+id/etMedicationObservations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Observaciones"
-            android:inputType="textMultiLine"
-            android:lines="3"
-            android:gravity="top|start" />
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: Tomar con Agua"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="number" />
 
-        <!-- Auxiliar de Enfermería -->
+        <!-- Enfermera-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enfermera"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
         <EditText
             android:id="@+id/etMedicationNurse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Auxiliar de Enfermería"
-            android:inputType="text" />
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: Samuel"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="number" />
 
-        <!-- Firma -->
-        <EditText
-            android:id="@+id/etMedicationSignature"
+        <!-- Fechas -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Firma"
-            android:inputType="text" />
+            android:text="Fechas"
+            android:textSize="18sp"
+            android:textColor="#4A90E2"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etMedicationExpirationDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Fecha de Vencimiento (DD/MM/AAAA)"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/etMedicationStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Fecha de Inicio (DD/MM/AAAA)"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/etMedicationEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Fecha de Finalización (DD/MM/AAAA)"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="date" />
+
+        <!-- Horarios -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horario de Administración"
+            android:textSize="18sp"
+            android:textColor="#4A90E2"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etMedicationMorningTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Hora Mañana (Ej: 08:00 AM)"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="time" />
+
+        <EditText
+            android:id="@+id/etMedicationAfternoonTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Hora Tarde (Ej: 02:00 PM)"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="time" />
+
+        <EditText
+            android:id="@+id/etMedicationNightTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Hora Noche (Ej: 08:00 PM)"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="time" />
 
         <!-- Botones -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="16dp">
+            android:gravity="center"
+            android:layout_marginTop="20dp">
 
             <Button
                 android:id="@+id/btnDialogAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
                 android:text="Agregar"
                 android:backgroundTint="#4A90E2"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp" />
 
             <Button
                 android:id="@+id/btnDialogCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
                 android:text="Cancelar"
-                android:layout_marginStart="8dp"
                 android:backgroundTint="#CCCCCC"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
