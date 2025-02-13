@@ -28,7 +28,8 @@ class MedicalControlActivity : AppCompatActivity() {
             nurse = "Auxiliar: Ana López",
             morningTime = "08:00 AM",
             afternoonTime = "02:00 PM",
-            nightTime = "08:00 PM"
+            nightTime = "08:00 PM",
+            dosis = 1
         )
     )
 
@@ -60,6 +61,7 @@ class MedicalControlActivity : AppCompatActivity() {
         dialog.show()
 
         // Referencias a los campos de texto
+        val etDosis = dialogView.findViewById<EditText>(R.id.etMedicationDosis)
         val etName = dialogView.findViewById<EditText>(R.id.etMedicationName)
         val etLot = dialogView.findViewById<EditText>(R.id.etMedicationLot)
         val etInvima = dialogView.findViewById<EditText>(R.id.etMedicationInvima)
@@ -84,6 +86,7 @@ class MedicalControlActivity : AppCompatActivity() {
             val endDate = etEndDate.text.toString().trim()
             val observations = etObservations.text.toString().trim()
             val nurse = etNurse.text.toString().trim()
+            val dosis = etDosis.text.toString().trim().toIntOrNull()
 
             // Obtener las horas de administración
             val morningTime = etMorningTime.text.toString().trim()
@@ -91,7 +94,7 @@ class MedicalControlActivity : AppCompatActivity() {
             val nightTime = etNightTime.text.toString().trim()
 
             // Validación de campos obligatorios
-            if (name.isEmpty() || lot.isEmpty() || invima.isEmpty() || quantity == null ||
+            if (name.isEmpty() || lot.isEmpty() || invima.isEmpty() || quantity == null || dosis == null ||
                 expirationDate.isEmpty() || startDate.isEmpty() || endDate.isEmpty() || nurse.isEmpty() ||
                 morningTime.isEmpty() || afternoonTime.isEmpty() || nightTime.isEmpty()) {
 
@@ -109,7 +112,8 @@ class MedicalControlActivity : AppCompatActivity() {
                     nurse = "Auxiliar: $nurse",
                     morningTime = morningTime,
                     afternoonTime = afternoonTime,
-                    nightTime = nightTime
+                    nightTime = nightTime,
+                    dosis = dosis
                 )
 
                 medicationList.add(newMedication)
@@ -139,7 +143,8 @@ data class MedicalControl(
     val nurse: String,
     val morningTime: String,
     val afternoonTime: String,
-    val nightTime: String
+    val nightTime: String,
+    val dosis: Int
 )
 
 
