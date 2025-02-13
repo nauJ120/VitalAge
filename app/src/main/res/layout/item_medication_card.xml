@@ -27,24 +27,13 @@
         android:fontFamily="sans-serif-light"
         android:textColor="#777777" />
 
-    <!-- Vía -->
+    <!-- Observaciones -->
     <TextView
-        android:id="@+id/tvMedicationVia"
+        android:id="@+id/tvMedicationObservation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Oral"
-        android:textSize="14sp"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#777777" />
-
-    <!-- Frecuencia -->
-    <TextView
-        android:id="@+id/tvMedicationFrequency"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Cada 8 horas"
         android:textSize="14sp"
         android:fontFamily="sans-serif-light"
         android:textColor="#777777" />

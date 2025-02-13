@@ -70,7 +70,7 @@
                 android:id="@+id/tvResidentName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Joaquín Gomez"
+                android:text="Nombre del Paciente"
                 android:textSize="20sp"
                 android:textColor="#333333"
                 android:fontFamily="sans-serif-medium" />
@@ -79,10 +79,11 @@
                 android:id="@+id/tvResidentInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID: 123456789 • Sexo: Hombre • Edad: 74"
+                android:text="Información del Paciente"
                 android:textSize="14sp"
                 android:textColor="#777777"
                 android:fontFamily="sans-serif-light" />
+
         </LinearLayout>
 
         <!-- Botón de acción -->
