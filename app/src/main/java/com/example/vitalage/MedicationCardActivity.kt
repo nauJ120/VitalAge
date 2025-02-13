@@ -1,9 +1,15 @@
 package com.example.vitalage
 
+import android.content.Context
+import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitalage.databinding.ActivityMedicationCardBinding
@@ -37,6 +43,9 @@ class MedicationCardActivity : AppCompatActivity() {
 
         // Configurar RecyclerView
         setupRecyclerView()
+
+        binding.rvMedications.addItemDecoration(SpaceItemDecoration(16)) // 16dp de espacio entre elementos
+
 
         // Obtener los medicamentos del paciente desde Firestore
         fetchMedicationsFromFirestore()
@@ -80,6 +89,11 @@ class MedicationCardActivity : AppCompatActivity() {
     }
 }
 
+class SpaceItemDecoration(private val spaceHeight: Int) : RecyclerView.ItemDecoration() {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+        outRect.bottom = spaceHeight // Agrega espacio en la parte inferior de cada ítem
+    }
+}
 
 data class MedicationCard(
     val name: String,
@@ -97,9 +111,7 @@ class MedicationCardAdapter(private val medications: List<MedicationCard>) :
         val tvName: android.widget.TextView = view.findViewById(R.id.tvMedicationName)
         val tvDose: android.widget.TextView = view.findViewById(R.id.tvMedicationDose)
         val tvObservation: android.widget.TextView = view.findViewById(R.id.tvMedicationObservation)
-        val tvMorning: android.widget.TextView = view.findViewById(R.id.tvMedicationMorning)
-        val tvAfternoon: android.widget.TextView = view.findViewById(R.id.tvMedicationAfternoon)
-        val tvNight: android.widget.TextView = view.findViewById(R.id.tvMedicationNight)
+        val tvSchedule: android.widget.TextView = view.findViewById(R.id.tvMedicationSchedule) // 🔥 Nuevo campo
     }
 
     override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): MedicationCardViewHolder {
@@ -113,9 +125,9 @@ class MedicationCardAdapter(private val medications: List<MedicationCard>) :
         holder.tvName.text = medication.name
         holder.tvDose.text = medication.dose
         holder.tvObservation.text = medication.observation
-        holder.tvMorning.text = medication.morning
-        holder.tvAfternoon.text = medication.afternoon
-        holder.tvNight.text = medication.night
+
+        // 🔥 Concatenar horarios en un solo String con separadores "•"
+        holder.tvSchedule.text = "${medication.morning} • ${medication.afternoon} • ${medication.night}"
     }
 
     override fun getItemCount(): Int = medications.size
