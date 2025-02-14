@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitalage.databinding.ActivityMedicationCardBinding
+import com.example.vitalage.model.MedicationCard
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MedicationCardActivity : AppCompatActivity() {
@@ -95,40 +96,6 @@ class SpaceItemDecoration(private val spaceHeight: Int) : RecyclerView.ItemDecor
     }
 }
 
-data class MedicationCard(
-    val name: String,
-    val dose: String,
-    val observation: String,
-    val morning: String,
-    val afternoon: String,
-    val night: String
-)
 
-class MedicationCardAdapter(private val medications: List<MedicationCard>) :
-    RecyclerView.Adapter<MedicationCardAdapter.MedicationCardViewHolder>() {
 
-    class MedicationCardViewHolder(val view: android.view.View) : RecyclerView.ViewHolder(view) {
-        val tvName: android.widget.TextView = view.findViewById(R.id.tvMedicationName)
-        val tvDose: android.widget.TextView = view.findViewById(R.id.tvMedicationDose)
-        val tvObservation: android.widget.TextView = view.findViewById(R.id.tvMedicationObservation)
-        val tvSchedule: android.widget.TextView = view.findViewById(R.id.tvMedicationSchedule) // 🔥 Nuevo campo
-    }
 
-    override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): MedicationCardViewHolder {
-        val view = android.view.LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_medication_card, parent, false)
-        return MedicationCardViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: MedicationCardViewHolder, position: Int) {
-        val medication = medications[position]
-        holder.tvName.text = medication.name
-        holder.tvDose.text = medication.dose
-        holder.tvObservation.text = medication.observation
-
-        // 🔥 Concatenar horarios en un solo String con separadores "•"
-        holder.tvSchedule.text = "${medication.morning} • ${medication.afternoon} • ${medication.night}"
-    }
-
-    override fun getItemCount(): Int = medications.size
-}
