@@ -115,8 +115,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="Ej: Tomar con Agua"
             android:padding="12dp"
-            android:textSize="14sp"
-            android:inputType="number" />
+            android:textSize="14sp" />
 
         <!-- Enfermera-->
         <TextView
@@ -133,8 +132,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="Ej: Samuel"
             android:padding="12dp"
-            android:textSize="14sp"
-            android:inputType="number" />
+            android:textSize="14sp" />
 
         <!-- Fechas -->
         <TextView
@@ -191,8 +189,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="Hora Mañana (Ej: 08:00 AM)"
             android:padding="12dp"
-            android:textSize="14sp"
-            android:inputType="time" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/etMedicationAfternoonTime"
@@ -201,8 +198,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="Hora Tarde (Ej: 02:00 PM)"
             android:padding="12dp"
-            android:textSize="14sp"
-            android:inputType="time" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/etMedicationNightTime"
@@ -211,8 +207,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="Hora Noche (Ej: 08:00 PM)"
             android:padding="12dp"
-            android:textSize="14sp"
-            android:inputType="time" />
+            android:textSize="14sp" />
 
         <!-- Botones -->
         <LinearLayout

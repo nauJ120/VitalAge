@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitalage.databinding.ActivityMedicationCardBinding
 import com.example.vitalage.model.MedicationCard
+import com.example.vitalage.model.SpaceItemDecoration
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MedicationCardActivity : AppCompatActivity() {
@@ -90,11 +91,7 @@ class MedicationCardActivity : AppCompatActivity() {
     }
 }
 
-class SpaceItemDecoration(private val spaceHeight: Int) : RecyclerView.ItemDecoration() {
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        outRect.bottom = spaceHeight // Agrega espacio en la parte inferior de cada ítem
-    }
-}
+
 
 
 
