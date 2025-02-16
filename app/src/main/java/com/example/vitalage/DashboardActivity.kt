@@ -18,6 +18,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 
 @Composable
 fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
@@ -31,7 +35,7 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.VitalAge),
+            painter = painterResource(id = R.drawable.vital1),
             contentDescription = "Logo VitalAge",
             modifier = Modifier.size(150.dp).padding(bottom = 16.dp)
         )

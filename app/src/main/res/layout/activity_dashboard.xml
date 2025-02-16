@@ -34,7 +34,7 @@
                 android:layout_height="150dp"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="@string/app_logo"
-                android:src="@drawable/VitalAge" />
+                android:src="@drawable/vital12" />
 
             <!-- Indicador de Total de Residentes -->
             <androidx.cardview.widget.CardView
@@ -107,6 +107,21 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <!-- Gráficas -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estadísticas Generales"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
         </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -37,7 +37,7 @@ class DashboardViewModel : ViewModel() {
 
             db.collection("signos_vitales").addSnapshotListener { snapshot, _ ->
                 val signos = snapshot?.toObjects(SignoVital::class.java) ?: emptyList()
-                _avgIMC.value = if (signos.isNotEmpty()) signos.map { it.imc?.toDouble() ?: 0.0 }.average() else 0.0
+                _avgIMC.value = if (signos.isNotEmpty()) signos.mapNotNull { it.imc?.toDoubleOrNull() }.average() else 0.0
             }
         }
     }
