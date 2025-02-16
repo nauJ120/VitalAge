@@ -1,6 +1,7 @@
 package com.example.vitalage
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -11,6 +12,11 @@ import com.example.vitalage.databinding.ActivityMedicalControlBinding
 import com.example.vitalage.model.MedicalControl
 import com.example.vitalage.model.MedicationCard
 import com.example.vitalage.model.SpaceItemDecoration
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MedicalControlActivity : AppCompatActivity() {
@@ -22,6 +28,8 @@ class MedicalControlActivity : AppCompatActivity() {
     private lateinit var patientId: String
     private lateinit var patientGender: String
     private var patientAge: Int = 0
+
+    private var usuarioActual: String = "Desconocido"
 
     // Lista inicial de medicamentos (simulada)
     private val medicationList = mutableListOf(
@@ -47,6 +55,11 @@ class MedicalControlActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMedicalControlBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        obtenerNombreUsuario { nombre ->
+            usuarioActual = nombre
+            binding.tvUser.text = "Usuario: $usuarioActual"
+        }
 
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
@@ -94,7 +107,6 @@ class MedicalControlActivity : AppCompatActivity() {
         val etStartDate = dialogView.findViewById<EditText>(R.id.etMedicationStartDate)
         val etEndDate = dialogView.findViewById<EditText>(R.id.etMedicationEndDate)
         val etObservations = dialogView.findViewById<EditText>(R.id.etMedicationObservations)
-        val etNurse = dialogView.findViewById<EditText>(R.id.etMedicationNurse)
         val etMorningTime = dialogView.findViewById<EditText>(R.id.etMedicationMorningTime)
         val etAfternoonTime = dialogView.findViewById<EditText>(R.id.etMedicationAfternoonTime)
         val etNightTime = dialogView.findViewById<EditText>(R.id.etMedicationNightTime)
@@ -109,7 +121,7 @@ class MedicalControlActivity : AppCompatActivity() {
             val startDate = etStartDate.text.toString().trim()
             val endDate = etEndDate.text.toString().trim()
             val observations = etObservations.text.toString().trim()
-            val nurse = etNurse.text.toString().trim()
+            val nurse = usuarioActual
             val dosis = etDosis.text.toString().trim().toIntOrNull()
             val morningTime = etMorningTime.text.toString().trim()
             val afternoonTime = etAfternoonTime.text.toString().trim()
@@ -197,7 +209,7 @@ class MedicalControlActivity : AppCompatActivity() {
                     val startDate = medication["fecha_inicio"] as? String ?: "N/A"
                     val endDate = medication["fecha_fin"] as? String ?: "N/A"
                     val observations = medication["observaciones"] as? String ?: "N/A"
-                    val nurse = medication["enfermero"] as? String ?: "N/A"
+                    val nurse = usuarioActual
                     val dose = (medication["dosis"] as? Long)?.toInt() ?: 0
                     val morningTime = medication["hora_mañana"] as? String ?: "-"
                     val afternoonTime = medication["hora_tarde"] as? String ?: "-"
@@ -230,6 +242,43 @@ class MedicalControlActivity : AppCompatActivity() {
         }.addOnFailureListener { e ->
             Toast.makeText(this, "Error al obtener medicamentos: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun obtenerNombreUsuario(callback: (String) -> Unit) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid == null) {
+            Log.e("Firebase", "No se encontró un usuario autenticado.")
+            callback("Desconocido")
+            return
+        }
+
+        Log.d("Firebase", "UID del usuario autenticado: $uid")
+
+        // 🔥 Corregimos la referencia según la estructura: user -> users -> {UID}
+        val databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(uid)
+
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    // Intentamos obtener el nombre desde ambas posibles claves
+                    val nombreUsuario = snapshot.child("nombre").value as? String
+                        ?: snapshot.child("nombre_usuario").value as? String
+                        ?: "Desconocido"
+
+                    Log.d("Firebase", "Nombre obtenido de la base de datos: $nombreUsuario")
+                    callback(nombreUsuario)
+                } else {
+                    Log.e("Firebase", "No se encontró el usuario en la base de datos.")
+                    callback("Desconocido")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al obtener el nombre: ${error.message}")
+                callback("Desconocido")
+            }
+        })
     }
 
 

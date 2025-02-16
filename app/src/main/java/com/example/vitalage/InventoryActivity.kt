@@ -1,6 +1,7 @@
 package com.example.vitalage
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -9,6 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vitalage.MedicationAdapter
 import com.example.vitalage.databinding.ActivityInventoryBinding
 import com.example.vitalage.model.Medication
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class InventoryActivity : AppCompatActivity() {
@@ -20,10 +27,18 @@ class InventoryActivity : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var patientId: String
 
+    private var usuarioActual: String = "Desconocido"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInventoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Obtener nombre de usuario actual
+        obtenerNombreUsuario { nombre ->
+            usuarioActual = nombre
+            binding.tvUser.text = "Usuario: $usuarioActual"
+        }
 
         // Obtener datos del Intent
         val patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
@@ -34,6 +49,7 @@ class InventoryActivity : AppCompatActivity() {
         // Mostrar datos del paciente en la UI
         binding.tvResidentName.text = patientName
         binding.tvResidentInfo.text = "ID: $patientId • Sexo: $patientGender • Edad: $patientAge años"
+
 
         // Inicializar Firestore
         firestore = FirebaseFirestore.getInstance()
@@ -114,65 +130,138 @@ class InventoryActivity : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_administer_medication, null)
         val etQuantity = dialogView.findViewById<EditText>(R.id.etAdministerQuantity)
 
+
         val dialogBuilder = AlertDialog.Builder(this)
             .setTitle("Administrar ${medication.nombre}")
+            .setMessage("Cantidad disponible: ${medication.cantidad}")
             .setView(dialogView)
             .setPositiveButton("Confirmar") { _, _ ->
                 val administeredQuantity = etQuantity.text.toString().trim().toIntOrNull()
 
-                if (administeredQuantity == null || administeredQuantity <= 0) {
-                    Toast.makeText(this, "Ingrese una cantidad válida", Toast.LENGTH_SHORT).show()
-                } else if (administeredQuantity > medication.cantidad) {
-                    Toast.makeText(this, "No hay suficiente cantidad disponible", Toast.LENGTH_SHORT).show()
-                } else {
-                    updateMedicationQuantity(medication, administeredQuantity)
+                when {
+                    administeredQuantity == null || administeredQuantity <= 0 -> {
+                        Toast.makeText(this, "Ingrese una cantidad válida", Toast.LENGTH_SHORT).show()
+                    }
+                    administeredQuantity > medication.cantidad -> {
+                        Toast.makeText(this, "No hay suficiente cantidad disponible", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+
+                        updateMedicationQuantity(medication, administeredQuantity, usuarioActual)
+                    }
                 }
             }
             .setNegativeButton("Cancelar", null)
 
-        dialogBuilder.create().show()
+        val dialog = dialogBuilder.create()
+        dialog.show()
     }
 
 
-    private fun updateMedicationQuantity(medication: Medication, administeredQuantity: Int) {
+    private fun updateMedicationQuantity(medication: Medication, administeredQuantity: Int, usuario: String) {
         val patientRef = firestore.collection("Pacientes").document(patientId)
 
-        patientRef.get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    // Obtener la lista actual de medicamentos
-                    val medications = document.get("medicamentos") as? MutableList<Map<String, Any>> ?: mutableListOf()
-
-                    // Buscar el medicamento a actualizar
-                    val updatedMedications = medications.map { med ->
+        // Obtener la lista actual de medicamentos
+        patientRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val medicamentos = document.get("medicamentos") as? MutableList<Map<String, Any>>
+                if (medicamentos != null) {
+                    val updatedMedications = medicamentos.map { med ->
                         if (med["nombre"] == medication.nombre) {
+                            // Convertir el mapa a mutable y actualizar la cantidad
                             med.toMutableMap().apply {
-                                val currentQuantity = (this["cantidad"] as? Long)?.toInt() ?: 0
-                                this["cantidad"] = currentQuantity - administeredQuantity
+                                val cantidadActual = (this["cantidad"] as? Long)?.toInt() ?: 0
+                                put("cantidad", cantidadActual - administeredQuantity) // Descontar cantidad administrada
                             }
                         } else {
                             med
                         }
                     }
 
-                    // Actualizar la lista de medicamentos en Firestore
+                    // Guardar la lista actualizada en Firestore
                     patientRef.update("medicamentos", updatedMedications)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Medicamento administrado correctamente", Toast.LENGTH_SHORT).show()
 
                             // Actualizar en la lista local
-                            medicationList.find { it.nombre == medication.nombre }?.cantidad =
-                                (medication.cantidad - administeredQuantity)
-                            medicationAdapter.notifyDataSetChanged()
+                            val medicamentoEncontrado = medicationList.find { it.nombre == medication.nombre }
+                            medicamentoEncontrado?.let {
+                                it.cantidad = (it.cantidad ?: 0) - administeredQuantity
+                                medicationAdapter.notifyDataSetChanged()
+                            }
+
+
+                            // Guardar en el historial de administración de dosis
+                            saveDoseHistory(medication, administeredQuantity, usuario)
                         }
                         .addOnFailureListener { e ->
                             Toast.makeText(this, "Error al actualizar cantidad: ${e.message}", Toast.LENGTH_SHORT).show()
                         }
                 }
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al obtener datos del paciente: ${e.message}", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener { e ->
+            Toast.makeText(this, "Error al obtener paciente: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+
+    private fun saveDoseHistory(medication: Medication, administeredQuantity: Int, usuario: String) {
+        val patientRef = firestore.collection("Pacientes").document(patientId)
+
+        val doseRecord = hashMapOf(
+            "medicamento" to medication.nombre,
+            "cantidad" to administeredQuantity,
+            "dosis" to medication.dosis,
+            "fecha_hora" to com.google.firebase.Timestamp.now(),
+            "usuario" to usuario,
+            "observaciones" to "Dosis administrada correctamente"
+        )
+
+        patientRef.update("historial_dosis", FieldValue.arrayUnion(doseRecord))
+            .addOnSuccessListener {
+                Toast.makeText(this, "Historial actualizado", Toast.LENGTH_SHORT).show()
             }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al actualizar historial: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun obtenerNombreUsuario(callback: (String) -> Unit) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid == null) {
+            Log.e("Firebase", "No se encontró un usuario autenticado.")
+            callback("Desconocido")
+            return
+        }
+
+        Log.d("Firebase", "UID del usuario autenticado: $uid")
+
+        // 🔥 Corregimos la referencia según la estructura: user -> users -> {UID}
+        val databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(uid)
+
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    // Intentamos obtener el nombre desde ambas posibles claves
+                    val nombreUsuario = snapshot.child("nombre").value as? String
+                        ?: snapshot.child("nombre_usuario").value as? String
+                        ?: "Desconocido"
+
+                    Log.d("Firebase", "Nombre obtenido de la base de datos: $nombreUsuario")
+                    callback(nombreUsuario)
+                } else {
+                    Log.e("Firebase", "No se encontró el usuario en la base de datos.")
+                    callback("Desconocido")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al obtener el nombre: ${error.message}")
+                callback("Desconocido")
+            }
+        })
     }
 
 
