@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.cardview)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -107,7 +107,7 @@
                 app:endIconMode="clear_text" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/contraseña"
+                android:id="@+id/contrasenia"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
@@ -122,7 +122,7 @@
                 app:circularflow_radiusInDP="10dp"
                 app:endIconMode="clear_text" />
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/contraseña2"
+                android:id="@+id/contrasenia2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
@@ -182,3 +182,4 @@
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
