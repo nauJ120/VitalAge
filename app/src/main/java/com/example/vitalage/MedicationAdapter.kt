@@ -36,8 +36,8 @@ class MedicationAdapter(
     override fun getItemCount(): Int = medications.size
 
     fun updateData(newList: List<Medication>) {
-        medications.clear() // 🔥 Limpiar la lista actual
-        medications.addAll(newList) // 🔥 Agregar los nuevos elementos
-        notifyDataSetChanged() // 🔥 Notificar el cambio en la UI
+        medications = newList.toMutableList() // 🔥 Crear una nueva lista mutable
+        notifyDataSetChanged()
     }
+
 }

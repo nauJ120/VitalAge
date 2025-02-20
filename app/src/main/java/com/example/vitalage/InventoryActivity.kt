@@ -59,6 +59,15 @@ class InventoryActivity : AppCompatActivity() {
 
         // Cargar medicamentos desde Firestore
         fetchMedicationsFromFirestore()
+
+        binding.btnApplyFilter.setOnClickListener {
+            val query = binding.etSearchMedication.text.toString().trim()
+            applyFilter(query)
+        }
+
+        binding.btnResetFilter.setOnClickListener {
+            resetFilter()
+        }
     }
 
     private fun setupRecyclerView() {
