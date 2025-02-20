@@ -1,8 +1,10 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +52,13 @@ class InventoryActivity : AppCompatActivity() {
         binding.tvResidentName.text = patientName
         binding.tvResidentInfo.text = "ID: $patientId • Sexo: $patientGender • Edad: $patientAge años"
 
+
+        val btnHomeContainer = findViewById<LinearLayout>(R.id.btnHomeContainer)
+
+        btnHomeContainer.setOnClickListener {
+            val intent = Intent(this, PatientListActivity::class.java) // Reemplaza "NuevaActividad" con el nombre de tu actividad destino
+            startActivity(intent)
+        }
 
         // Inicializar Firestore
         firestore = FirebaseFirestore.getInstance()

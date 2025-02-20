@@ -1,9 +1,11 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -83,6 +85,13 @@ class MedicalControlActivity : AppCompatActivity() {
 
         // Obtener los medicamentos del paciente desde Firestore
         fetchMedicationsFromFirestore()
+
+        val btnHomeContainer = findViewById<LinearLayout>(R.id.btnHomeContainer)
+
+        btnHomeContainer.setOnClickListener {
+            val intent = Intent(this, PatientListActivity::class.java) // Reemplaza "NuevaActividad" con el nombre de tu actividad destino
+            startActivity(intent)
+        }
     }
 
     private fun setupRecyclerView() {

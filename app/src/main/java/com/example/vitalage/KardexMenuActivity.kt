@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.vitalage.databinding.ActivityKardexMenuBinding
@@ -53,6 +54,13 @@ class KardexMenuActivity : AppCompatActivity() {
         val btnMedCard = findViewById<Button>(R.id.btnMedCard)
         val btnControl = findViewById<Button>(R.id.btnControl)
         val btnHistory = findViewById<Button>(R.id.btnDoseHistory)
+
+        val btnHomeContainer = findViewById<LinearLayout>(R.id.btnHomeContainer)
+
+        btnHomeContainer.setOnClickListener {
+            val intent = Intent(this, PatientListActivity::class.java) // Reemplaza "NuevaActividad" con el nombre de tu actividad destino
+            startActivity(intent)
+        }
 
         btnInventory.setOnClickListener {
             val intent = Intent(this, InventoryActivity::class.java)

@@ -1,7 +1,9 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +50,13 @@ class DoseHistoryActivity : AppCompatActivity() {
 
         // Obtener el historial de dosis
         fetchDoseHistoryFromFirestore()
+
+        val btnHomeContainer = findViewById<LinearLayout>(R.id.btnHomeContainer)
+
+        btnHomeContainer.setOnClickListener {
+            val intent = Intent(this, PatientListActivity::class.java) // Reemplaza "NuevaActividad" con el nombre de tu actividad destino
+            startActivity(intent)
+        }
 
 
     }
