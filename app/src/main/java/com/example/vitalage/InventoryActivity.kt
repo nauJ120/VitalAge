@@ -59,6 +59,15 @@ class InventoryActivity : AppCompatActivity() {
 
         // Cargar medicamentos desde Firestore
         fetchMedicationsFromFirestore()
+
+        binding.btnApplyFilter.setOnClickListener {
+            val query = binding.etSearchMedication.text.toString().trim()
+            applyFilter(query)
+        }
+
+        binding.btnResetFilter.setOnClickListener {
+            resetFilter()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -263,6 +272,21 @@ class InventoryActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun applyFilter(query: String) {
+        if (query.isNotEmpty()) {
+            val filteredList = medicationList.filter { it.nombre.contains(query, ignoreCase = true) }
+            medicationAdapter.updateData(filteredList)
+        } else {
+            Toast.makeText(this, "Ingrese un nombre para filtrar", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun resetFilter() {
+        binding.etSearchMedication.text.clear()
+        medicationAdapter.updateData(medicationList)
+    }
+
 
 
 }
