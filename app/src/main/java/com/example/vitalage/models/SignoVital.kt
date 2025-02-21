@@ -7,5 +7,6 @@ data class SignoVital(
     val presionArterial: String = "",
     val frecuenciaCardiaca: Int = 0,
     val temperatura: Float = 0.0f,
-    val oxigenacion: Int = 0
+    val oxigenacion: Int = 0,
+    val imc: Float =0.0f,
 )

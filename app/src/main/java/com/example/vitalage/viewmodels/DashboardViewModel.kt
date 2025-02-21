@@ -26,18 +26,24 @@ class DashboardViewModel : ViewModel() {
 
     private fun fetchDashboardData() {
         viewModelScope.launch {
+            // Obtener el número total de residentes
             db.collection("residentes").addSnapshotListener { snapshot, _ ->
                 _totalResidents.value = snapshot?.size() ?: 0
             }
 
-            db.collection("medicamentos").whereEqualTo("estado", "pendiente")
+            // Obtener el número de alertas pendientes
+            db.collection("medicamentos")
+                .whereEqualTo("estado", "pendiente")
                 .addSnapshotListener { snapshot, _ ->
                     _pendingAlerts.value = snapshot?.size() ?: 0
                 }
 
+            // Calcular el promedio de IMC
             db.collection("signos_vitales").addSnapshotListener { snapshot, _ ->
                 val signos = snapshot?.toObjects(SignoVital::class.java) ?: emptyList()
-                _avgIMC.value = if (signos.isNotEmpty()) signos.mapNotNull { it.imc?.toDoubleOrNull() }.average() else 0.0
+                val imcValues = signos.map { it.imc.toDouble() } // Convertimos Float a Double
+
+                _avgIMC.value = if (imcValues.isNotEmpty()) imcValues.average() else 0.0
             }
         }
     }
