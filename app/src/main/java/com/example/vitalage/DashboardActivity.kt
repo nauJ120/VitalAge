@@ -9,19 +9,18 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.vitalage.R
 import com.example.vitalage.viewmodels.DashboardViewModel
-import com.google.firebase.firestore.FirebaseFirestore
-import androidx.compose.foundation.Canvas
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import androidx.compose.ui.viewinterop.AndroidView
+import android.graphics.Color
 
 @Composable
 fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
@@ -30,7 +29,9 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
     val avgIMC by viewModel.avgIMC.collectAsState()
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -62,12 +63,55 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
 
         Text(text = "Estadísticas Generales", style = MaterialTheme.typography.h6)
 
-        Canvas(modifier = Modifier.fillMaxWidth().height(200.dp)) {
-            drawLine(color = Color.Blue, start = Offset(50f, 50f), end = Offset(50f, totalResidents.toFloat() * 10f), strokeWidth = 8f)
-            drawLine(color = Color.Red, start = Offset(150f, 50f), end = Offset(150f, pendingAlerts.toFloat() * 10f), strokeWidth = 8f)
-            drawLine(color = Color.Green, start = Offset(250f, 50f), end = Offset(250f, avgIMC.toFloat() * 10f), strokeWidth = 8f)
-        }
+        BarChartView(
+            totalResidents = totalResidents.toFloat(),
+            pendingAlerts = pendingAlerts.toFloat(),
+            avgIMC = avgIMC.toFloat()
+        )
     }
+}
+
+@Composable
+fun BarChartView(totalResidents: Float, pendingAlerts: Float, avgIMC: Float) {
+    val context = LocalContext.current
+
+    AndroidView(factory = { ctx ->
+        BarChart(ctx).apply {
+            description.isEnabled = false
+            setDrawGridBackground(false)
+            setDrawBarShadow(false)
+            setTouchEnabled(true)
+            setScaleEnabled(false)
+            setPinchZoom(false)
+
+            axisLeft.apply {
+                setDrawGridLines(false)
+                axisMinimum = 0f
+            }
+            axisRight.isEnabled = false
+
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(false)
+            }
+
+            legend.isEnabled = false
+        }
+    }, update = { barChart ->
+        val entries = listOf(
+            BarEntry(0f, totalResidents),
+            BarEntry(1f, pendingAlerts),
+            BarEntry(2f, avgIMC)
+        )
+
+        val dataSet = BarDataSet(entries, "Estadísticas").apply {
+            colors = listOf(Color.BLUE, Color.RED, Color.GREEN)
+            valueTextSize = 12f
+        }
+
+        barChart.data = BarData(dataSet)
+        barChart.invalidate() // Refrescar la gráfica
+    })
 }
 
 class DashboardActivity : ComponentActivity() {
