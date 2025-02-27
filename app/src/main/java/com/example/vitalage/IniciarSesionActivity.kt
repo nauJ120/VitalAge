@@ -54,7 +54,7 @@ class IniciarSesionActivity : AppCompatActivity() {
                 .addOnSuccessListener { snapshot ->
                     if (snapshot.exists()) {
                         rol = snapshot.value.toString()
-                        Log.d("Firebase", "El rol del usuario es: $rol")
+                        Toast.makeText(applicationContext, "Tu rol es:$rol", Toast.LENGTH_SHORT).show()
                     } else {
                         Log.d("Firebase", "No se encontró el rol")
                     }
@@ -72,7 +72,6 @@ class IniciarSesionActivity : AppCompatActivity() {
             binding.contraForm.text.toString()
         ).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
-                Toast.makeText(applicationContext, "Tu rol es:$rol", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@IniciarSesionActivity, PatientListActivity::class.java))
                 finish()
             } else {

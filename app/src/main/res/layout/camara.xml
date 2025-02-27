@@ -50,7 +50,7 @@
         android:id="@+id/captura"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="40dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -67,11 +67,14 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="16dp">
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/baseline_camera_alt_24"
-                app:tint="@color/md_blue_500" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="264dp"
+                android:layout_height="264dp"
+                app:lottie_fileName="principal.json"
+                app:lottie_imageAssetsFolder="assets"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_colorFilter="@color/md_blue_500" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -92,7 +95,21 @@
         android:text="@string/tomar_foto"
         android:textColor="@color/white"
         app:iconGravity="textStart"
-        android:layout_marginBottom="130dp"
+        android:layout_marginBottom="185dp"
+        android:background="@drawable/boton3"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonGalery"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:text="@string/tomar_galeria"
+        android:textColor="@color/white"
+        app:iconGravity="textStart"
+        android:layout_marginBottom="120dp"
         android:background="@drawable/boton3"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

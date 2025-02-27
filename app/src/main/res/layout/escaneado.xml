@@ -81,46 +81,10 @@
             android:id="@+id/nombreMedicamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre: Paracetamol"
-            android:textSize="26sp"
-            android:textColor="@color/black" />
-        <TextView
-            android:id="@+id/VencimientoMedicamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Vencimiento: 25/02/2026"
+            android:text=""
             android:textSize="26sp"
             android:textColor="@color/black" />
 
-
-        <TextView
-            android:id="@+id/dosisMedicamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dosis: 500 mg cada 8 horas"
-            android:textSize="26sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="4dp" />
-
-        <!-- Indicaciones -->
-        <TextView
-            android:id="@+id/indicacionesMedicamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Indicaciones: Para el tratamiento de dolores leves y fiebre."
-            android:textSize="26sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="4dp" />
-
-        <!-- Contraindicaciones -->
-        <TextView
-            android:id="@+id/contraindicacionesMedicamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Contraindicaciones: No administrar en caso de insuficiencia hepática."
-            android:textSize="26sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="4dp" />
     </LinearLayout>
     </LinearLayout>
 

@@ -34,7 +34,8 @@
     <string name="continuar">Continuar</string>
     <string name="tipo_de_documento">Tipo de documento</string>
     <string name="escaneo_medi">Escaneo de medicamento</string>
-    <string name="tomar_foto">Tomar foto</string>
+    <string name="tomar_foto">Tomar</string>
+    <string name="tomar_galeria">Escoger de galeria</string>
     <string name="descartar">Descartar</string>
     <string name="atras">Atrás</string>
     <string name="analizar">Analizar</string>
