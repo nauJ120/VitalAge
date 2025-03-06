@@ -95,11 +95,11 @@
         android:text="@string/guardar"
         android:textColor="@color/white"
         app:iconGravity="textStart"
-        android:layout_marginBottom="190dp"
+        android:layout_marginBottom="-60dp"
         android:layout_marginLeft="25dp"
         android:background="@drawable/boton3"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
 
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -110,11 +110,11 @@
         android:text="@string/atras"
         android:textColor="@color/white"
         android:layout_marginLeft="15dp"
+        android:layout_marginBottom="-60dp"
         app:iconGravity="textStart"
-        android:layout_marginBottom="190dp"
         android:background="@drawable/boton4"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintLeft_toRightOf="@id/buttoncancelar"/>
 
 
