@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
@@ -50,7 +51,7 @@
         android:id="@+id/captura"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -67,6 +68,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="16dp">
+
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="264dp"
                 android:layout_height="264dp"
@@ -95,7 +97,7 @@
         android:text="@string/tomar_foto"
         android:textColor="@color/white"
         app:iconGravity="textStart"
-        android:layout_marginBottom="185dp"
+        android:layout_marginBottom="125dp"
         android:background="@drawable/boton3"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -109,11 +111,67 @@
         android:text="@string/tomar_galeria"
         android:textColor="@color/white"
         app:iconGravity="textStart"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="70dp"
         android:background="@drawable/boton3"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Botón de Inicio -->
+        <LinearLayout
+            android:id="@+id/btnHomeContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Home"
+                android:src="@drawable/ic_home"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+
+        <!-- Espacio entre íconos -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#DDDDDD" />
+
+        <!-- Botón de Perfil -->
+        <LinearLayout
+            android:id="@+id/btnProfileContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Profile"
+                android:src="@drawable/ic_profile"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
