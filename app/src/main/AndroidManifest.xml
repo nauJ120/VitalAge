@@ -2,14 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
@@ -24,6 +21,7 @@
         android:theme="@style/Theme.VitalAge"
         tools:targetApi="31">
 
+        <!-- Se mantiene el FileProvider de feature/camara -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.vitalage.fileprovider"
@@ -33,6 +31,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
+
+        <!-- Se mantiene la actividad de DoseHistoryActivity de master -->
+        <activity
+            android:name=".DoseHistoryActivity"
+            android:exported="false" />
 
         <activity
             android:name=".IniciarSesionActivity"
@@ -68,15 +71,11 @@
         <activity
             android:name=".PatientListActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
-
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -84,7 +83,7 @@
         <activity android:name=".NursingNotesActivity" />
         <activity android:name=".AddNursingNoteActivity" />
         <activity android:name=".TomaSignosActivity" />
-        <activity android:name=".HistorialFechaActivity"/>
+        <activity android:name=".HistorialFechaActivity" />
         <activity android:name=".HistorialSignosActivity" />
     </application>
 
