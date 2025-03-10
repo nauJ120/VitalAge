@@ -55,6 +55,15 @@
             android:name=".PatientListActivity"
             android:exported="false" />
         <activity
+            android:name=".ListaEscalasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateScaleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScaleResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

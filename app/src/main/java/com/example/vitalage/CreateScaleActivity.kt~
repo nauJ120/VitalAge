@@ -358,9 +358,6 @@ class CreateScaleActivity : AppCompatActivity() {
         // 🔥 GUARDAR EN FIRESTORE
         val db = FirebaseFirestore.getInstance()
         val patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
-        val patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
-        val patientGender = intent.getStringExtra("patient_gender") ?: "No especificado"
-        val patientAge = intent.getIntExtra("patient_age", 0)
 
         if (patientId == "Sin ID") {
             Toast.makeText(this, "Error: No se pudo obtener el ID del paciente.", Toast.LENGTH_SHORT).show()
@@ -388,10 +385,6 @@ class CreateScaleActivity : AppCompatActivity() {
                     putExtra("score", score)
                     putExtra("encargado", encargado)
                     putExtra("fecha", fecha)
-                    intent.putExtra("patient_name", patientName)
-                    intent.putExtra("patient_id", patientId)
-                    intent.putExtra("patient_gender", patientGender)
-                    intent.putExtra("patient_age", patientAge)
                 }
                 startActivity(intent)
                 finish()

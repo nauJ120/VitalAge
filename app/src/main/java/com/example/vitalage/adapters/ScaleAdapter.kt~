@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.vitalage.R
 import com.example.vitalage.clases.Escala
 
-class ScaleAdapter(private var escalaList: MutableList<Escala>) :
+class ScaleAdapter(private val escalaList: List<Escala>) :
     RecyclerView.Adapter<ScaleAdapter.ScaleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScaleViewHolder {
@@ -23,13 +23,6 @@ class ScaleAdapter(private var escalaList: MutableList<Escala>) :
     }
 
     override fun getItemCount(): Int = escalaList.size
-
-    // 🔥 Método para actualizar la lista de escalas dinámicamente
-    fun updateData(newList: List<Escala>) {
-        escalaList.clear()  // Eliminar los datos antiguos
-        escalaList.addAll(newList)  // Agregar los nuevos datos
-        notifyDataSetChanged()  // Notificar cambios al RecyclerView
-    }
 
     class ScaleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvType: TextView = itemView.findViewById(R.id.tv_scale_type)

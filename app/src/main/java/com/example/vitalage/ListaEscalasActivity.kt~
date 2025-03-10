@@ -256,20 +256,19 @@
                 if (document.exists()) {
                     val scales = document.get("escalas") as? List<Map<String, Any>> ?: emptyList()
 
-                    allEscalas.clear() // 🔥 Limpiar la lista antes de agregar nuevas escalas
+                    allEscalas.clear() // 🔥 Limpiar lista antes de agregar nuevas escalas
 
                     scales.forEach { scale ->
                         val tipo = scale["tipo"] as? String ?: "Desconocido"
                         val fecha = scale["fecha"] as? String ?: "Sin Fecha"
-                        val encargadoNombre = scale["encargado"] as? String ?: "No Asignado"
+                        val encargadoNombre = scale["encargado"] as? String ?: "No Asignado" // ✅ Ahora es el nombre directo
                         val puntaje = (scale["puntaje"] as? Number)?.toInt() ?: 0
 
-                        allEscalas.add(Escala(tipo, fecha, encargadoNombre, puntaje))
+                        allEscalas.add(Escala(tipo, fecha, encargadoNombre, puntaje)) // ✅ Ya no hace falta convertir ID a nombre
                     }
 
-                    // 🔥 En lugar de solo `notifyDataSetChanged()`, actualizamos directamente la RecyclerView
-                    updateRecyclerView(allEscalas)
-
+                    // 🔥 Notificar cambios en la lista directamente
+                    adapter.notifyDataSetChanged()
                 } else {
                     Toast.makeText(this, "No se encontraron escalas para este paciente", Toast.LENGTH_SHORT).show()
                 }
@@ -277,7 +276,6 @@
                 Toast.makeText(this, "Error al obtener escalas: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
-
 
 
 
