@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,13 +19,40 @@
         android:theme="@style/Theme.VitalAge"
         tools:targetApi="31">
         <activity
-            android:name=".ScaleResultActivity"
+            android:name=".DoseHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ListaEscalasActivity"
+            android:name=".IniciarSesionActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateScaleActivity"
+            android:name=".EscaneoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CamaraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FotoCamaraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegistarseActivityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TipoDocumentoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MedicalControlActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MedicationCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InventoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".KardexMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PatientListActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -30,6 +63,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".NursingNotesActivity" />
+        <activity android:name=".AddNursingNoteActivity" />
+        <activity android:name=".TomaSignosActivity" />
+        <activity android:name=".HistorialFechaActivity" />
+        <activity android:name=".HistorialSignosActivity" />
     </application>
 
 </manifest>

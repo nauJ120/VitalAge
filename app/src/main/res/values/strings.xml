@@ -1,5 +1,26 @@
 <resources>
     <string name="app_name">VitalAge</string>
+    <string name="a_o">Año</string>
+    <string name="toma_de_signos_vitales">Toma de Signos Vitales</string>
+    <string name="men">Menú</string>
+    <string name="frecuencia_respiratoria_res_min">Frecuencia Respiratoria (res/min)</string>
+    <string name="saturaci_n_ox_geno">Saturación Oxígeno (%)</string>
+    <string name="presi_n_arterial_mm_hg">Presión Arterial (mm Hg)</string>
+    <string name="temperatura_corporal_c">Temperatura Corporal (°C)</string>
+    <string name="d_a">Día</string>
+    <string name="mes">Mes</string>
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="icono_de_enfermera">Icono de enfermera</string>
+    <string name="historial_signos_vitales">Historial Signos Vitales</string>
+    <string name="historial">Historial</string>
+    <string name="icono_de_calendario">Icono de calendario</string>
+    <string name="toma_signos_vitales">Toma Signos vitales</string>
+    <string name="icono_de_estetoscopio">Icono de estetoscopio</string>
+    <string name="signos_vitales">Signos vitales</string>
+    <string name="mm_dd_yyyy">mm/dd/yyyy</string>
+    <string name="seleccione_la_fecha">Seleccione la fecha</string>
+    <string name="calendario">Calendario</string>
     <string name="background">Background</string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="correo">Correo:</string>
@@ -8,4 +29,46 @@
     <string name="digite_contra">Digite su contraseña</string>
     <string name="no_tienes_cuenta">¿No tienes una cuenta?</string>
     <string name="registrarme">Registrarme</string>
+
+
+    <string name="continuar">Continuar</string>
+    <string name="tipo_de_documento">Tipo de documento</string>
+    <string name="escaneo_medi">Escaneo de medicamento</string>
+    <string name="tomar_foto">Tomar foto</string>
+    <string name="descartar">Descartar</string>
+    <string name="atras">Atrás</string>
+    <string name="analizar">Analizar</string>
+
+
+    <string name="menu">Menú</string>
+    <string name="user_icon">Ícono de usuario</string>
+    <string name="menu_icon">Ícono de menú</string>
+    <string name="option_icon">Descripción del icono</string>
+    <string name="add_note">Añadir nota</string>
+    <string name="back_icon">Ícono de regreso</string>
+
+    <string-array name="Tipos_de_documentos">
+        <item>CÉDULA DE CIUDADANIA</item>
+        <item>CÉDULA DE EXTRANJERÍA</item>
+        <item>MENOR SIN DOCUMENTO DE IDENTIFACIÓN</item>
+        <item>NÚMERO UNICO DE IDENTIFICACIÓN PERSONAL</item>
+        <item>PASAPORTE</item>
+        <item>NIT</item>
+        <item>TARJETA DE IDENTIDAD</item>
+        <item>REGISTRO CIVIL DE NACIMIENTO</item>
+        <item>CARNÉ DIPLOMÁTICO</item>
+        <item>CERTIFICADO DE NACIDO VIVO</item>
+        <item>SALVOCONDUCTO DE PERMANENCIA</item>
+        <item>ADULTO SIN DOCUMENTO DE IDENTIFICACIÓN</item>
+        <item>PERMISO ESPECIAL DE PERMANENCIA</item>
+        <item>PERMISO POR PROTECCIÓN TEMPORAL</item>
+        <item>CARNÉ DE IDENTIDAD</item>
+        <item>CARNÉ DE AFILIACIÓN A EPS</item>
+        <item>CARNÉ DE MIGRANTE</item>
+        <item>CERTIFICADO DE MOVILIDAD FRONTERIZA</item>
+        <item>PEP RAMV </item>
+        <item>PEP-FF </item>
+        <item>DOCUMENTO NACIONAL DE IDENTIFICACIÓN  </item>
+
+    </string-array>
 </resources>

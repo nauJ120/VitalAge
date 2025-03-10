@@ -2,6 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_blue_500">#FF03A9F4</color>
+
 
     <!--blue-->
     <color name="md_blue_50">#E3F2FD</color>
@@ -51,16 +53,30 @@
     <color name="md_cyan_A400">#00E5FF</color>
     <color name="md_cyan_A700">#00B8D4</color>
 
+
     <!-- indigo -->
     <color name="md_indigo_50">#E8EAF6</color>
     <color name="md_indigo_100">#C5CAE9</color>
 
 
     <!-- Gris -->
+    <color name="md_grey_50">#FAFAFA</color>
+    <color name="md_grey_100">#F5F5F5</color>
+    <color name="md_grey_200">#EEEEEE</color>
+    <color name="md_grey_300">#E0E0E0</color>
+    <color name="md_grey_400">#BDBDBD</color>
     <color name="md_grey_500">#9E9E9E</color>
+    <color name="md_grey_600">#757575</color>
+    <color name="md_grey_700">#616161</color>
+    <color name="md_grey_800">#424242</color>
+    <color name="md_grey_900">#212121</color>
 
     <!-- Indigo -->
     <color name="md_indigo_500">#3F51B5</color>
     <color name="md_indigo_700">#303F9F</color>
+
+
+    <color name="md_red_500">#FF0000</color>
+
 
 </resources>

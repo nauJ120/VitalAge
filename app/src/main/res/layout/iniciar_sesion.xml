@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@id/correo" />
 
     <TextView
-        android:id="@+id/contraseña"
+        android:id="@+id/contrasenia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -102,14 +102,14 @@
         android:textColorHint="@color/md_grey_500"
         app:layout_constraintEnd_toEndOf="@id/main_background"
         app:layout_constraintStart_toStartOf="@id/correo"
-        app:layout_constraintTop_toBottomOf="@id/contraseña" />
+        app:layout_constraintTop_toBottomOf="@id/contrasenia" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginHorizontal="50dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="150dp"
         android:text="@string/iniciar_sesion"
         android:background="@drawable/boton1"
         android:textStyle="normal"
