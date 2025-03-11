@@ -44,17 +44,43 @@ class IniciarSesionActivity : AppCompatActivity() {
     }
 
     private fun iniciar_sesion() {
-
         val database = FirebaseDatabase.getInstance().reference
         val userId = FirebaseAuth.getInstance().currentUser?.uid
-        var rol = ""
+
         if (userId != null) {
             database.child("user").child("users").child(userId).child("rol")
                 .get()
                 .addOnSuccessListener { snapshot ->
                     if (snapshot.exists()) {
-                        rol = snapshot.value.toString()
+                        val rol = snapshot.value.toString()
                         Log.d("Firebase", "El rol del usuario es: $rol")
+
+                        // 🔥 Mueve la autenticación dentro del éxito de obtención del rol
+                        auth.signInWithEmailAndPassword(
+                            binding.correoForm.text.toString(),
+                            binding.contraForm.text.toString()
+                        ).addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(applicationContext, "Bienvenido, tu rol es: $rol", Toast.LENGTH_SHORT).show()
+
+                                // 🔥 Redirigir según el rol
+                                val intent = when (rol) {
+                                    "Administrador" -> Intent(this@IniciarSesionActivity, MenuAdminActivity::class.java)
+                                    "Enfermera" -> Intent(this@IniciarSesionActivity, PatientListActivity::class.java)
+                                    else -> {
+                                        Toast.makeText(this, "Rol desconocido", Toast.LENGTH_SHORT).show()
+                                        return@addOnCompleteListener
+                                    }
+                                }
+
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                task.exception?.localizedMessage?.let {
+                                    Toast.makeText(applicationContext, "Fallo de inicio de sesión", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
                     } else {
                         Log.d("Firebase", "No se encontró el rol")
                     }
@@ -65,23 +91,7 @@ class IniciarSesionActivity : AppCompatActivity() {
         } else {
             Log.d("Firebase", "No hay usuario autenticado")
         }
-
-
-        auth.signInWithEmailAndPassword(
-            binding.correoForm.text.toString(),
-            binding.contraForm.text.toString()
-        ).addOnCompleteListener(this) { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(applicationContext, "Tu rol es:$rol", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@IniciarSesionActivity, PatientListActivity::class.java))
-                finish()
-            } else {
-
-                task.exception?.localizedMessage?.let {
-                    Toast.makeText(applicationContext, "Fallo de inicio de sesión", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
+
 
 }

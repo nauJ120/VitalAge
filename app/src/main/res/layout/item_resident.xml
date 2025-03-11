@@ -1,0 +1,79 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:background="@android:color/white"
+    android:layout_marginBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Foto del residente -->
+        <ImageView
+            android:id="@+id/imgResident"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_resident"
+            app:tint="@color/md_blue_500"
+            android:layout_marginEnd="12dp"/>
+
+        <!-- Información del residente -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvResidentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Joaquín Gomez"
+                android:textSize="18sp"
+                android:textColor="#333333"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvResidentInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edad: 74 años"
+                android:textSize="14sp"
+                android:textColor="#777777"/>
+
+            <TextView
+                android:id="@+id/tvResidentId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cedula: 000000000"
+                android:textSize="14sp"
+                android:textColor="#777777"/>
+        </LinearLayout>
+
+        <!-- Botón Editar -->
+        <ImageButton
+            android:id="@+id/btnEditResident"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_edit"
+            android:background="?attr/selectableItemBackground"
+            app:tint="@color/md_blue_500"
+            android:layout_marginEnd="12dp"/>
+
+        <!-- Botón Eliminar -->
+        <ImageButton
+            android:id="@+id/btnDeleteResident"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_delete"
+            android:background="?attr/selectableItemBackground"
+            app:tint="@color/md_red_500"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
