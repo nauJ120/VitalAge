@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Locale
+import com.example.vitalage.databinding.ActivityCreateScaleBinding
 
 
 class CreateScaleActivity : AppCompatActivity() {
@@ -38,6 +39,13 @@ class CreateScaleActivity : AppCompatActivity() {
     private lateinit var questionsContainer: LinearLayout
     private lateinit var btnSave: Button
     private lateinit var btnCancel: Button
+
+    private lateinit var patientName: String
+    private lateinit var patientId: String
+    private lateinit var patientGender: String
+    private var patientAge: Int = 0
+
+    private lateinit var binding: ActivityCreateScaleBinding
 
     private var usuarioActual: String = "Desconocido"
 
@@ -232,6 +240,9 @@ class CreateScaleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_scale)
 
+        binding = ActivityCreateScaleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         // Inicializar vistas
         spinnerScaleType = findViewById(R.id.spinner_scale_type)
         tvEncargado = findViewById(R.id.tv_encargado)
@@ -240,6 +251,13 @@ class CreateScaleActivity : AppCompatActivity() {
         btnSave = findViewById(R.id.btn_save)
         btnCancel = findViewById(R.id.btn_cancel)
 
+        patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
+        patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
+        patientGender = intent.getStringExtra("patient_gender") ?: "No especificado"
+        patientAge = intent.getIntExtra("patient_age", 0)
+
+        binding.tvResidentName.text = patientName
+        binding.tvResidentInfo.text = "ID: $patientId • Sexo: $patientGender • Edad: $patientAge años"
 
         // Obtener fecha actual formateada
         val fechaActual = com.google.firebase.Timestamp.now().toDate()

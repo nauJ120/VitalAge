@@ -16,7 +16,6 @@
     import com.example.vitalage.adapters.ScaleAdapter
     import com.example.vitalage.clases.Escala
     import com.example.vitalage.databinding.ActivityListaEscalasBinding
-    import com.example.vitalage.databinding.ActivityMedicationCardBinding
     import com.example.vitalage.model.SpaceItemDecoration
     import com.google.android.material.chip.Chip
     import com.google.android.material.chip.ChipGroup

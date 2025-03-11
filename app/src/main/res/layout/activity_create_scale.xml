@@ -21,20 +21,19 @@
             android:id="@+id/tvHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Historial de Dosis Administradas"
+            android:text="Crear escala"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold"
             android:gravity="start"/>
 
-        <!-- Información Automática -->
         <TextView
             android:id="@+id/tv_encargado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Encargado: Pepe Gonzalez"
             android:textSize="18sp"
-            android:paddingTop="16dp"
+            android:paddingTop="8dp"
             android:textColor="#FFFFFF" />
 
         <TextView
@@ -43,8 +42,58 @@
             android:layout_height="wrap_content"
             android:text="Fecha: 14/01/2025"
             android:textSize="18sp"
-            android:paddingTop="8dp"
+            android:paddingTop="4dp"
             android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <!-- TARJETA DEL RESIDENTE -->
+    <LinearLayout
+        android:id="@+id/cardResident"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/card_background"
+        android:elevation="4dp"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imgResident"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_resident"
+            android:contentDescription="Resident Photo"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:tint="#4A90E2" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvResidentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Joaquín Gomez"
+                android:textSize="20sp"
+                android:textColor="#333333"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:id="@+id/tvResidentInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: 123456789 • Sexo: Hombre • Edad: 74"
+                android:textSize="14sp"
+                android:textColor="#777777"
+                android:fontFamily="sans-serif-light" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- CONTENIDO CENTRAL -->
@@ -52,8 +101,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintBottom_toTopOf="@id/navigationBar">
+        app:layout_constraintTop_toBottomOf="@id/cardResident"
+        app:layout_constraintBottom_toTopOf="@id/navigationBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,7 +112,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Selección del Tipo de Escala -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,9 +128,6 @@
                 android:spinnerMode="dropdown"
                 android:background="@drawable/spinner_background" />
 
-
-
-            <!-- Divisor -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -88,7 +135,6 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Contenedor de Preguntas -->
             <LinearLayout
                 android:id="@+id/questions_container"
                 android:layout_width="match_parent"
@@ -96,7 +142,6 @@
                 android:orientation="vertical"
                 android:paddingTop="8dp" />
 
-            <!-- Botones -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -147,7 +192,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Botón de Inicio -->
         <LinearLayout
             android:id="@+id/btnHomeContainer"
             android:layout_width="0dp"
@@ -159,18 +203,15 @@
                 android:id="@+id/btnHome"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Home"
                 android:src="@drawable/ic_home"
                 app:tint="#4A90E2"/>
         </LinearLayout>
 
-        <!-- Separador -->
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#DDDDDD"/>
 
-        <!-- Botón de Perfil -->
         <LinearLayout
             android:id="@+id/btnProfileContainer"
             android:layout_width="0dp"
@@ -183,7 +224,6 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/ic_profile"
-                android:contentDescription="Profile"
                 app:tint="#4A90E2"/>
         </LinearLayout>
     </LinearLayout>

@@ -4,30 +4,38 @@
     android:layout_height="match_parent"
     android:background="#F9FAFB">
 
+    <!-- HEADER correctamente alineado sin márgenes -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_light_blue_300"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crear escala"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="start"/>
+    </LinearLayout>
+
     <!-- Contenedor con Scroll y Padding -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/header"
         android:layout_above="@id/navigationBar"
         android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
-
-            <!-- Título -->
-            <TextView
-                android:id="@+id/tv_result_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Resultados de la Escala"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#1E88E5"
-                android:layout_marginBottom="16dp"
-                android:gravity="center" />
+            android:orientation="vertical">
 
             <!-- Información General -->
             <LinearLayout
@@ -118,20 +126,21 @@
                 android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
+                android:backgroundTint="#1E88E5"
+                android:elevation="4dp"
                 android:paddingHorizontal="32dp"
                 android:paddingVertical="12dp"
                 android:text="Volver"
-                android:textSize="16sp"
-                android:backgroundTint="#1E88E5"
                 android:textColor="#FFFFFF"
-                app:cornerRadius="12dp"
-                android:elevation="4dp"
-                android:gravity="center" />
+                android:textSize="16sp"
+                app:cornerRadius="12dp" />
+
         </LinearLayout>
     </ScrollView>
 
-    <!-- Barra de navegación inferior SIN PADDING -->
+    <!-- Barra de navegación inferior FIJA SIN PADDING -->
     <LinearLayout
         android:id="@+id/navigationBar"
         android:layout_width="match_parent"
@@ -196,4 +205,5 @@
                 android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>
