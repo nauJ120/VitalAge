@@ -73,6 +73,16 @@ class MenuActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
+                "Escalas" -> {
+                    // Redirigir a la actividad de "Escalas"
+                    val intent = Intent(this, ListaEscalasActivity::class.java)
+                    intent.putExtra("patient_name", patientName)
+                    intent.putExtra("patient_id", patientId)
+                    intent.putExtra("patient_gender", patientGender)
+                    intent.putExtra("patient_age", patientAge)
+                    startActivity(intent)
+                }
+
                 else -> {
                     // Acciones para otras opciones
                 }
