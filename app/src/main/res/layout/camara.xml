@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/marcoSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/marco_registrarse"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/textoregistrarse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/escaneo_medi"
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="20.3dp"
+            android:layout_marginStart="50dp"
+            android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/hamburguesa"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="@id/marcoSuperior"
+            app:layout_constraintTop_toTopOf="@id/marcoSuperior"
+            app:layout_constraintEnd_toEndOf="@id/marcoSuperior"
+            android:src="@drawable/ic_menu_icon" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enfermera"
+            android:layout_width="430dp"
+            android:layout_height= "40dp"
+            android:layout_marginTop="73dp"
+            android:layout_marginStart="-10dp"
+            android:hint="Pepe Gonzalez"
+            app:layout_constraintStart_toStartOf="@id/marcoSuperior"
+            app:layout_constraintTop_toTopOf="@id/marcoSuperior"
+            app:layout_constraintEnd_toEndOf="@id/marcoSuperior"
+            android:background="@drawable/formato_enfermera"
+            android:drawableStart="@drawable/enfermera" />
+    </FrameLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/captura"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginBottom="100dp"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        app:cardElevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCamera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/baseline_camera_alt_24"
+                app:tint="@color/md_blue_500" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Plantilla para extraer datos de la imagen del medicamento"
+                android:textColor="@color/md_blue_500"
+                android:textSize="29sp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                 />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonCamera"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:text="@string/tomar_foto"
+        android:textColor="@color/white"
+        app:iconGravity="textStart"
+        android:layout_marginBottom="130dp"
+        android:background="@drawable/boton3"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

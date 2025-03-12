@@ -119,18 +119,6 @@
 
     <!-- Botón Agregar Medicamento -->
 
-    <Button
-        android:id="@+id/btnAddMedication"
-        android:layout_width="281dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#4A90E2"
-        android:elevation="4dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Agregar Medicamento"
-        android:textColor="#FFFFFF" />
-
     <LinearLayout
         android:id="@+id/navigationBar"
         android:layout_width="match_parent"

@@ -91,6 +91,23 @@
                 app:endIconMode="clear_text" />
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nombre_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/formato_entrada2"
+                android:hint="Nombre de usuario"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:layout_marginBottom="30dp"
+                android:textColorHint="@color/md_grey_600"
+                app:circularflow_radiusInDP="10dp"
+                android:drawableStart="@drawable/outline_person_24"
+                app:endIconMode="clear_text" />
+
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/correo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -107,7 +124,7 @@
                 app:endIconMode="clear_text" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/contraseña"
+                android:id="@+id/contrasenia"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
@@ -122,7 +139,7 @@
                 app:circularflow_radiusInDP="10dp"
                 app:endIconMode="clear_text" />
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/contraseña2"
+                android:id="@+id/contrasenia2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
@@ -142,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginBottom="30dp"
-                android:drawableLeft="@drawable/baseline_medical_services_24"
+                android:drawableLeft="@drawable/enfermerainiciar"
                 android:paddingHorizontal="10dp"
                 android:text="Enfermera" />
             <CheckBox
@@ -154,16 +171,24 @@
                 android:drawableLeft="@drawable/baseline_engineering_24"
                 android:paddingHorizontal="10dp"
                 android:text="Administrador" />
-            <View
+
+            <CheckBox
+                android:id="@+id/checkbox3"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="30dp"
+                android:drawableLeft="@drawable/medico"
+                android:paddingHorizontal="10dp"
+                android:text="Médico" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="50dp"
-                android:layout_marginBottom="100dp"
+                android:layout_marginBottom="150dp"
                 android:text="@string/continuar"
                 android:background="@drawable/boton3"
                 android:textStyle="normal"
@@ -174,3 +199,4 @@
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
