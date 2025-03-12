@@ -60,7 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingrese el nombre del residente"
-                android:background="@drawable/input_background"
                 android:padding="12dp"/>
 
             <!-- Edad -->
@@ -79,8 +78,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:hint="Ingrese la edad"
-                android:background="@drawable/input_background"
                 android:padding="12dp"/>
+
+
 
             <!-- Género -->
             <TextView
@@ -97,7 +97,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingrese el género"
-                android:background="@drawable/input_background"
+
+                android:padding="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cédula"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:paddingBottom="4dp"
+                android:paddingTop="12dp"/>
+
+            <EditText
+                android:id="@+id/etResidentId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese la cédula"
                 android:padding="12dp"/>
 
             <!-- BOTONES -->
