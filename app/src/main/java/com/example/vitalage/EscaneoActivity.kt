@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.vitalage.databinding.EscaneadoBinding
 
-import com.example.vitalage.databinding.FotoCamaraBinding
+
 
 
 class EscaneoActivity: AppCompatActivity() {
@@ -29,15 +29,27 @@ class EscaneoActivity: AppCompatActivity() {
         val nombre = intent.getStringExtra("nombreMedicamento") ?: "No detectado"
         val cantidad = intent.getStringExtra("cantidad") ?: "No detectado"
         val masa = intent.getStringExtra("masa") ?: "No detectado"
-        val otrosDatos = intent.getStringExtra("otrosDatos") ?: "No detectado"
+        val maxLongitud = 450  // Ajusta el límite según lo necesites
+        val otrosDatos = intent.getStringExtra("otrosDatos")?.let {
+            val datosProcesados = it.replace("\n", ", ").take(maxLongitud)
+            if (it.length > maxLongitud) "$datosProcesados..." else datosProcesados
+        } ?: "No detectado"
 
 
         escaneadoBinding.nombreMedicamento.text = "Nombre: $nombre\nCantidad: $cantidad\nMasa: $masa\nOtros: $otrosDatos"
 
 
+        escaneadoBinding.buttoncancelar.setOnClickListener{
+            val intent = Intent(this, MedicalControlActivity::class.java)
+            intent.putExtra("from_scan", true)  // Enviar bandera de escaneo
+            intent.putExtra("nombre", nombre)
+            intent.putExtra("cantidad", cantidad)
+            intent.putExtra("masa", masa)
+            intent.putExtra("otrosDatos", otrosDatos)
+            startActivity(intent)
+        }
 
-
-        botoncancelar.setOnClickListener{
+        escaneadoBinding.buttonCamera.setOnClickListener{
             val intent = Intent(this, FotoCamaraActivity::class.java)
             startActivity(intent)
         }
