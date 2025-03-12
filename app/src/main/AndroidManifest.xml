@@ -71,6 +71,11 @@
         <activity
             android:name=".PatientListActivity"
             android:exported="false" />
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
         <activity
             android:name=".MainActivity"
             android:exported="true">
