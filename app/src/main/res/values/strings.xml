@@ -44,7 +44,6 @@
     <string name="imc_promedio">IMC Promedio:</string>
     <string name="total_de_residentes">Total de Residentes:</string>
     <string name="app_logo">app_logo</string>
-    <string name="estad_sticas_generales">Estadísticas Generales</string>
     <string-array name="Tipos_de_documentos">
     <item>CÉDULA DE CIUDADANIA</item>
     <item>CÉDULA DE EXTRANJERÍA</item>

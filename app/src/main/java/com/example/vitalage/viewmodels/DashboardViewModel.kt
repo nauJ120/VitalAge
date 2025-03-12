@@ -20,31 +20,30 @@ class DashboardViewModel : ViewModel() {
     private val _avgIMC = MutableStateFlow(0.0)
     val avgIMC = _avgIMC.asStateFlow()
 
-    private val _imcData = MutableStateFlow<List<Float>>(emptyList())
-    val imcData = _imcData.asStateFlow()
-
     init {
         fetchDashboardData()
     }
 
     private fun fetchDashboardData() {
         viewModelScope.launch {
+            // Obtener el número total de residentes
             db.collection("residentes").addSnapshotListener { snapshot, _ ->
                 _totalResidents.value = snapshot?.size() ?: 0
             }
 
+            // Obtener el número de alertas pendientes
             db.collection("medicamentos")
                 .whereEqualTo("estado", "pendiente")
                 .addSnapshotListener { snapshot, _ ->
                     _pendingAlerts.value = snapshot?.size() ?: 0
                 }
 
+            // Calcular el promedio de IMC
             db.collection("signos_vitales").addSnapshotListener { snapshot, _ ->
                 val signos = snapshot?.toObjects(SignoVital::class.java) ?: emptyList()
-                val imcValues = signos.map { it.imc }
+                val imcValues = signos.map { it.imc.toDouble() } // Convertimos Float a Double
 
-                _avgIMC.value = if (imcValues.isNotEmpty()) imcValues.average().toDouble() else 0.0
-                _imcData.value = imcValues // Guardamos los datos para la gráfica
+                _avgIMC.value = if (imcValues.isNotEmpty()) imcValues.average() else 0.0
             }
         }
     }
