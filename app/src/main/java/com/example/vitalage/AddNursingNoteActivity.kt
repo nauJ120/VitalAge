@@ -1,10 +1,12 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -70,6 +72,9 @@ class AddNursingNoteActivity : AppCompatActivity() {
 
         cancelButton.setOnClickListener { finish() }
         findViewById<ImageView>(R.id.iv_back).setOnClickListener { finish() }
+
+        // ✅ Agregar Footer de Navegación
+        setupFooterNavigation()
     }
 
     private fun saveNursingNote(patientId: String, enfermera: String, descripcion: String) {
@@ -129,5 +134,21 @@ class AddNursingNoteActivity : AppCompatActivity() {
                 callback("Desconocido")
             }
         })
+    }
+
+    // ✅ Configurar Footer de Navegación
+    private fun setupFooterNavigation() {
+        val btnHome = findViewById<ImageView>(R.id.btnHome)
+        val btnProfile = findViewById<ImageView>(R.id.btnProfile)
+
+        btnHome.setOnClickListener {
+            val intent = Intent(this, PatientListActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        btnProfile.setOnClickListener {
+            Toast.makeText(this, "Perfil en construcción", Toast.LENGTH_SHORT).show()
+        }
     }
 }
