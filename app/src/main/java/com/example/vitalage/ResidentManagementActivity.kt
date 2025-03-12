@@ -47,7 +47,7 @@ class ResidentManagementActivity : AppCompatActivity() {
         }
 
         findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
-            startActivity(Intent(this, AdminProfileActivity::class.java))
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
     }
 
