@@ -61,7 +61,13 @@ class NursingNotesActivity : AppCompatActivity() {
                     val notes = document.get("notasEnfermeria") as? List<Map<String, Any>> ?: emptyList()
                     nursingNotes.clear()
                     nursingNotes.addAll(notes.map {
-                        "${it["fecha"]} - ${it["enfermera"]}: ${it["descripcion"]}"
+                        val titulo = it["titulo"] as? String ?: "Sin título"
+                        val fecha = it["fecha"] as? String ?: "Fecha desconocida"
+                        val enfermera = it["enfermera"] as? String ?: "Enfermera desconocida"
+                        val descripcion = it["descripcion"] as? String ?: "Sin descripción"
+
+                        // ✅ Mostrar el título correctamente antes de la descripción
+                        "📌 $titulo\n$fecha - $enfermera: $descripcion"
                     })
                     adapter.notifyDataSetChanged()
                 }

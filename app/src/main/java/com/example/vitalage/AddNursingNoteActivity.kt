@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,6 +25,8 @@ class AddNursingNoteActivity : AppCompatActivity() {
     private lateinit var patientId: String
     private lateinit var encargado: String // Nombre del enfermero/a
     private lateinit var saveButton: Button // Botón Guardar
+    private lateinit var titleField: EditText // ✅ Campo de título
+    private lateinit var descriptionField: EditText // ✅ Campo de descripción
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,10 @@ class AddNursingNoteActivity : AppCompatActivity() {
         // Inicializar vistas
         saveButton = findViewById(R.id.btn_save)
         val cancelButton = findViewById<Button>(R.id.btn_cancel)
-        val descriptionField = findViewById<EditText>(R.id.et_description)
+        val backButton = findViewById<ImageView>(R.id.iv_back)
+
+        titleField = findViewById(R.id.et_title) // ✅ Campo de título
+        descriptionField = findViewById(R.id.et_description)
 
         // Deshabilitar el botón Guardar hasta que se obtenga el nombre del usuario
         saveButton.isEnabled = false
@@ -62,25 +66,34 @@ class AddNursingNoteActivity : AppCompatActivity() {
 
         // Acción del botón Guardar
         saveButton.setOnClickListener {
-            val descripcion = descriptionField.text.toString()
-            if (descripcion.isNotBlank()) {
-                saveNursingNote(patientId, encargado, descripcion)
-            } else {
-                Toast.makeText(this, "Por favor ingrese una descripción válida.", Toast.LENGTH_SHORT).show()
+            val titulo = titleField.text.toString().trim()
+            val descripcion = descriptionField.text.toString().trim()
+
+            if (titulo.isBlank()) {
+                Toast.makeText(this, "Por favor ingrese un título válido.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            if (descripcion.isBlank()) {
+                Toast.makeText(this, "Por favor ingrese una descripción válida.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            saveNursingNote(patientId, titulo, encargado, descripcion)
         }
 
         cancelButton.setOnClickListener { finish() }
-        findViewById<ImageView>(R.id.iv_back).setOnClickListener { finish() }
+        backButton.setOnClickListener { finish() }
 
         // ✅ Agregar Footer de Navegación
         setupFooterNavigation()
     }
 
-    private fun saveNursingNote(patientId: String, enfermera: String, descripcion: String) {
+    private fun saveNursingNote(patientId: String, titulo: String, enfermera: String, descripcion: String) {
         val fechaHora = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
 
         val newNote = hashMapOf(
+            "titulo" to titulo, // ✅ Guardar el título en Firestore
             "fecha" to fechaHora,
             "enfermera" to enfermera,
             "descripcion" to descripcion
@@ -98,7 +111,7 @@ class AddNursingNoteActivity : AppCompatActivity() {
             }
     }
 
-    // ✅ Función corregida para obtener el nombre del usuario logueado desde la ruta correcta
+    // ✅ Función para obtener el nombre del usuario logueado desde la base de datos
     private fun obtenerNombreUsuario(callback: (String) -> Unit) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
