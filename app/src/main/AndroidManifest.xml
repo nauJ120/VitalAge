@@ -19,6 +19,9 @@
         android:theme="@style/Theme.VitalAge"
         tools:targetApi="31">
         <activity
+            android:name=".UserFormActivity"
+            android:exported="false" />
+        <activity
             android:name=".ResidentFormActivity"
             android:exported="false" />
         <activity
