@@ -83,6 +83,11 @@ class MedicalControlActivity : AppCompatActivity() {
 
         // Obtener los medicamentos del paciente desde Firestore
         fetchMedicationsFromFirestore()
+
+        val fromScan = intent.getBooleanExtra("from_scan", false)
+        if (fromScan) {
+            showAddMedicationDialog()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -92,6 +97,13 @@ class MedicalControlActivity : AppCompatActivity() {
     }
 
     private fun showAddMedicationDialog() {
+
+        val nombre = intent.getStringExtra("nombre")?.takeIf { it != "No detectado" } ?: ""
+        val cantidad = intent.getStringExtra("cantidad")?.takeIf { it != "No detectado" } ?: ""
+        val masa = intent.getStringExtra("masa")?.takeIf { it != "No detectado" } ?: ""
+        val otrosDatos = intent.getStringExtra("otrosDatos")?.takeIf { it != "No detectado" } ?: ""
+
+
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_medical_control, null)
         val dialogBuilder = AlertDialog.Builder(this).setView(dialogView)
         val dialog = dialogBuilder.create()
@@ -110,6 +122,12 @@ class MedicalControlActivity : AppCompatActivity() {
         val etMorningTime = dialogView.findViewById<EditText>(R.id.etMedicationMorningTime)
         val etAfternoonTime = dialogView.findViewById<EditText>(R.id.etMedicationAfternoonTime)
         val etNightTime = dialogView.findViewById<EditText>(R.id.etMedicationNightTime)
+
+
+        etName.setText(nombre)
+        etQuantity.setText(cantidad.toString())
+        etDosis.setText(masa)
+        etObservations.setText(otrosDatos)
 
         // Botón para agregar el medicamento
         dialogView.findViewById<Button>(R.id.btnDialogAdd).setOnClickListener {
