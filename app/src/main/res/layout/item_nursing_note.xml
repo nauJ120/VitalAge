@@ -8,11 +8,30 @@
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/tv_note"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:textSize="16sp"
-        android:textColor="@android:color/black" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Texto de la nota -->
+        <TextView
+            android:id="@+id/tv_note"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:textColor="@android:color/black" />
+
+        <!-- Botón de eliminar -->
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="Eliminar nota"
+            app:tint="@android:color/holo_red_dark"/>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
