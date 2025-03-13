@@ -69,6 +69,9 @@ class NursingNotesActivity : AppCompatActivity() {
         }
 
         loadNursingNotes(patientId)
+
+        // ✅ Agregar Footer de Navegación
+        setupFooterNavigation()
     }
 
     override fun onResume() {
@@ -113,5 +116,25 @@ class NursingNotesActivity : AppCompatActivity() {
         nursingNotes.clear()
         nursingNotes.addAll(filteredList)
         adapter.updateNotes(nursingNotes)
+    }
+
+    // ✅ Configurar Footer de Navegación
+    private fun setupFooterNavigation() {
+        try {
+            val btnHome = findViewById<ImageView>(R.id.btnHome)
+            val btnProfile = findViewById<ImageView>(R.id.btnProfile)
+
+            btnHome.setOnClickListener {
+                val intent = Intent(this, PatientListActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+            btnProfile.setOnClickListener {
+                Toast.makeText(this, "Perfil en construcción", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Log.e("FooterError", "Error al inicializar el footer: ${e.message}")
+        }
     }
 }
