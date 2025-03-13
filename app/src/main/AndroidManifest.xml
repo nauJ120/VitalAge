@@ -31,9 +31,6 @@
             android:name=".UserManagementActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".ResidentManagementActivity"
             android:exported="false" />
         <activity
@@ -86,6 +83,9 @@
             android:exported="false" />
         <activity
             android:name=".ScaleResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
