@@ -25,6 +25,7 @@ class EscaneoActivity: AppCompatActivity() {
 
         val botoncancelar = findViewById<AppCompatButton>(R.id.buttonCamera)
 
+         //
 
         val nombre = intent.getStringExtra("nombreMedicamento") ?: "No detectado"
         val cantidad = intent.getStringExtra("cantidad") ?: "No detectado"

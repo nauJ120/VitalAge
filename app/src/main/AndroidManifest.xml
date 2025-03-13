@@ -51,9 +51,7 @@
         <activity
             android:name=".UserManagementActivity"
             android:exported="false" />
-        <activity
-            android:name=".AdminProfileActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ResidentManagementActivity"
             android:exported="false" />
@@ -101,11 +99,6 @@
         <activity
             android:name=".PatientListActivity"
             android:exported="false" />
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
         <activity
             android:name=".ListaEscalasActivity"
             android:exported="false" />
