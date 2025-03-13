@@ -2,13 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< Updated upstream
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-=======
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
->>>>>>> Stashed changes
+
 
     <FrameLayout
         android:id="@+id/marcoSuperior"
@@ -94,89 +91,56 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-<<<<<<< Updated upstream
+<LinearLayout
+    android:id="@+id/navigationBar"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="#FFFFFF"
+    android:orientation="horizontal"
+    android:elevation="8dp"
+    android:layout_alignParentBottom="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:weightSum="2"
+    tools:ignore="MissingConstraints">
 
-=======
->>>>>>> Stashed changes
+    <!-- Contenedor del Botón de Inicio -->
     <LinearLayout
-        android:id="@+id/navigationBar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#FFFFFF"
-<<<<<<< Updated upstream
-        android:elevation="8dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:id="@+id/btnHomeContainer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
 
-        <!-- Botón de Inicio -->
-=======
-        android:orientation="horizontal"
-        android:elevation="8dp"
-        android:layout_alignParentBottom="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:weightSum="2"
-        tools:ignore="MissingConstraints">
-
-        <!-- Contenedor del Botón de Inicio -->
->>>>>>> Stashed changes
-        <LinearLayout
-            android:id="@+id/btnHomeContainer"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/btnHome"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="Home"
-                android:src="@drawable/ic_home"
-                app:tint="#4A90E2" />
-        </LinearLayout>
-
-<<<<<<< Updated upstream
-        <!-- Espacio entre íconos -->
-=======
-        <!-- Separador entre los íconos -->
->>>>>>> Stashed changes
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#DDDDDD" />
-
-<<<<<<< Updated upstream
-        <!-- Botón de Perfil -->
-=======
-        <!-- Contenedor del Botón de Perfil -->
->>>>>>> Stashed changes
-        <LinearLayout
-            android:id="@+id/btnProfileContainer"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/btnProfile"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-<<<<<<< Updated upstream
-                android:contentDescription="Profile"
-                android:src="@drawable/ic_profile"
-                app:tint="#4A90E2" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/btnHome"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="Home"
+            android:src="@drawable/ic_home"
+            app:tint="#4A90E2" />
     </LinearLayout>
 
-=======
-                android:src="@drawable/ic_profile"
-                android:contentDescription="Profile"
-                app:tint="#4A90E2" />
-        </LinearLayout>
+    <!-- Separador entre los íconos -->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#DDDDDD" />
+
+    <!-- Contenedor del Botón de Perfil -->
+    <LinearLayout
+        android:id="@+id/btnProfileContainer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/btnProfile"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_profile"
+            android:contentDescription="Profile"
+            app:tint="#4A90E2" />
     </LinearLayout>
->>>>>>> Stashed changes
+</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
