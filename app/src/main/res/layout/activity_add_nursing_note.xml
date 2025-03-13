@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,139 +16,165 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Botón de retroceso -->
-    <ImageView
-        android:id="@+id/iv_back"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_back"
-        android:contentDescription="@string/back_icon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="16dp" />
+        <!-- Botón de retroceso -->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="@string/back_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="16dp" />
 
-    <!-- Título centrado -->
+        <!-- Título centrado -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir Notas"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Campo Título -->
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_title_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir Notas"
-        android:textSize="32sp"
+        android:text="Título:"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_back"
-        app:layout_constraintEnd_toEndOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@id/header_container"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp" />
 
-    <!-- Campo Paciente -->
-<TextView
-android:id="@+id/tv_patient_label"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Paciente:"
-android:textSize="16sp"
-android:textStyle="bold"
-app:layout_constraintTop_toBottomOf="@id/header_container"
-app:layout_constraintStart_toStartOf="parent"
-android:layout_marginTop="16dp"
-android:layout_marginStart="24dp" />
-
-<EditText
-android:id="@+id/et_patient"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:hint="Nombre del paciente"
-app:layout_constraintTop_toBottomOf="@id/tv_patient_label"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-android:layout_marginTop="8dp"
-android:layout_marginStart="24dp"
-android:layout_marginEnd="24dp" />
-
-    <!-- Campo Cita -->
-<TextView
-android:id="@+id/tv_appointment_label"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Cita:"
-android:textSize="16sp"
-android:textStyle="bold"
-app:layout_constraintTop_toBottomOf="@id/et_patient"
-app:layout_constraintStart_toStartOf="parent"
-android:layout_marginTop="24dp"
-android:layout_marginStart="24dp" />
-
-<EditText
-android:id="@+id/et_appointment"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:hint="Tipo de cita"
-app:layout_constraintTop_toBottomOf="@id/tv_appointment_label"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-android:layout_marginTop="8dp"
-android:layout_marginStart="24dp"
-android:layout_marginEnd="24dp" />
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingrese el título"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <!-- Campo Descripción -->
-<TextView
-android:id="@+id/tv_description_label"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Descripción:"
-android:textSize="16sp"
-android:textStyle="bold"
-app:layout_constraintTop_toBottomOf="@id/et_appointment"
-app:layout_constraintStart_toStartOf="parent"
-android:layout_marginTop="24dp"
-android:layout_marginStart="24dp" />
+    <TextView
+        android:id="@+id/tv_description_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/et_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp" />
 
-<EditText
-android:id="@+id/et_description"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:hint="Descripción de la cita"
-android:minHeight="100dp"
-app:layout_constraintTop_toBottomOf="@id/tv_description_label"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-android:layout_marginTop="8dp"
-android:layout_marginStart="24dp"
-android:layout_marginEnd="24dp" />
+    <EditText
+        android:id="@+id/et_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingrese la descripción"
+        android:minHeight="100dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_description_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <!-- Botones Guardar y Cancelar -->
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="horizontal"
-app:layout_constraintTop_toBottomOf="@id/et_description"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-android:layout_marginTop="32dp"
-android:layout_marginStart="24dp"
-android:layout_marginEnd="24dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/et_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp">
 
-<Button
-    android:id="@+id/btn_save"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Guardar"
-    android:backgroundTint="@color/black"
-    android:textColor="@android:color/white" />
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Guardar"
+            android:backgroundTint="@color/black"
+            android:textColor="@android:color/white" />
 
-<Button
-    android:id="@+id/btn_cancel"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="Cancelar"
-    android:backgroundTint="@android:color/white"
-    android:textColor="@color/black"
-    android:layout_marginStart="8dp" />
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancelar"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@color/black"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Footer de Navegación -->
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/btnHomeContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Home"
+                android:src="@drawable/ic_home"
+                app:tint="#4A90E2"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#DDDDDD"/>
+
+        <LinearLayout
+            android:id="@+id/btnProfileContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Profile"
+                android:src="@drawable/ic_profile"
+                app:tint="#4A90E2"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

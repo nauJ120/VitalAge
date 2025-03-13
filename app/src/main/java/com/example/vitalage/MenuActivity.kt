@@ -48,6 +48,10 @@ class MenuActivity : AppCompatActivity() {
                 "Notas de enfermería" -> {
                     // Redirigir a la actividad de "Notas de enfermería"
                     val intent = Intent(this, NursingNotesActivity::class.java)
+                    intent.putExtra("patient_name", patientName)
+                    intent.putExtra("patient_id", patientId)
+                    intent.putExtra("patient_gender", patientGender)
+                    intent.putExtra("patient_age", patientAge)
                     startActivity(intent)
                 }
 
