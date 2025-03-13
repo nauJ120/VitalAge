@@ -259,6 +259,13 @@ class CreateScaleActivity : AppCompatActivity() {
         binding.tvResidentName.text = patientName
         binding.tvResidentInfo.text = "ID: $patientId • Sexo: $patientGender • Edad: $patientAge años"
 
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
+
         // Obtener fecha actual formateada
         val fechaActual = com.google.firebase.Timestamp.now().toDate()
         val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

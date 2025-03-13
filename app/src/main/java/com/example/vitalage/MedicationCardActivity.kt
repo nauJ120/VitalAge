@@ -1,11 +1,13 @@
 package com.example.vitalage
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +47,13 @@ class MedicationCardActivity : AppCompatActivity() {
             usuarioActual = nombre
             binding.tvUser.text = "Usuario: $usuarioActual"
         }
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
         // Recibir datos del Intent
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"

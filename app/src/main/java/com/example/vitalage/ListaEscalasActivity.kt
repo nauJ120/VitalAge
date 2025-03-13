@@ -48,6 +48,8 @@
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
 
+
+
             // 🔥 Inicializar Binding correctamente
             binding = ActivityListaEscalasBinding.inflate(layoutInflater)
             setContentView(binding.root)  // 🔥 Esto es fundamental para usar View Binding
@@ -56,6 +58,13 @@
                 usuarioActual = nombre
                 binding.tvUser.text = "Usuario: $usuarioActual"
             }
+
+            findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+                startActivity(Intent(this, PatientListActivity::class.java))
+            }
+
+            findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+                startActivity(Intent(this, ProfileActivity::class.java))}
 
             // Recibir datos del Intent
             patientName = intent.getStringExtra("patient_name") ?: "Desconocido"

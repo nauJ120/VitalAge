@@ -37,12 +37,11 @@ class KardexMenuActivity : AppCompatActivity() {
         }
 
         findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
-            startActivity(Intent(this, MenuActivity::class.java))
+            startActivity(Intent(this, PatientListActivity::class.java))
         }
 
         findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
-        }
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
