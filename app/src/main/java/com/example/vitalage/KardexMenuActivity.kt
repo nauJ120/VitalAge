@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.vitalage.databinding.ActivityKardexMenuBinding
@@ -33,6 +34,14 @@ class KardexMenuActivity : AppCompatActivity() {
             usuarioActual = nombre
             val tvUser = findViewById<TextView>(R.id.tvUser)
             tvUser.text = "Usuario: $usuarioActual"
+        }
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, MenuActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
 
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
