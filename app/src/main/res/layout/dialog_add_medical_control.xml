@@ -1,0 +1,225 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <!-- Nombre del Medicamento -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre del Medicamento"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
+        <EditText
+            android:id="@+id/etMedicationName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: Paracetamol"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="text" />
+
+        <!-- Lote -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lote"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
+        <EditText
+            android:id="@+id/etMedicationLot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: L12345"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="text" />
+
+        <!-- INVIMA -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="INVIMA"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
+        <EditText
+            android:id="@+id/etMedicationInvima"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: INV1234"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="text" />
+
+        <!-- Cantidad -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cantidad"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
+        <EditText
+            android:id="@+id/etMedicationQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: 10"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="number" />
+        <!-- Dosis -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dosis"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
+        <EditText
+            android:id="@+id/etMedicationDosis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: 100"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="number" />
+
+        <!-- Observaciones -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Observaciones"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginTop="12dp"/>
+        <EditText
+            android:id="@+id/etMedicationObservations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Ej: Tomar con Agua"
+            android:padding="12dp"
+            android:textSize="14sp" />
+
+
+        <!-- Fechas -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fechas"
+            android:textSize="18sp"
+            android:textColor="#4A90E2"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etMedicationExpirationDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Fecha de Vencimiento (DD/MM/AAAA)"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/etMedicationStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Fecha de Inicio (DD/MM/AAAA)"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/etMedicationEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Fecha de Finalización (DD/MM/AAAA)"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="date" />
+
+        <!-- Horarios -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horario de Administración"
+            android:textSize="18sp"
+            android:textColor="#4A90E2"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etMedicationMorningTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Hora Mañana (Ej: 08:00 AM)"
+            android:padding="12dp"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etMedicationAfternoonTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Hora Tarde (Ej: 02:00 PM)"
+            android:padding="12dp"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etMedicationNightTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="Hora Noche (Ej: 08:00 PM)"
+            android:padding="12dp"
+            android:textSize="14sp" />
+
+        <!-- Botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:id="@+id/btnDialogAdd"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Agregar"
+                android:backgroundTint="#4A90E2"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btnDialogCancel"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Cancelar"
+                android:backgroundTint="#CCCCCC"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

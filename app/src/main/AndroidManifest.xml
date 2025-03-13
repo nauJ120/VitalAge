@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,11 +20,63 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VitalAge"
         tools:targetApi="31">
+
+        <!-- Se mantiene el FileProvider de feature/camara -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.vitalage.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
+        <!-- Se mantiene la actividad de DoseHistoryActivity de master -->
         <activity
-            android:name=".PatientListActivity"
+            android:name=".TerapiaFormActivity"
             android:exported="false" />
         <activity
+            android:name=".TerapiasActivity"
+            android:exported="false" />
+             <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResidentFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserManagementActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ResidentManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DoseHistoryActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".IniciarSesionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EscaneoActivity"
+            android:exported="false"
+            android:noHistory="true"/>
+        <activity
+            android:name=".CamaraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FotoCamaraActivity"
             android:exported="false" />
         <activity
             android:name=".RegistarseActivityActivity"
@@ -25,20 +85,43 @@
             android:name=".TipoDocumentoActivity"
             android:exported="false" />
         <activity
+            android:name=".MedicalControlActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MedicationCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InventoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".KardexMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PatientListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListaEscalasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateScaleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScaleResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".NursingNotesActivity" />
         <activity android:name=".AddNursingNoteActivity" />
-
+        <activity android:name=".TomaSignosActivity" />
+        <activity android:name=".HistorialFechaActivity" />
+        <activity android:name=".HistorialSignosActivity" />
     </application>
 
 </manifest>
