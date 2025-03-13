@@ -1,0 +1,178 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9FAFB">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_light_blue_300"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar Terapia"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="start"/>
+    </LinearLayout>
+
+    <!-- Contenedor -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/header"
+        android:layout_above="@id/navigationBar"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Tipo de Terapia -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tipo de Terapia"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="4dp"/>
+
+            <EditText
+                android:id="@+id/spTipoTerapia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"/>
+
+            <!-- Fecha -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de Terapia"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingTop="12dp"
+                android:paddingBottom="4dp"/>
+
+            <EditText
+                android:id="@+id/etFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Seleccionar fecha"
+                android:focusable="false"
+                android:clickable="true"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"/>
+
+            <!-- Realizada -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Terapia realizada?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+
+                <Switch
+                    android:id="@+id/switchRealizada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <!-- Botones -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingTop="24dp">
+
+                <Button
+                    android:id="@+id/btnCancelar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#F44336"
+                    android:text="Cancelar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"/>
+
+                <Button
+                    android:id="@+id/btnGuardar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#03A9F4"
+                    android:text="Guardar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- MENÚ INFERIOR -->
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/btnHomeContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Home"
+                android:src="@drawable/ic_home"
+                app:tint="#4A90E2"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#DDDDDD"/>
+
+        <LinearLayout
+            android:id="@+id/btnProfileContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Profile"
+                android:src="@drawable/ic_profile"
+                app:tint="#4A90E2"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

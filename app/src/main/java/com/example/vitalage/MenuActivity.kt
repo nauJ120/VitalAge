@@ -55,6 +55,15 @@ class MenuActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
+                "Terapias" -> {
+                    // Redirigir a la actividad de "Terapias"
+                    val intent = Intent(this, TerapiasActivity::class.java)
+                    intent.putExtra("patient_name", patientName)
+                    intent.putExtra("patient_id", patientId)
+                    intent.putExtra("patient_gender", patientGender)
+                    intent.putExtra("patient_age", patientAge)
+                    startActivity(intent)
+                }
 
                 "Cámara" -> {
                     val intent = Intent(this, CamaraActivity::class.java)
