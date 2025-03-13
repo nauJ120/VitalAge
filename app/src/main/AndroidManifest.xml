@@ -34,6 +34,36 @@
 
         <!-- Se mantiene la actividad de DoseHistoryActivity de master -->
         <activity
+            android:name=".TerapiaFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TerapiasActivity"
+            android:exported="false" />
+             <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResidentFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResidentManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".DoseHistoryActivity"
             android:exported="false" />
 
@@ -76,6 +106,15 @@
 
 
 >>>>>>> Stashed changes
+        <activity
+            android:name=".ListaEscalasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateScaleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScaleResultActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

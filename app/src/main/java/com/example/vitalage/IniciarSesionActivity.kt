@@ -44,43 +44,64 @@ class IniciarSesionActivity : AppCompatActivity() {
     }
 
     private fun iniciar_sesion() {
+        val email = binding.correoForm.text.toString()
+        val password = binding.contraForm.text.toString()
 
-        val database = FirebaseDatabase.getInstance().reference
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        var rol = ""
-        if (userId != null) {
-            database.child("user").child("users").child(userId).child("rol")
-                .get()
-                .addOnSuccessListener { snapshot ->
-                    if (snapshot.exists()) {
-                        rol = snapshot.value.toString()
-                        Toast.makeText(applicationContext, "Tu rol es:$rol", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Log.d("Firebase", "No se encontró el rol")
-                    }
-                }
-                .addOnFailureListener {
-                    Log.e("Firebase", "Error al obtener el rol", it)
-                }
-        } else {
-            Log.d("Firebase", "No hay usuario autenticado")
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Por favor ingrese correo y contraseña", Toast.LENGTH_SHORT).show()
+            return
         }
 
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        auth.signInWithEmailAndPassword(
-            binding.correoForm.text.toString(),
-            binding.contraForm.text.toString()
-        ).addOnCompleteListener(this) { task ->
-            if (task.isSuccessful) {
-                startActivity(Intent(this@IniciarSesionActivity, PatientListActivity::class.java))
-                finish()
-            } else {
-
-                task.exception?.localizedMessage?.let {
-                    Toast.makeText(applicationContext, "Fallo de inicio de sesión", Toast.LENGTH_SHORT).show()
+                    if (userId != null) {
+                        obtenerRolYRedirigir(userId)
+                    } else {
+                        Toast.makeText(this, "Error al obtener usuario", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "Fallo de inicio de sesión: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
     }
+
+    /**
+     * Obtiene el rol del usuario y lo redirige a la pantalla correspondiente.
+     */
+    private fun obtenerRolYRedirigir(userId: String) {
+        val database = FirebaseDatabase.getInstance().reference
+
+        database.child("user").child("users").child(userId).child("rol")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    val rol = snapshot.value.toString()
+                    Log.d("Firebase", "El rol del usuario es: $rol")
+
+                    val intent = when (rol) {
+                        "Administrador" -> Intent(this, MenuAdminActivity::class.java)
+                        "Enfermera" -> Intent(this, PatientListActivity::class.java)
+                        else -> {
+                            Toast.makeText(this, "Rol desconocido", Toast.LENGTH_SHORT).show()
+                            return@addOnSuccessListener
+                        }
+                    }
+
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "No se encontró el rol del usuario", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firebase", "Error al obtener el rol", e)
+                Toast.makeText(this, "Error al obtener rol", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
 
 }

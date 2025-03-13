@@ -48,9 +48,22 @@ class MenuActivity : AppCompatActivity() {
                 "Notas de enfermería" -> {
                     // Redirigir a la actividad de "Notas de enfermería"
                     val intent = Intent(this, NursingNotesActivity::class.java)
+                    intent.putExtra("patient_name", patientName)
+                    intent.putExtra("patient_id", patientId)
+                    intent.putExtra("patient_gender", patientGender)
+                    intent.putExtra("patient_age", patientAge)
                     startActivity(intent)
                 }
 
+                "Terapias" -> {
+                    // Redirigir a la actividad de "Terapias"
+                    val intent = Intent(this, TerapiasActivity::class.java)
+                    intent.putExtra("patient_name", patientName)
+                    intent.putExtra("patient_id", patientId)
+                    intent.putExtra("patient_gender", patientGender)
+                    intent.putExtra("patient_age", patientAge)
+                    startActivity(intent)
+                }
 
                 "Cámara" -> {
                     val intent = Intent(this, CamaraActivity::class.java)
@@ -66,6 +79,16 @@ class MenuActivity : AppCompatActivity() {
                 "Inventario y Control" -> {
                     // Redirigir a la actividad de "Inventario y Control"
                     val intent = Intent(this, KardexMenuActivity::class.java)
+                    intent.putExtra("patient_name", patientName)
+                    intent.putExtra("patient_id", patientId)
+                    intent.putExtra("patient_gender", patientGender)
+                    intent.putExtra("patient_age", patientAge)
+                    startActivity(intent)
+                }
+
+                "Escalas" -> {
+                    // Redirigir a la actividad de "Escalas"
+                    val intent = Intent(this, ListaEscalasActivity::class.java)
                     intent.putExtra("patient_name", patientName)
                     intent.putExtra("patient_id", patientId)
                     intent.putExtra("patient_gender", patientGender)

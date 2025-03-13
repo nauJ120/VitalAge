@@ -1,0 +1,72 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/item_background">
+
+    <!-- Línea superior: Tipo de Escala y Puntaje -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Tipo de Escala -->
+        <TextView
+            android:id="@+id/tv_scale_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Tipo de Escala"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#222222"
+            android:textStyle="bold" />
+
+        <!-- Puntaje -->
+        <TextView
+            android:id="@+id/tv_scale_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Puntaje: 85"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#444444"
+            android:gravity="end" />
+    </LinearLayout>
+
+    <!-- Línea inferior: Fecha y Encargado -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <!-- Fecha -->
+        <TextView
+            android:id="@+id/tv_scale_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Fecha"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#555555"
+            android:gravity="start" />
+
+        <!-- Encargado -->
+        <TextView
+            android:id="@+id/tv_scale_encargado"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Encargado: Juan Pérez"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#777777"
+            android:gravity="end" />
+    </LinearLayout>
+
+</LinearLayout>
