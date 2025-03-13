@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.databinding.ActivityProfileBinding
@@ -85,8 +86,22 @@ class ProfileActivity : AppCompatActivity() {
                     binding.btnSaveChanges.visibility = View.VISIBLE
                     binding.etPassword.visibility = View.VISIBLE
                     binding.tvPasswordLabel.visibility = View.VISIBLE
+                    findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+                        startActivity(Intent(this, MenuAdminActivity::class.java))
+                    }
+
+                    findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                    }
                 } else {
                     // Si es médico o enfermero, los campos son solo lectura
+                    findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+                        startActivity(Intent(this, PatientListActivity::class.java))
+                    }
+
+                    findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                    }
                     disableFields()
                 }
             }

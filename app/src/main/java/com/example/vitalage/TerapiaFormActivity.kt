@@ -1,8 +1,10 @@
 package com.example.vitalage
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.clases.Terapia
@@ -41,6 +43,13 @@ class TerapiaFormActivity : AppCompatActivity() {
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
         patientGender = intent.getStringExtra("patient_gender") ?: "No especificado"
         patientAge = intent.getIntExtra("patient_age", 0)
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
     }
 
     private fun showDatePicker() {

@@ -1,7 +1,9 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -41,6 +43,12 @@ class ScaleResultActivity : AppCompatActivity() {
         btnBack.setOnClickListener {
             finish()
         }
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
     }
 
     private fun getMessagesForScale(scaleType: String, score: Int): Pair<String, String> {

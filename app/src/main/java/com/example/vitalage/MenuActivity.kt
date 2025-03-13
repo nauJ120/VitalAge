@@ -3,6 +3,7 @@ package com.example.vitalage
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,13 @@ class MenuActivity : AppCompatActivity() {
             MenuOption("Informes", R.drawable.ic_reports),
             MenuOption("Cámara", R.drawable.ic_camera)
         )
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
         // Configurar el RecyclerView
         val recyclerView = findViewById<RecyclerView>(R.id.rv_menu_options)
@@ -101,5 +109,6 @@ class MenuActivity : AppCompatActivity() {
                 }
             }
         }
+
     }
 }

@@ -1,9 +1,11 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.databinding.ActivityUserFormBinding
@@ -44,6 +46,14 @@ class UserFormActivity : AppCompatActivity() {
         // Botón Cancelar
         binding.btnCancel.setOnClickListener {
             finish()  // Cerrar la actividad sin guardar
+        }
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, MenuAdminActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
     }
 
