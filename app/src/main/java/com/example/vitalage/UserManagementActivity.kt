@@ -3,6 +3,7 @@ package com.example.vitalage
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,14 @@ class UserManagementActivity : AppCompatActivity() {
         // Botón para agregar nuevo usuario
         binding.fabAddUser.setOnClickListener {
             startActivity(Intent(this, UserFormActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, MenuAdminActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
     }
 

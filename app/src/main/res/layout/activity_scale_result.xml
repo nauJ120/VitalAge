@@ -17,7 +17,7 @@
             android:id="@+id/tvHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Crear escala"
+            android:text="Resultado de la escala"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold"
