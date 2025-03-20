@@ -1,4 +1,4 @@
-package com.example.vitalage.models
+package com.example.vitalage.model
 
 data class SignoVital(
     val id: String = "",
