@@ -1,0 +1,87 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:background="@android:color/white"
+    android:layout_marginBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Icono del Usuario -->
+        <ImageView
+            android:id="@+id/imgUserIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_user"
+            app:tint="@color/md_blue_500"
+            android:layout_marginEnd="12dp"/>
+
+        <!-- Información del Usuario -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Juan Pérez"
+                android:textSize="18sp"
+                android:textColor="#333333"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="correo@ejemplo.com"
+                android:textSize="14sp"
+                android:textColor="#777777"/>
+
+            <TextView
+                android:id="@+id/tvUserRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rol: Enfermera"
+                android:textSize="14sp"
+                android:textColor="#777777"/>
+
+            <TextView
+                android:id="@+id/tvUserId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cédula: 123456789"
+                android:textSize="14sp"
+                android:textColor="#777777"/>
+        </LinearLayout>
+
+        <!-- Botón Editar -->
+        <ImageButton
+            android:id="@+id/btnEditUser"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_edit"
+            android:background="?attr/selectableItemBackground"
+            app:tint="@color/md_blue_500"
+            android:layout_marginEnd="12dp"/>
+
+        <!-- Botón Eliminar -->
+        <ImageButton
+            android:id="@+id/btnDeleteUser"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_delete"
+            android:background="?attr/selectableItemBackground"
+            app:tint="@color/md_red_500"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

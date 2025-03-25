@@ -51,13 +51,13 @@ class DoseHistoryActivity : AppCompatActivity() {
         // Obtener el historial de dosis
         fetchDoseHistoryFromFirestore()
 
-        val btnHomeContainer = findViewById<LinearLayout>(R.id.btnHomeContainer)
 
-        btnHomeContainer.setOnClickListener {
-            val intent = Intent(this, PatientListActivity::class.java) // Reemplaza "NuevaActividad" con el nombre de tu actividad destino
-            startActivity(intent)
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
         }
 
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
     }
 

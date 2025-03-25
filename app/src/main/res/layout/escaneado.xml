@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
@@ -81,46 +83,10 @@
             android:id="@+id/nombreMedicamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre: Paracetamol"
-            android:textSize="26sp"
-            android:textColor="@color/black" />
-        <TextView
-            android:id="@+id/VencimientoMedicamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Vencimiento: 25/02/2026"
+            android:text=""
             android:textSize="26sp"
             android:textColor="@color/black" />
 
-
-        <TextView
-            android:id="@+id/dosisMedicamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dosis: 500 mg cada 8 horas"
-            android:textSize="26sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="4dp" />
-
-        <!-- Indicaciones -->
-        <TextView
-            android:id="@+id/indicacionesMedicamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Indicaciones: Para el tratamiento de dolores leves y fiebre."
-            android:textSize="26sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="4dp" />
-
-        <!-- Contraindicaciones -->
-        <TextView
-            android:id="@+id/contraindicacionesMedicamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Contraindicaciones: No administrar en caso de insuficiencia hepática."
-            android:textSize="26sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="4dp" />
     </LinearLayout>
     </LinearLayout>
 
@@ -131,11 +97,11 @@
         android:text="@string/guardar"
         android:textColor="@color/white"
         app:iconGravity="textStart"
-        android:layout_marginBottom="190dp"
+        android:layout_marginBottom="-60dp"
         android:layout_marginLeft="25dp"
         android:background="@drawable/boton3"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
 
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -146,14 +112,64 @@
         android:text="@string/atras"
         android:textColor="@color/white"
         android:layout_marginLeft="15dp"
+        android:layout_marginBottom="-60dp"
         app:iconGravity="textStart"
-        android:layout_marginBottom="190dp"
         android:background="@drawable/boton4"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintLeft_toRightOf="@id/buttoncancelar"/>
 
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:elevation="8dp"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:weightSum="2"
+        tools:ignore="MissingConstraints">
 
+        <!-- Contenedor del Botón de Inicio -->
+        <LinearLayout
+            android:id="@+id/btnHomeContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Home"
+                android:src="@drawable/ic_home"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+
+        <!-- Separador entre los íconos -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#DDDDDD" />
+
+        <!-- Contenedor del Botón de Perfil -->
+        <LinearLayout
+            android:id="@+id/btnProfileContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_profile"
+                android:contentDescription="Profile"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,6 +48,13 @@ class MedicationCardActivity : AppCompatActivity() {
             binding.tvUser.text = "Usuario: $usuarioActual"
         }
 
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
+
         // Recibir datos del Intent
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"

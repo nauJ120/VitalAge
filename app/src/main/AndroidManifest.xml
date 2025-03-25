@@ -7,6 +7,8 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
@@ -18,15 +20,58 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VitalAge"
         tools:targetApi="31">
+
+        <!-- Se mantiene el FileProvider de feature/camara -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.vitalage.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
+        <!-- Se mantiene la actividad de DoseHistoryActivity de master -->
+        <activity
+            android:name=".TerapiaFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TerapiasActivity"
+            android:exported="false" />
+             <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResidentFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserManagementActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ResidentManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false" />
         <activity
             android:name=".DoseHistoryActivity"
             android:exported="false" />
+
         <activity
             android:name=".IniciarSesionActivity"
             android:exported="false" />
         <activity
             android:name=".EscaneoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true"/>
         <activity
             android:name=".CamaraActivity"
             android:exported="false" />
@@ -55,11 +100,19 @@
             android:name=".PatientListActivity"
             android:exported="false" />
         <activity
+            android:name=".ListaEscalasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateScaleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScaleResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

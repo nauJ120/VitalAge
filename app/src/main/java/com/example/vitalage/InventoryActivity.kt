@@ -41,6 +41,12 @@ class InventoryActivity : AppCompatActivity() {
             usuarioActual = nombre
             binding.tvUser.text = "Usuario: $usuarioActual"
         }
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
         // Obtener datos del Intent
         val patientName = intent.getStringExtra("patient_name") ?: "Desconocido"

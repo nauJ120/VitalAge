@@ -2,7 +2,9 @@ package com.example.vitalage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,12 +28,7 @@ class PatientListActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = PatientAdapter(patientList) { patient ->
-            val intent = Intent(this, MenuActivity::class.java)
-            intent.putExtra("patient_name", patient.name)
-            intent.putExtra("patient_id", patient.id)
-            intent.putExtra("patient_gender", patient.gender)
-            intent.putExtra("patient_age", patient.age)
-            startActivity(intent)
+            openPatientMenu(patient)
         }
         recyclerView.adapter = adapter
 
@@ -40,6 +37,12 @@ class PatientListActivity : AppCompatActivity() {
         searchField.addTextChangedListener { query ->
             filterPatients(query.toString())
         }
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
     }
 
     private fun fetchPatientsFromFirestore() {
@@ -50,9 +53,11 @@ class PatientListActivity : AppCompatActivity() {
                 patientList.clear()
                 for (document in result) {
                     val name = document.getString("nombre") ?: "Sin Nombre"
-                    val id = document.id
+                    val id = document.id // 🔥 Asegura que obtenemos correctamente el ID del paciente
                     val gender = document.getString("sexo") ?: "No especificado"
                     val age = document.getLong("edad")?.toInt() ?: 0
+
+                    Log.d("PatientListActivity", "Paciente cargado: ID=$id, Nombre=$name") // 🔥 Verificar en Logcat
 
                     patientList.add(Patient(name, id, gender, age))
                 }
@@ -60,6 +65,7 @@ class PatientListActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error al cargar pacientes: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("PatientListActivity", "Error al obtener pacientes desde Firestore", e)
             }
     }
 
@@ -68,5 +74,18 @@ class PatientListActivity : AppCompatActivity() {
             it.name.contains(query, ignoreCase = true) || it.id.contains(query)
         }
         adapter.updateData(filteredList)
+    }
+
+    // ✅ Nueva función para abrir el menú de un paciente y pasar patient_id
+    private fun openPatientMenu(patient: Patient) {
+        Log.d("PatientListActivity", "Paciente seleccionado: ID=${patient.id}, Nombre=${patient.name}") // 🔥 Verificar en Logcat
+
+        val intent = Intent(this, MenuActivity::class.java).apply {
+            putExtra("patient_name", patient.name)
+            putExtra("patient_id", patient.id)
+            putExtra("patient_gender", patient.gender)
+            putExtra("patient_age", patient.age)
+        }
+        startActivity(intent)
     }
 }

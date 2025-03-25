@@ -36,6 +36,13 @@ class KardexMenuActivity : AppCompatActivity() {
             tvUser.text = "Usuario: $usuarioActual"
         }
 
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
+
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
         patientGender = intent.getStringExtra("patient_gender") ?: "No especificado"
