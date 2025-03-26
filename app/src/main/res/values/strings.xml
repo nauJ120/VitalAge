@@ -55,6 +55,7 @@
     <string name="estad_sticas_generales">Estadísticas Generales</string>
     <string name="dashboard">Dashboard</string>
     <string name="logo_de_vitalage">Logo de VitalAge</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
 
     <string-array name="Tipos_de_documentos">
         <item>CÉDULA DE CIUDADANIA</item>

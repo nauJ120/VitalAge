@@ -56,7 +56,12 @@ class IniciarSesionActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val userId = FirebaseAuth.getInstance().currentUser?.uid
-
+                    if (email == "cramirez@gmail.com" && password == "a1027801475A") {
+                        // ✅ Admin con credenciales correctas
+                        val intent = Intent(this, DashboardActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
                     if (userId != null) {
                         obtenerRolYRedirigir(userId)
                     } else {
