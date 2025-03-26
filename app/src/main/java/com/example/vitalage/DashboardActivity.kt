@@ -1,6 +1,5 @@
 package com.example.vitalage
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -19,14 +18,13 @@ class DashboardActivity : AppCompatActivity() {
 
     private lateinit var barChart: BarChart
     private val db = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val currentUser = auth.currentUser
+        val emailFromIntent = intent.getStringExtra("email")
 
-        if (currentUser == null || currentUser.email != "cramirez@gmail.com") {
+        if (emailFromIntent != "cramirez@gmail.com") {
             Toast.makeText(this, "Acceso denegado. Solo el administrador puede ingresar.", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, IniciarSesionActivity::class.java))
             finish()
@@ -35,17 +33,17 @@ class DashboardActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_dashboard)
 
-        // Configurar Toolbar
+        // Toolbar
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Dashboard"
 
-        // Inicializar el gráfico
+        // Gráfico
         barChart = findViewById(R.id.barChart)
         setupChart()
         fetchChartData()
 
-        // Botón de cierre de sesión con confirmación
+        // Botón cerrar sesión
         val btnCerrarSesion = findViewById<Button>(R.id.btnCerrarSesion)
         btnCerrarSesion.setOnClickListener {
             mostrarDialogoCerrarSesion()
@@ -56,8 +54,8 @@ class DashboardActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("Cerrar sesión")
             .setMessage("¿Estás seguro de que deseas cerrar sesión?")
-            .setPositiveButton("Sí") { dialog, _ ->
-                auth.signOut()
+            .setPositiveButton("Sí") { _, _ ->
+                FirebaseAuth.getInstance().signOut()
                 Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, IniciarSesionActivity::class.java))
                 finish()
@@ -100,7 +98,7 @@ class DashboardActivity : AppCompatActivity() {
 
             val barData = BarData(dataSet)
             barChart.data = barData
-            barChart.invalidate() // Refrescar gráfico
+            barChart.invalidate()
         }.addOnFailureListener {
             Toast.makeText(this, "Error al cargar datos", Toast.LENGTH_SHORT).show()
         }
