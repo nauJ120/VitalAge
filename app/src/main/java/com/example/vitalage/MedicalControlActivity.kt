@@ -1,8 +1,12 @@
 package com.example.vitalage
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -20,6 +24,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Calendar
 
 class MedicalControlActivity : AppCompatActivity() {
 
@@ -34,23 +39,8 @@ class MedicalControlActivity : AppCompatActivity() {
     private var usuarioActual: String = "Desconocido"
 
     // Lista inicial de medicamentos (simulada)
-    private val medicationList = mutableListOf(
-        MedicalControl(
-            name = "Paracetamol",
-            lot = "L12345",
-            invima = "INV1234",
-            quantity = 20,
-            expirationDate = "12/2025",
-            startDate = "01/2023",
-            endDate = "02/2023",
-            observations = "Ninguna",
-            nurse = "Auxiliar: Ana López",
-            morningTime = "08:00 AM",
-            afternoonTime = "02:00 PM",
-            nightTime = "08:00 PM",
-            dosis = 1
-        )
-    )
+    private val medicationList = mutableListOf<MedicalControl>()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,15 +84,13 @@ class MedicalControlActivity : AppCompatActivity() {
         // Obtener los medicamentos del paciente desde Firestore
         fetchMedicationsFromFirestore()
 
-
-
         val fromScan = intent.getBooleanExtra("from_scan", false)
         if (fromScan) {
             showAddMedicationDialog()
         }
+
+
     }
-
-
 
 
     private fun setupRecyclerView() {
@@ -138,6 +126,61 @@ class MedicalControlActivity : AppCompatActivity() {
         val etAfternoonTime = dialogView.findViewById<EditText>(R.id.etMedicationAfternoonTime)
         val etNightTime = dialogView.findViewById<EditText>(R.id.etMedicationNightTime)
 
+        etExpirationDate.setOnClickListener {
+            showDatePicker(etExpirationDate)
+        }
+
+        etStartDate.setOnClickListener {
+            showDatePicker(etStartDate)
+        }
+
+        etEndDate.setOnClickListener {
+            showDatePicker(etEndDate)
+        }
+
+        etMorningTime.setOnClickListener {
+            showTimePicker(etMorningTime)
+        }
+        etAfternoonTime.setOnClickListener {
+            showTimePicker(etAfternoonTime)
+        }
+        etNightTime.setOnClickListener {
+            showTimePicker(etNightTime)
+        }
+
+
+        val autoCompleteMedicamento = dialogView.findViewById<AutoCompleteTextView>(R.id.autoCompleteMedicamento)
+        val medicamentosGenerales = mutableListOf<String>()
+        val medicamentosMap = mutableMapOf<String, Map<String, Any>>() // nombre → info
+
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Medicamentos")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (doc in documents) {
+                    val nombre = doc.getString("nombre") ?: continue
+                    medicamentosGenerales.add(nombre)
+                    medicamentosMap[nombre] = doc.data
+                }
+
+                val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, medicamentosGenerales)
+                autoCompleteMedicamento.setAdapter(adapter)
+
+                autoCompleteMedicamento.setOnItemClickListener { parent, _, position, _ ->
+                    val selectedNombre = parent.getItemAtPosition(position) as String
+                    val selectedData = medicamentosMap[selectedNombre]
+
+                    selectedData?.let {
+                        etName.setText(it["nombre"] as? String ?: "")
+                        etInvima.setText(it["invima"] as? String ?: "")
+                        etQuantity.setText((it["cantidad"] as? Long)?.toString() ?: "")
+                        etDosis.setText((it["dosis"] as? Long)?.toString() ?: "")
+                        etObservations.setText(it["observaciones"] as? String ?: "")
+                    }
+                }
+            }
+
+
 
         etName.setText(nombre)
         etQuantity.setText(cantidad.toString())
@@ -149,72 +192,105 @@ class MedicalControlActivity : AppCompatActivity() {
             val name = etName.text.toString().trim()
             val lot = etLot.text.toString().trim()
             val invima = etInvima.text.toString().trim()
-            val quantity = etQuantity.text.toString().trim().toIntOrNull()
-            val expirationDate = etExpirationDate.text.toString().trim()
-            val startDate = etStartDate.text.toString().trim()
-            val endDate = etEndDate.text.toString().trim()
-            val observations = etObservations.text.toString().trim()
-            val nurse = usuarioActual
             val dosis = etDosis.text.toString().trim().toIntOrNull()
-            val morningTime = etMorningTime.text.toString().trim()
-            val afternoonTime = etAfternoonTime.text.toString().trim()
-            val nightTime = etNightTime.text.toString().trim()
+            val cantidad = etQuantity.text.toString().trim().toIntOrNull()
+            val observaciones = etObservations.text.toString().trim()
+            val fechaVencimiento = etExpirationDate.text.toString().trim()
+            val fechaInicio = etStartDate.text.toString().trim()
+            val fechaFin = etEndDate.text.toString().trim()
+            val horaMañana = etMorningTime.text.toString().trim()
+            val horaTarde = etAfternoonTime.text.toString().trim()
+            val horaNoche = etNightTime.text.toString().trim()
+            val auxiliar = usuarioActual
 
-            // Validación de campos obligatorios
-            if (name.isEmpty() || lot.isEmpty() || invima.isEmpty() || quantity == null || dosis == null ||
-                expirationDate.isEmpty() || startDate.isEmpty() || endDate.isEmpty() || nurse.isEmpty() ||
-                morningTime.isEmpty() || afternoonTime.isEmpty() || nightTime.isEmpty()) {
-
+            if (name.isEmpty() || invima.isEmpty() || dosis == null || cantidad == null ||
+                lot.isEmpty() || fechaVencimiento.isEmpty() || fechaInicio.isEmpty() || fechaFin.isEmpty() ||
+                horaMañana.isEmpty() || horaTarde.isEmpty() || horaNoche.isEmpty()) {
                 Toast.makeText(this, "Por favor completa todos los campos obligatorios", Toast.LENGTH_SHORT).show()
-            } else {
-                val newMedication = mapOf(
-                    "nombre" to name,
-                    "lote" to lot,
-                    "invima" to invima,
-                    "cantidad" to quantity,
-                    "fecha_vencimiento" to expirationDate,
-                    "fecha_inicio" to startDate,
-                    "fecha_fin" to endDate,
-                    "observaciones" to observations,
-                    "enfermero" to "Auxiliar: $nurse",
-                    "dosis" to dosis,
-                    "hora_mañana" to morningTime,
-                    "hora_tarde" to afternoonTime,
-                    "hora_noche" to nightTime
-                )
+                return@setOnClickListener
+            }
 
-                val db = FirebaseFirestore.getInstance()
+            val db = FirebaseFirestore.getInstance()
+            val globalId = "${name.lowercase()}_${dosis}mg"
+
+            val globalMedData = mapOf(
+                "id" to globalId,
+                "nombre" to name,
+                "invima" to invima,
+                "dosis" to dosis,
+                "cantidad" to cantidad,
+                "observaciones" to observaciones
+            )
+
+            val nuevoRegistro = mapOf(
+                "medicamento_id" to globalId,
+                "lote" to lot,
+                "fecha_vencimiento" to fechaVencimiento,
+                "fecha_inicio" to fechaInicio,
+                "fecha_fin" to fechaFin,
+                "hora_mañana" to horaMañana,
+                "hora_tarde" to horaTarde,
+                "hora_noche" to horaNoche,
+                "auxiliar" to auxiliar,
+                "cantidad_paciente" to cantidad
+            )
+
+            // 1. Crear medicamento global si no existe
+            db.collection("Medicamentos").document(globalId).get().addOnSuccessListener { globalDoc ->
+                if (!globalDoc.exists()) {
+                    db.collection("Medicamentos").document(globalId).set(globalMedData)
+                }
+
+                // 2. Obtener y actualizar los medicamentos del paciente
                 val patientRef = db.collection("Pacientes").document(patientId)
+                patientRef.get().addOnSuccessListener { doc ->
+                    val existingList = doc.get("medicamentos") as? MutableList<Map<String, Any>> ?: mutableListOf()
+                    val updatedList = mutableListOf<Map<String, Any>>()
+                    var yaExistia = false
 
-                // Obtener la lista actual de medicamentos del paciente y agregar el nuevo medicamento
-                patientRef.get().addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val existingMedications = document.get("medicamentos") as? MutableList<Map<String, Any>> ?: mutableListOf()
-                        existingMedications.add(newMedication)
+                    for (med in existingList) {
+                        if ((med["medicamento_id"] as? String) == globalId) {
+                            val cantidadActual = (med["cantidad_paciente"] as? Long ?: 0)
 
-                        // Actualizar Firestore con la nueva lista de medicamentos
-                        patientRef.update("medicamentos", existingMedications)
-                            .addOnSuccessListener {
-                                Toast.makeText(this, "Medicamento agregado correctamente", Toast.LENGTH_SHORT).show()
+                            val actualizado = mutableMapOf<String, Any>(
+                                "medicamento_id" to globalId,
+                                "lote" to lot,
+                                "fecha_vencimiento" to fechaVencimiento,
+                                "fecha_inicio" to fechaInicio,
+                                "fecha_fin" to fechaFin,
+                                "hora_mañana" to horaMañana,
+                                "hora_tarde" to horaTarde,
+                                "hora_noche" to horaNoche,
+                                "auxiliar" to auxiliar,
+                                "cantidad_paciente" to cantidadActual + cantidad
+                            )
 
-                                // Agregar a la lista local y actualizar la UI
-                                medicationList.add(
-                                    MedicalControl(
-                                        name, lot, invima, quantity, expirationDate, startDate, endDate,
-                                        observations, "Auxiliar: $nurse", morningTime, afternoonTime, nightTime, dosis
-                                    )
-                                )
-                                medicalControlAdapter.notifyItemInserted(medicationList.size - 1)
-
-                                dialog.dismiss()
-                            }
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this, "Error al guardar: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
+                            updatedList.add(actualizado)
+                            yaExistia = true
+                        } else {
+                            updatedList.add(med)
+                        }
                     }
+
+                    if (!yaExistia) {
+                        updatedList.add(nuevoRegistro)
+                    }
+
+                    // 3. Guardar cambios
+                    patientRef.update("medicamentos", updatedList)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Medicamento registrado correctamente", Toast.LENGTH_SHORT).show()
+                            fetchMedicationsFromFirestore()
+                            dialog.dismiss()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Error al guardar: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
                 }
             }
         }
+
+
 
         // Botón para cancelar
         dialogView.findViewById<Button>(R.id.btnDialogCancel).setOnClickListener {
@@ -223,59 +299,85 @@ class MedicalControlActivity : AppCompatActivity() {
     }
 
 
+    private fun showDatePicker(targetEditText: EditText) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePicker = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = "%02d/%02d/%04d".format(selectedDay, selectedMonth + 1, selectedYear)
+            targetEditText.setText(selectedDate)
+        }, year, month, day)
+
+        datePicker.show()
+    }
+
+    private fun showTimePicker(targetEditText: EditText) {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePicker = TimePickerDialog(this, { _, selectedHour, selectedMinute ->
+            val amPm = if (selectedHour < 12) "AM" else "PM"
+            val hourFormatted = if (selectedHour % 12 == 0) 12 else selectedHour % 12
+            val minuteFormatted = String.format("%02d", selectedMinute)
+            val formattedTime = "$hourFormatted:$minuteFormatted $amPm"
+            targetEditText.setText(formattedTime)
+        }, hour, minute, false) // false = formato 12h
+
+        timePicker.show()
+    }
+
+
+
+
     private fun fetchMedicationsFromFirestore() {
         val db = FirebaseFirestore.getInstance()
         val patientRef = db.collection("Pacientes").document(patientId)
 
         patientRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
-                val medications = document.get("medicamentos") as? List<Map<String, Any>> ?: emptyList()
-
+                val medicamentosRelacionados = document.get("medicamentos") as? List<Map<String, Any>> ?: emptyList()
                 medicationList.clear()
 
-                for (medication in medications) {
-                    val name = medication["nombre"] as? String ?: "Desconocido"
-                    val lot = medication["lote"] as? String ?: "N/A"
-                    val invima = medication["invima"] as? String ?: "N/A"
-                    val quantity = (medication["cantidad"] as? Long)?.toInt() ?: 0
-                    val expirationDate = medication["fecha_vencimiento"] as? String ?: "N/A"
-                    val startDate = medication["fecha_inicio"] as? String ?: "N/A"
-                    val endDate = medication["fecha_fin"] as? String ?: "N/A"
-                    val observations = medication["observaciones"] as? String ?: "N/A"
-                    val nurse = usuarioActual
-                    val dose = (medication["dosis"] as? Long)?.toInt() ?: 0
-                    val morningTime = medication["hora_mañana"] as? String ?: "-"
-                    val afternoonTime = medication["hora_tarde"] as? String ?: "-"
-                    val nightTime = medication["hora_noche"] as? String ?: "-"
+                for (relacion in medicamentosRelacionados) {
+                    val medicamentoId = relacion["medicamento_id"] as? String ?: continue
 
-                    val newMedication = MedicalControl(
-                        name = name,
-                        lot = lot,
-                        invima = invima,
-                        quantity = quantity,
-                        expirationDate = expirationDate,
-                        startDate = startDate,
-                        endDate = endDate,
-                        observations = observations,
-                        nurse = nurse,
-                        morningTime = morningTime,
-                        afternoonTime = afternoonTime,
-                        nightTime = nightTime,
-                        dosis = dose
-                    )
+                    // Consultar datos generales del medicamento
+                    db.collection("Medicamentos").document(medicamentoId).get()
+                        .addOnSuccessListener { medDoc ->
+                            if (medDoc.exists()) {
+                                val datosGlobales = medDoc.data ?: return@addOnSuccessListener
 
-                    medicationList.add(newMedication)
+                                // Combinar con datos específicos
+                                val medicamento = MedicalControl(
+                                    name = datosGlobales["nombre"] as? String ?: "Desconocido",
+                                    lot = relacion["lote"] as? String ?: "-",
+                                    invima = datosGlobales["invima"] as? String ?: "-",
+                                    quantity = datosGlobales["cantidad"]?.toString()?.toIntOrNull() ?: 0,
+                                    expirationDate = relacion["fecha_vencimiento"] as? String ?: "-",
+                                    startDate = relacion["fecha_inicio"] as? String ?: "-",
+                                    endDate = relacion["fecha_fin"] as? String ?: "-",
+                                    observations = datosGlobales["observaciones"] as? String ?: "-",
+                                    nurse = relacion["auxiliar"] as? String ?: "Desconocido",
+                                    morningTime = relacion["hora_mañana"] as? String ?: "-",
+                                    afternoonTime = relacion["hora_tarde"] as? String ?: "-",
+                                    nightTime = relacion["hora_noche"] as? String ?: "-",
+                                    dosis = datosGlobales["dosis"]?.toString()?.toIntOrNull() ?: 0
+                                )
+
+                                medicationList.add(medicamento)
+                                medicalControlAdapter.notifyDataSetChanged()
+                            }
+                        }
                 }
-
-                // Notificar cambios en la lista
-                medicalControlAdapter.notifyDataSetChanged()
-            } else {
-                Toast.makeText(this, "No se encontraron medicamentos para este paciente", Toast.LENGTH_SHORT).show()
             }
-        }.addOnFailureListener { e ->
-            Toast.makeText(this, "Error al obtener medicamentos: ${e.message}", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(this, "Error al obtener medicamentos", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun obtenerNombreUsuario(callback: (String) -> Unit) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
