@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,13 @@ class NursingNotesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nursing_notes)
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
         db = FirebaseFirestore.getInstance()
 

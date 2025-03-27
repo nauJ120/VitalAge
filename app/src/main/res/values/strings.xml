@@ -1,7 +1,4 @@
 <resources>
-    <string name="dashboard_title">Dashboard</string>
-    <string name="historial_signos_title">Historial de Signos Vitales</string>
-    <string name="inventario_medicamentos_title">Inventario de Medicamentos</string>
     <string name="app_name">VitalAge</string>
     <string name="a_o">Año</string>
     <string name="toma_de_signos_vitales">Toma de Signos Vitales</string>
@@ -37,7 +34,8 @@
     <string name="continuar">Continuar</string>
     <string name="tipo_de_documento">Tipo de documento</string>
     <string name="escaneo_medi">Escaneo de medicamento</string>
-    <string name="tomar_foto">Tomar foto</string>
+    <string name="tomar_foto">Tomar</string>
+    <string name="tomar_galeria">Escoger de galeria</string>
     <string name="descartar">Descartar</string>
     <string name="atras">Atrás</string>
     <string name="analizar">Analizar</string>
@@ -49,12 +47,7 @@
     <string name="option_icon">Descripción del icono</string>
     <string name="add_note">Añadir nota</string>
     <string name="back_icon">Ícono de regreso</string>
-    <string name="continuar">Continuar</string>
-    <string name="tipo_de_documento">Tipo de documento</string>
-    <string name="alertas_de_medicamentos_pendientes">Alertas de Medicamentos Pendientes:</string>
-    <string name="imc_promedio">IMC Promedio:</string>
-    <string name="total_de_residentes">Total de Residentes:</string>
-    <string name="app_logo">app_logo</string>
+
     <string-array name="Tipos_de_documentos">
         <item>CÉDULA DE CIUDADANIA</item>
         <item>CÉDULA DE EXTRANJERÍA</item>
@@ -77,6 +70,8 @@
         <item>PEP RAMV </item>
         <item>PEP-FF </item>
         <item>DOCUMENTO NACIONAL DE IDENTIFICACIÓN  </item>
+
+
 
     </string-array>
 </resources>

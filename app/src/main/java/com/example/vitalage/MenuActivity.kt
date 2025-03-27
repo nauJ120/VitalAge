@@ -3,6 +3,7 @@ package com.example.vitalage
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +41,13 @@ class MenuActivity : AppCompatActivity() {
             MenuOption("Cámara", R.drawable.ic_camera)
         )
 
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
+
         // Configurar el RecyclerView
         val recyclerView = findViewById<RecyclerView>(R.id.rv_menu_options)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -55,6 +63,15 @@ class MenuActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
+                "Terapias" -> {
+                    // Redirigir a la actividad de "Terapias"
+                    val intent = Intent(this, TerapiasActivity::class.java)
+                    intent.putExtra("patient_name", patientName)
+                    intent.putExtra("patient_id", patientId)
+                    intent.putExtra("patient_gender", patientGender)
+                    intent.putExtra("patient_age", patientAge)
+                    startActivity(intent)
+                }
 
                 "Cámara" -> {
                     val intent = Intent(this, CamaraActivity::class.java)
@@ -92,5 +109,6 @@ class MenuActivity : AppCompatActivity() {
                 }
             }
         }
+
     }
 }

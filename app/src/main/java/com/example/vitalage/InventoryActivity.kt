@@ -1,8 +1,10 @@
 package com.example.vitalage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +41,12 @@ class InventoryActivity : AppCompatActivity() {
             usuarioActual = nombre
             binding.tvUser.text = "Usuario: $usuarioActual"
         }
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
         // Obtener datos del Intent
         val patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
