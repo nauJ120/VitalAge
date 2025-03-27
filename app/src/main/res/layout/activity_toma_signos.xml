@@ -24,7 +24,6 @@
 
     <!-- Campos de Entrada -->
 
-
     <TextView
         android:id="@+id/tituloTomaSignos"
         android:layout_width="wrap_content"
@@ -37,8 +36,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/barraTitulo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/barraTitulo"
-        app:layout_constraintVertical_bias="0.617" />
+        app:layout_constraintTop_toTopOf="@id/barraTitulo" />
+
 
     <TextView
         android:id="@+id/informacionUsuario"
