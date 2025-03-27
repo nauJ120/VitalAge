@@ -53,15 +53,6 @@
             android:exported="false" />
 
         <activity
-            android:name=".ResidentManagementActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MenuAdminActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminDashboardActivity"
-            android:exported="false" />
-        <activity
             android:name=".DoseHistoryActivity"
             android:exported="false" />
 
@@ -107,6 +98,9 @@
             android:exported="false" />
         <activity
             android:name=".ScaleResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
