@@ -89,6 +89,10 @@ class MenuActivity : AppCompatActivity() {
                 "Signos vitales" -> {
                     // Redirigir a la actividad de "Signos vitales"
                     val intent = Intent(this, SignosVitalesActivity::class.java)
+                    intent.putExtra("patient_name", patientName)
+                    intent.putExtra("patient_id", patientId)
+                    intent.putExtra("patient_gender", patientGender)
+                    intent.putExtra("patient_age", patientAge)
                     startActivity(intent)
                 }
 

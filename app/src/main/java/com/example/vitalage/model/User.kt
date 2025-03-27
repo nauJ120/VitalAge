@@ -8,5 +8,4 @@ class User(
     var contrasenia: String = "",
     var rol : String = "",
     var nombre_usuario : String = "",
-    var listaPacientes: MutableMap<String, Paciente> = mutableMapOf()
 )
