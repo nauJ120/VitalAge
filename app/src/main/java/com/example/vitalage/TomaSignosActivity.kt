@@ -6,33 +6,18 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.auth.FirebaseAuth
+
 class TomaSignosActivity : AppCompatActivity() {
 
     private var diaSeleccionado: String? = null
     private var mesSeleccionado: String? = null
     private var anioSeleccionado: String? = null
     private lateinit var textFechaSeleccionada: TextView
-    private lateinit var db: FirebaseFirestore
-    private lateinit var auth: FirebaseAuth
-    private var pacienteId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_toma_signos)
-        // Inicializar Firestore
-        db = FirebaseFirestore.getInstance()
-        auth = FirebaseAuth.getInstance()
 
-
-        // Obtener ID del paciente dinámicamente (suponiendo que el usuario autenticado es el paciente)
-        auth.currentUser?.let { user ->
-            pacienteId = user.uid // Se asume que el UID de Firebase Auth es el ID del paciente
-        } ?: run {
-            Toast.makeText(this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show()
-            finish()
-        }
         // Elementos del layout
         val inputFrecuenciaRespiratoria = findViewById<EditText>(R.id.inputFrecuenciaRespiratoria)
         val inputSaturacionOxigeno = findViewById<EditText>(R.id.inputSaturacionOxigeno)
@@ -105,28 +90,10 @@ class TomaSignosActivity : AppCompatActivity() {
             finish()
         }
 
-
         // Acciones para el menú desplegable
         menuIcon.setOnClickListener {
             showPopupMenu(menuIcon)
         }
-    }
-
-
-    private fun guardarEnFirestore(pacienteId: String, frecuencia: String, saturacion: String, presion: String, temperatura: String) {
-        val registro = hashMapOf(
-            "fecha" to "$diaSeleccionado de $mesSeleccionado $anioSeleccionado",
-            "frecuencia_respiratoria" to frecuencia,
-            "saturacion_oxigeno" to saturacion,
-            "presion_arterial" to presion,
-            "temperatura_corporal" to temperatura
-        )
-
-        db.collection("Pacientes").document(pacienteId)
-            .collection("signos_vitales")
-            .add(registro)
-            .addOnSuccessListener { Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show() }
-            .addOnFailureListener { e -> Toast.makeText(this, "Error al guardar: ${e.message}", Toast.LENGTH_SHORT).show() }
     }
 
     // Función para actualizar el texto de la fecha seleccionada
@@ -172,5 +139,5 @@ class TomaSignosActivity : AppCompatActivity() {
             }
         }
         popupMenu.show()
-        }
+    }
 }

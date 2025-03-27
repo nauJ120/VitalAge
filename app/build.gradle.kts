@@ -41,16 +41,6 @@ android {
 }
 
 dependencies {
-    //Implementaciones nuevas
-    // Firebase Firestore
-    implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
-    
-    // MPAndroidChart
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    // --------------------------------
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

@@ -47,15 +47,6 @@
     <string name="option_icon">Descripción del icono</string>
     <string name="add_note">Añadir nota</string>
     <string name="back_icon">Ícono de regreso</string>
-    <string name="dashboard_title">Dashboard\n</string>
-    <string name="app_logo">app logo</string>
-    <string name="total_de_residentes">Total de Residentes:</string>
-    <string name="alertas_de_medicamentos_pendientes">Alertas de Medicamentos Pendientes:</string>
-    <string name="imc_promedio">IMC Promedio:</string>
-    <string name="estad_sticas_generales">Estadísticas Generales</string>
-    <string name="dashboard">Dashboard</string>
-    <string name="logo_de_vitalage">Logo de VitalAge</string>
-    <string name="cerrar_sesi_n">Cerrar sesión</string>
 
     <string-array name="Tipos_de_documentos">
         <item>CÉDULA DE CIUDADANIA</item>
