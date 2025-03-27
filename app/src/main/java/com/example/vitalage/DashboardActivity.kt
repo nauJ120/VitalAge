@@ -1,29 +1,34 @@
 package com.example.vitalage
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.vitalage.model.SignoVital
+import com.example.vitalage.viewmodels.DashboardViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.*
-import com.google.firebase.auth.FirebaseAuth
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DashboardActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: DashboardViewModel
     private lateinit var barChart: BarChart
-    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val emailFromIntent = intent.getStringExtra("email")
-
         if (emailFromIntent != "cramirez@gmail.com") {
             Toast.makeText(this, "Acceso denegado. Solo el administrador puede ingresar.", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, IniciarSesionActivity::class.java))
@@ -33,18 +38,37 @@ class DashboardActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_dashboard)
 
+        // ViewModel
+        viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
+
         // Toolbar
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Dashboard"
 
-        // Gráfico
-        barChart = findViewById(R.id.barChart)
-        setupChart()
-        fetchChartData()
-
-        // Botón cerrar sesión
+        // UI Components
+        val tvTotalResidents = findViewById<TextView>(R.id.tvTotalResidents)
+        val tvPendingAlerts = findViewById<TextView>(R.id.tvPendingAlerts)
+        val tvAvgIMC = findViewById<TextView>(R.id.tvAvgIMC)
         val btnCerrarSesion = findViewById<Button>(R.id.btnCerrarSesion)
+        barChart = findViewById(R.id.barChart)
+
+        setupChart()
+        cargarGraficaIMC()
+
+        // Observers
+        viewModel.totalResidents.observe(this, Observer {
+            tvTotalResidents.text = "Total de Residentes: $it"
+        })
+
+        viewModel.pendingAlerts.observe(this, Observer {
+            tvPendingAlerts.text = "Alertas de Medicamentos Pendientes: $it"
+        })
+
+        viewModel.avgIMC.observe(this, Observer {
+            tvAvgIMC.text = "IMC Promedio: %.2f".format(it)
+        })
+
         btnCerrarSesion.setOnClickListener {
             mostrarDialogoCerrarSesion()
         }
@@ -55,8 +79,6 @@ class DashboardActivity : AppCompatActivity() {
             .setTitle("Cerrar sesión")
             .setMessage("¿Estás seguro de que deseas cerrar sesión?")
             .setPositiveButton("Sí") { _, _ ->
-                FirebaseAuth.getInstance().signOut()
-                Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, IniciarSesionActivity::class.java))
                 finish()
             }
@@ -82,25 +104,26 @@ class DashboardActivity : AppCompatActivity() {
         barChart.legend.isEnabled = true
     }
 
-    private fun fetchChartData() {
-        db.collection("signos_vitales").get().addOnSuccessListener { snapshot ->
-            val signos = snapshot.documents
-            val entries = ArrayList<BarEntry>()
+    private fun cargarGraficaIMC() {
+        FirebaseFirestore.getInstance().collection("Signos Vitales")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val signos = snapshot.toObjects(SignoVital::class.java)
+                val entries = ArrayList<BarEntry>()
 
-            signos.forEachIndexed { index, doc ->
-                val imc = doc.getDouble("imc") ?: 0.0
-                entries.add(BarEntry(index.toFloat(), imc.toFloat()))
+                signos.forEachIndexed { index, signo ->
+                    entries.add(BarEntry(index.toFloat(), signo.imc.toFloat()))
+                }
+
+                val dataSet = BarDataSet(entries, "IMC por paciente")
+                dataSet.color = ContextCompat.getColor(this, R.color.md_indigo_700)
+
+                val barData = BarData(dataSet)
+                barChart.data = barData
+                barChart.invalidate()
             }
-
-            val dataSet = BarDataSet(entries, "IMC Promedio")
-            dataSet.color = Color.BLUE
-            dataSet.valueTextColor = Color.BLACK
-
-            val barData = BarData(dataSet)
-            barChart.data = barData
-            barChart.invalidate()
-        }.addOnFailureListener {
-            Toast.makeText(this, "Error al cargar datos", Toast.LENGTH_SHORT).show()
-        }
+            .addOnFailureListener {
+                Toast.makeText(this, "No se pudo cargar la gráfica", Toast.LENGTH_SHORT).show()
+            }
     }
 }

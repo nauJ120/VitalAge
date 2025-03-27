@@ -24,20 +24,23 @@ class DashboardViewModel : ViewModel() {
     }
 
     private fun fetchDashboardData() {
-        db.collection("residentes").addSnapshotListener { snapshot, _ ->
+        db.collection("Pacientes").addSnapshotListener { snapshot, error ->
+            if (error != null) return@addSnapshotListener
             _totalResidents.value = snapshot?.size() ?: 0
         }
 
-        db.collection("medicamentos")
+        db.collection("Medicamentos")
             .whereEqualTo("estado", "pendiente")
-            .addSnapshotListener { snapshot, _ ->
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) return@addSnapshotListener
                 _pendingAlerts.value = snapshot?.size() ?: 0
             }
 
-        db.collection("signos_vitales").addSnapshotListener { snapshot, _ ->
+        db.collection("Signos Vitales").addSnapshotListener { snapshot, error ->
+            if (error != null) return@addSnapshotListener
             val signos = snapshot?.toObjects(SignoVital::class.java) ?: emptyList()
-            val imcValues = signos.map { it.imc.toDouble() }
-            _avgIMC.value = if (imcValues.isNotEmpty()) imcValues.average() else 0.0
+            val imcValues = signos.map { it.imc }
+            _avgIMC.value = if (imcValues.isNotEmpty()) imcValues.average().toDouble() else 0.0
         }
     }
 }
