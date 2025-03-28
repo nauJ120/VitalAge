@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9FAFB">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_light_blue_300"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Regresar"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/tvHeaderPaciente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Informe Clínico"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_below="@id/header"
+        android:layout_above="@id/navigationBar">
+
+        <TextView
+            android:id="@+id/tvNombrePaciente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del paciente"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spPeriodo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"/>
+
+        <Button
+            android:id="@+id/btnGenerarInforme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generar Informe"
+            android:layout_marginTop="12dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/tvVistaInforme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vista previa del informe aquí..."
+                android:textSize="16sp" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnDescargarPdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descargar PDF"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <!-- MENÚ INFERIOR -->
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/btnHomeContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Home"
+                android:src="@drawable/ic_home"
+                app:tint="#4A90E2"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#DDDDDD"/>
+
+        <LinearLayout
+            android:id="@+id/btnProfileContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Profile"
+                android:src="@drawable/ic_profile"
+                app:tint="#4A90E2"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

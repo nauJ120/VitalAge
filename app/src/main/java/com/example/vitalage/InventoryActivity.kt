@@ -59,6 +59,13 @@ class InventoryActivity : AppCompatActivity() {
         binding.tvResidentInfo.text = "ID: $patientId • Sexo: $patientGender • Edad: $patientAge años"
 
 
+        val btnHomeContainer = findViewById<LinearLayout>(R.id.btnHomeContainer)
+
+        btnHomeContainer.setOnClickListener {
+            val intent = Intent(this, PatientListActivity::class.java) // Reemplaza "NuevaActividad" con el nombre de tu actividad destino
+            startActivity(intent)
+        }
+
         // Inicializar Firestore
         firestore = FirebaseFirestore.getInstance()
 
@@ -67,6 +74,15 @@ class InventoryActivity : AppCompatActivity() {
 
         // Cargar medicamentos desde Firestore
         fetchMedicationsFromFirestore()
+
+        binding.btnApplyFilter.setOnClickListener {
+            val query = binding.etSearchMedication.text.toString().trim()
+            applyFilter(query)
+        }
+
+        binding.btnResetFilter.setOnClickListener {
+            resetFilter()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -83,47 +99,52 @@ class InventoryActivity : AppCompatActivity() {
         patientRef.get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    // 🔥 Extraer el array de medicamentos como una lista de mapas
-                    val medications = document.get("medicamentos") as? List<Map<String, Any>> ?: emptyList()
-
+                    val relaciones = document.get("medicamentos") as? List<Map<String, Any>> ?: emptyList()
                     medicationList.clear()
 
-                    for (medication in medications) {
-                        val name = medication["nombre"] as? String ?: "Desconocido"
-                        val cantidad = (medication["cantidad"] as? Long)?.toInt() ?: 0
-                        val dosis = (medication["dosis"] as? Long)?.toInt() ?: 0
-                        val auxiliar = medication["auxiliar"] as? String ?: "N/A"
-                        val fechaInicio = medication["fecha_inicio"] as? String ?: "-"
-                        val fechaFin = medication["fecha_fin"] as? String ?: "-"
-                        val fechaVencimiento = medication["fecha_vencimiento"] as? String ?: "-"
-                        val horaMañana = medication["hora_mañana"] as? String ?: "-"
-                        val horaTarde = medication["hora_tarde"] as? String ?: "-"
-                        val horaNoche = medication["hora_noche"] as? String ?: "-"
-                        val invima = medication["invima"] as? String ?: "-"
-                        val lote = medication["lote"] as? String ?: "-"
-                        val observaciones = medication["observaciones"] as? String ?: "-"
+                    // Para cada relación en el paciente
+                    for (relacion in relaciones) {
+                        val medicamentoId = relacion["medicamento_id"] as? String ?: continue
+                        val cantidadPaciente = (relacion["cantidad_paciente"] as? Long)?.toInt() ?: 0
+                        val auxiliar = relacion["auxiliar"] as? String ?: "N/A"
+                        val fechaInicio = relacion["fecha_inicio"] as? String ?: "-"
+                        val fechaFin = relacion["fecha_fin"] as? String ?: "-"
+                        val fechaVencimiento = relacion["fecha_vencimiento"] as? String ?: "-"
+                        val horaMañana = relacion["hora_mañana"] as? String ?: "-"
+                        val horaTarde = relacion["hora_tarde"] as? String ?: "-"
+                        val horaNoche = relacion["hora_noche"] as? String ?: "-"
+                        val lote = relacion["lote"] as? String ?: "-"
 
-                        // Crear objeto Medication y agregarlo a la lista
-                        medicationList.add(
-                            Medication(
-                                nombre = name,
-                                cantidad = cantidad,
-                                dosis = dosis,
-                                enfermero = auxiliar,
-                                fecha_inicio = fechaInicio,
-                                fecha_fin = fechaFin,
-                                fecha_vencimiento = fechaVencimiento,
-                                hora_mañana = horaMañana,
-                                hora_tarde = horaTarde,
-                                hora_noche = horaNoche,
-                                invima = invima,
-                                lote = lote,
-                                observaciones = observaciones
-                            )
-                        )
+                        // Consultar los datos generales del medicamento desde la colección global
+                        firestore.collection("Medicamentos").document(medicamentoId).get()
+                            .addOnSuccessListener { medDoc ->
+                                if (medDoc.exists()) {
+                                    val nombre = medDoc.getString("nombre") ?: "Desconocido"
+                                    val invima = medDoc.getString("invima") ?: "-"
+                                    val observaciones = medDoc.getString("observaciones") ?: "-"
+                                    val dosis = (medDoc.getLong("dosis") ?: 0).toInt()
+
+                                    val medicamento = Medication(
+                                        nombre = nombre,
+                                        cantidad = cantidadPaciente,
+                                        dosis = dosis,
+                                        enfermero = auxiliar,
+                                        fecha_inicio = fechaInicio,
+                                        fecha_fin = fechaFin,
+                                        fecha_vencimiento = fechaVencimiento,
+                                        hora_mañana = horaMañana,
+                                        hora_tarde = horaTarde,
+                                        hora_noche = horaNoche,
+                                        invima = invima,
+                                        lote = lote,
+                                        observaciones = observaciones
+                                    )
+
+                                    medicationList.add(medicamento)
+                                    medicationAdapter.notifyItemInserted(medicationList.size - 1)
+                                }
+                            }
                     }
-
-                    medicationAdapter.notifyDataSetChanged()
                 } else {
                     Toast.makeText(this, "No se encontraron medicamentos", Toast.LENGTH_SHORT).show()
                 }
@@ -132,6 +153,7 @@ class InventoryActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error al obtener medicamentos: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 
 
     private fun showAdministerDialog(medication: Medication) {
@@ -271,6 +293,21 @@ class InventoryActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun applyFilter(query: String) {
+        if (query.isNotEmpty()) {
+            val filteredList = medicationList.filter { it.nombre.contains(query, ignoreCase = true) }
+            medicationAdapter.updateData(filteredList)
+        } else {
+            Toast.makeText(this, "Ingrese un nombre para filtrar", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun resetFilter() {
+        binding.etSearchMedication.text.clear()
+        medicationAdapter.updateData(medicationList)
+    }
+
 
 
 }
