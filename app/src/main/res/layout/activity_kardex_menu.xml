@@ -86,14 +86,6 @@
 
         </LinearLayout>
 
-        <!-- Botón de acción -->
-        <ImageView
-            android:id="@+id/btnAddInfo"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/note"
-            android:contentDescription="Add Info"
-            app:tint="#4A90E2" />
     </LinearLayout>
 
     <!-- Botones de menú -->

@@ -51,10 +51,10 @@ class UserManagementActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 usersList.clear()
                 for (userSnapshot in snapshot.children) {
-                    val uid = userSnapshot.key ?: continue // 🔥 Obtener UID de Firebase
+                    val uid = userSnapshot.key ?: continue
 
                     val user = User(
-                        id = uid, // 🔥 Guardamos el UID en vez de identificacion
+                        id = uid, //
                         nombre_usuario = userSnapshot.child("nombre_usuario").getValue(String::class.java) ?: "",
                         correo = userSnapshot.child("correo").getValue(String::class.java) ?: "",
                         identificacion = userSnapshot.child("identificacion").getValue(String::class.java) ?: "",
@@ -77,7 +77,7 @@ class UserManagementActivity : AppCompatActivity() {
 
     private fun editUser(user: User) {
         val intent = Intent(this, UserFormActivity::class.java).apply {
-            putExtra("user_id", user.id) // 🔥 Pasar el UID, no identificacion
+            putExtra("user_id", user.id)
         }
         startActivity(intent)
     }
@@ -87,7 +87,7 @@ class UserManagementActivity : AppCompatActivity() {
             .setTitle("Eliminar usuario")
             .setMessage("¿Seguro que deseas eliminar a ${user.nombre_usuario}?")
             .setPositiveButton("Sí") { _, _ ->
-                databaseRef.child(user.id).removeValue() // 🔥 Eliminar con UID
+                databaseRef.child(user.id).removeValue()
                     .addOnSuccessListener {
                         Toast.makeText(this, "Usuario eliminado", Toast.LENGTH_SHORT).show()
                     }

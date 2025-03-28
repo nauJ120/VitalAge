@@ -1,168 +1,168 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".SignosVitalesActivity">
+    android:background="#F9FAFB">
 
-    <!-- Barra superior con color -->
-    <View
-        android:id="@+id/barraTitulo"
-        android:layout_width="0dp"
-        android:layout_height="76dp"
-        android:layout_marginBottom="655dp"
-        android:background="@color/light_blue_500"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!-- Título Principal -->
-
-    <!-- Información del Usuario -->
-
-    <!-- Botón para Toma de Signos Vitales -->
-
-    <!-- Botón para Historial -->
-
-    <!-- Menú Desplegable -->
-
-    <TextView
-        android:id="@+id/tituloSignosVitales"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="86dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="104dp"
-        android:layout_marginBottom="670dp"
-        android:text="@string/signos_vitales"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/informacionUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Pepe Gonzalez   Paciente: Bryan Caicedo"
-        android:textColor="@color/black"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.811"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloSignosVitales" />
-
-    <!-- Botón para Toma de Signos Vitales -->
-
-    <!-- Botón para Historial -->
-
-    <!-- Botón para Toma de Signos Vitales -->
-
-    <!-- Botón para Historial -->
-
+    <!-- Header -->
     <LinearLayout
-        android:id="@+id/btnTomaSignos"
-        android:layout_width="0dp"
+        android:id="@+id/header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="128dp"
-        android:layout_marginBottom="449dp"
-        android:background="#EEEEEE"
-        android:elevation="4dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/informacionUsuario">
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/md_light_blue_300">
 
-        <ImageView
-            android:id="@+id/iconStethoscope"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/icono_de_estetoscopio"
-            android:src="@drawable/ic_stethoscope" />
-
-        <TextView
-            android:id="@+id/textTomaSignos"
-            android:layout_width="wrap_content"
+        <!-- Fila con botón de retroceso y título -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/toma_signos_vitales"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                android:contentDescription="Volver"
+                android:layout_marginEnd="16dp"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Historial de Signos Vitales"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Nuevo TextView debajo del header -->
+        <TextView
+            android:id="@+id/tvSubtitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Usuario"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
     </LinearLayout>
 
+
+    <!-- Tarjeta del Residente -->
     <LinearLayout
-        android:id="@+id/btnHistorial"
-        android:layout_width="0dp"
+        android:id="@+id/cardResident"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="377dp"
-        android:background="#EEEEEE"
-        android:elevation="4dp"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnTomaSignos"
-        app:layout_constraintVertical_bias="0.0">
+        android:background="@drawable/card_background"
+        android:elevation="4dp"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:layout_below="@id/header">
 
+        <!-- Foto del residente -->
         <ImageView
-            android:id="@+id/iconCalendar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/icono_de_calendario"
-            android:src="@drawable/ic_calendar" />
+            android:id="@+id/imgResident"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_resident"
+            android:contentDescription="Resident Photo"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:tint="#4A90E2" />
 
-        <TextView
-            android:id="@+id/textHistorial"
-            android:layout_width="wrap_content"
+        <!-- Información del residente -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/historial"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvResidentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre del Paciente"
+                android:textSize="20sp"
+                android:textColor="#333333"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:id="@+id/tvResidentInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Información del Paciente"
+                android:textSize="14sp"
+                android:textColor="#777777"
+                android:fontFamily="sans-serif-light" />
+        </LinearLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/menuIcon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="350dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="670dp"
-        android:contentDescription="@string/men"
-        android:src="@drawable/ic_menu_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Lista -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerSignosVitales"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/cardResident"
+        android:layout_above="@id/navigationBar"
+        android:padding="16dp" />
 
-    <ImageView
-        android:id="@+id/nurseIcon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="74dp"
-        android:layout_marginEnd="350dp"
-        android:layout_marginBottom="612dp"
-        android:contentDescription="@string/icono_de_enfermera"
-        android:src="@drawable/ic_nurse"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Botón flotante -->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Footer -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAgregarSignos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/navigationBar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="29dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/md_blue_500"
+        app:tint="@android:color/white" />
+
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:id="@+id/btnHomeContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_home"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnProfileContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_profile"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

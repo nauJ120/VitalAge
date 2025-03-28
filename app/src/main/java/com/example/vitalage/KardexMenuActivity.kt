@@ -62,6 +62,13 @@ class KardexMenuActivity : AppCompatActivity() {
         val btnControl = findViewById<Button>(R.id.btnControl)
         val btnHistory = findViewById<Button>(R.id.btnDoseHistory)
 
+        val btnHomeContainer = findViewById<LinearLayout>(R.id.btnHomeContainer)
+
+        btnHomeContainer.setOnClickListener {
+            val intent = Intent(this, PatientListActivity::class.java) // Reemplaza "NuevaActividad" con el nombre de tu actividad destino
+            startActivity(intent)
+        }
+
         btnInventory.setOnClickListener {
             val intent = Intent(this, InventoryActivity::class.java)
             intent.putExtra("patient_name", patientName)

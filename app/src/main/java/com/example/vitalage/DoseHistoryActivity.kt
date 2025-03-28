@@ -51,6 +51,7 @@ class DoseHistoryActivity : AppCompatActivity() {
         // Obtener el historial de dosis
         fetchDoseHistoryFromFirestore()
 
+
         findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
             startActivity(Intent(this, PatientListActivity::class.java))
         }
