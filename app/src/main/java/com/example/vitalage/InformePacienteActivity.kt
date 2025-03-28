@@ -76,64 +76,78 @@ class InformePacienteActivity : AppCompatActivity() {
         pacienteRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
                 val builder = StringBuilder()
-                builder.append("📋 Informe de salud de $patientName\n")
-                builder.append("Periodo: $periodo (${desde.format(formatter)} a ${hoy.format(formatter)})\n\n")
 
-                // 1. Signos Vitales
-                builder.append("🩺 Signos vitales:\n")
+                builder.appendLine("╔══════════════════════════════════════════╗")
+                builder.appendLine("              INFORME CLÍNICO              ")
+                builder.appendLine("╚══════════════════════════════════════════╝\n")
+                builder.appendLine("👤 Nombre del paciente: $patientName")
+                builder.appendLine("📆 Periodo del informe: $periodo (${desde.format(formatter)} a ${hoy.format(formatter)})")
+                builder.appendLine("🕒 Fecha de generación: ${hoy.format(formatter)}\n")
+
+                // 1. SIGNOS VITALES
+                builder.appendLine("📍 1. SIGNOS VITALES")
+                builder.appendLine("──────────────────────────────────────────")
                 val signos = document.get("signos_vitales") as? List<Map<String, Any>> ?: emptyList()
+                if (signos.isEmpty()) builder.appendLine("❌ No se encontraron registros.")
                 signos.filter {
-                    val fecha = it["fecha"] as? String
+                    val fechaStr = it["fecha"] as? String
                     try {
-                        fecha?.let { f -> LocalDate.parse(f, formatter).isAfter(desde) } ?: false
-                    } catch (e: Exception) {
-                        false
-                    }
-                }.forEach {
-                    builder.append("- ${it["fecha"]}: Temp ${it["temperatura"]}°C, FC ${it["frecuencia_cardiaca"]}, PA ${it["presion_arterial"]}\n")
-                }
-
-                // 2. Dosis Administradas
-                builder.append("\n💊 Dosis administradas:\n")
-                val dosis = document.get("historial_dosis") as? List<Map<String, Any>> ?: emptyList()
-
-                val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()) // Formato legible
-
-                dosis.filter {
-                    val fecha = it["fecha_hora"] as? Timestamp
-                    fecha?.toDate()?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate()?.isAfter(desde) ?: false
-                }.forEach {
-                    val timestamp = it["fecha_hora"] as? Timestamp
-                    val fechaFormateada = timestamp?.toDate()?.let { date -> sdf.format(date) } ?: "Fecha desconocida"
-                    val medicamento = it["medicamento"] ?: "Desconocido"
-                    val cantidad = it["cantidad"] ?: "-"
-                    val dosisMg = it["dosis"] ?: "-"
-                    val usuario = it["usuario"] ?: "Sin registrar"
-
-                    builder.append("- $fechaFormateada: $medicamento, ${cantidad}u, ${dosisMg}mg ($usuario)\n")
-                }
-
-
-                // 3. Terapias
-                builder.append("\n📋 Terapias:\n")
-                val terapias = document.get("terapias") as? List<Map<String, Any>> ?: emptyList()
-                terapias.filter {
-                    val fecha = it["fecha"] as? String
-                    try {
-                        fecha?.let { f ->
-                            val fechaLocal = LocalDate.parse(f, formatterNotas)
-                            fechaLocal in desde..hasta
+                        fechaStr?.let { f ->
+                            val soloFecha = f.split(" ")[0].replace("/", "-")
+                            val fecha = LocalDate.parse(soloFecha, formatter)
+                            fecha in desde..hasta
                         } ?: false
                     } catch (e: Exception) {
                         false
                     }
                 }.forEach {
-                    builder.append("- ${it["fecha"]}: ${it["tipo"]} - Realizada: ${it["realizada"]}\n")
+                    builder.appendLine("📅 Fecha: ${it["fecha"]}")
+                    builder.appendLine("   ❤️ FC: ${it["frecuencia_cardiaca"]} bpm   💨 FR: ${it["frecuencia_respiratoria"]} rpm")
+                    builder.appendLine("   🫁 Oxígeno: ${it["saturacion_oxigeno"]}%   🌡️ Temp: ${it["temperatura"]} °C")
+                    builder.appendLine("   🩸 PA: ${it["presion_arterial"]}   ⚖️ Peso: ${it["peso"]} kg   📊 IMC: ${it["imc"]}")
+                    builder.appendLine("   👩 Encargado: ${it["encargado"]}\n")
                 }
 
-                // 4. Escalas
-                builder.append("\n🧠 Escalas aplicadas:\n")
+                // 2. MEDICAMENTOS ADMINISTRADOS
+                builder.appendLine("💊 2. MEDICAMENTOS ADMINISTRADOS")
+                builder.appendLine("──────────────────────────────────────────")
+                val dosis = document.get("historial_dosis") as? List<Map<String, Any>> ?: emptyList()
+                val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+                if (dosis.isEmpty()) builder.appendLine("❌ No se encontraron registros.")
+                dosis.filter {
+                    val fecha = it["fecha_hora"] as? Timestamp
+                    fecha?.toDate()?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate()?.isAfter(desde) ?: false
+                }.forEach {
+                    val fechaFormateada = (it["fecha_hora"] as? Timestamp)?.toDate()?.let { date -> sdf.format(date) }
+                    builder.appendLine("📅 $fechaFormateada")
+                    builder.appendLine("   💊 Medicamento: ${it["medicamento"]}")
+                    builder.appendLine("   🧪 Dosis: ${it["dosis"]} mg   Cantidad: ${it["cantidad"]}u")
+                    builder.appendLine("   👩 Administrado por: ${it["usuario"]}\n")
+                }
+
+                // 3. TERAPIAS
+                builder.appendLine("📋 3. TERAPIAS")
+                builder.appendLine("──────────────────────────────────────────")
+                val terapias = document.get("terapias") as? List<Map<String, Any>> ?: emptyList()
+                if (terapias.isEmpty()) builder.appendLine("❌ No se encontraron registros.")
+                terapias.filter {
+                    val fecha = it["fecha"] as? String
+                    try {
+                        fecha?.let { f -> LocalDate.parse(f, formatterNotas) in desde..hasta } ?: false
+                    } catch (e: Exception) {
+                        false
+                    }
+                }.forEach {
+                    builder.appendLine("📅 Fecha: ${it["fecha"]}")
+                    builder.appendLine("   🧠 Tipo: ${it["tipo"]}   ✅ Realizada: ${it["realizada"]}")
+                    builder.appendLine("   👨 Encargado: ${it["encargado"]}\n")
+                }
+
+                // 4. ESCALAS APLICADAS
+                builder.appendLine("🧠 4. ESCALAS APLICADAS")
+                builder.appendLine("──────────────────────────────────────────")
                 val escalas = document.get("escalas") as? List<Map<String, Any>> ?: emptyList()
+                if (escalas.isEmpty()) builder.appendLine("❌ No se encontraron registros.")
                 escalas.filter {
                     val fecha = it["fecha"] as? String
                     try {
@@ -142,12 +156,16 @@ class InformePacienteActivity : AppCompatActivity() {
                         false
                     }
                 }.forEach {
-                    builder.append("- ${it["fecha"]}: ${it["tipo"]} - Puntaje: ${it["puntaje"]}\n")
+                    builder.appendLine("📅 Fecha: ${it["fecha"]}")
+                    builder.appendLine("   📌 Tipo: ${it["tipo"]}   🧮 Puntaje: ${it["puntaje"]}")
+                    builder.appendLine("   👩 Encargado: ${it["encargado"]}\n")
                 }
 
-                // 5. Notas de enfermería
-                builder.append("\n📝 Notas de enfermería:\n")
+                // 5. NOTAS DE ENFERMERÍA
+                builder.appendLine("📝 5. NOTAS DE ENFERMERÍA")
+                builder.appendLine("──────────────────────────────────────────")
                 val notas = document.get("notasEnfermeria") as? List<Map<String, Any>> ?: emptyList()
+                if (notas.isEmpty()) builder.appendLine("❌ No se encontraron registros.")
                 notas.filter {
                     val fecha = it["fecha"] as? String
                     try {
@@ -160,17 +178,23 @@ class InformePacienteActivity : AppCompatActivity() {
                         false
                     }
                 }.forEach {
-                    builder.append("- ${it["fecha"]}: ${it["titulo"]} - ${it["descripcion"]}\n")
+                    builder.appendLine("📅 Fecha: ${it["fecha"]}")
+                    builder.appendLine("   📝 Título: ${it["titulo"]}")
+                    builder.appendLine("   📄 Descripción: ${it["descripcion"]}")
+                    builder.appendLine("   👩 Enfermera: ${it["enfermera"]}\n")
                 }
 
                 binding.tvVistaInforme.text = builder.toString()
+
             } else {
-                binding.tvVistaInforme.text = "No se encontraron datos para este paciente."
+                binding.tvVistaInforme.text = "❌ No se encontraron datos para este paciente."
             }
         }.addOnFailureListener {
-            Toast.makeText(this, "Error al generar informe: ${it.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "⚠️ Error al generar informe: ${it.message}", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 
 
 
