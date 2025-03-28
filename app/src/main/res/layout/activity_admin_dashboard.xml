@@ -1,7 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F9FAFB">
 
+    <!-- Contenido principal en scroll -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/navigationBar"
+        android:layout_alignParentTop="true"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- HEADER -->
+            <LinearLayout
+                android:id="@+id/header_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/md_light_blue_300"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="Volver"
+                    app:tint="@android:color/white"
+                    android:layout_marginEnd="8dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dashboard del Administrador"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Resumen general del hogar geriátrico"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:paddingTop="4dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- SECCIÓN 1: Indicadores Clave -->
+            <LinearLayout
+                android:id="@+id/layoutIndicators"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_residents"
+                        app:tint="@color/md_blue_500" />
+
+                    <TextView
+                        android:id="@+id/tvResidentesActivos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Residentes Activos"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_users"
+                        app:tint="@color/md_blue_500" />
+
+                    <TextView
+                        android:id="@+id/tvPersonalSalud"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Personal de Salud"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- SECCIÓN 2: Alertas -->
+            <LinearLayout
+                android:id="@+id/layoutAlerts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Alertas recientes"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/layout_alert_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:background="@android:color/white"
+                    android:layout_marginBottom="8dp"
+                    android:elevation="2dp" />
+
+                <TextView
+                    android:id="@+id/tvMedicamentosVencerTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Medicamentos por vencer (próximos 7 días)"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/layout_alert_meds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:background="@android:color/white"
+                    android:elevation="2dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- FOOTER -->
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/btnHomeContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_home"
+                android:contentDescription="Home"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#DDDDDD" />
+
+        <LinearLayout
+            android:id="@+id/btnProfileContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_profile"
+                android:contentDescription="Perfil"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
