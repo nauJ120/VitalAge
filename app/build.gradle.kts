@@ -40,6 +40,7 @@ android {
     }
 }
 
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -56,4 +57,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.play.services.mlkit.text.recognition)
     implementation (libs.lottie)
+    implementation(libs.mpandroidchart)
 }
