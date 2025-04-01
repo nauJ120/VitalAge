@@ -8,23 +8,23 @@
     tools:context=".KardexMenuActivity">
 
     <!-- Encabezado -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/md_light_blue_300"
-        android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/tvHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
             android:fontFamily="sans-serif-medium"
             android:text="Kardex"
             android:textColor="#FFFFFF"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvUser"
@@ -33,8 +33,13 @@
             android:fontFamily="sans-serif-light"
             android:text="Pepe Gonzalez"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-    </LinearLayout>
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/tvHeader"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="4dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <!-- Tarjeta del Residente -->
     <LinearLayout

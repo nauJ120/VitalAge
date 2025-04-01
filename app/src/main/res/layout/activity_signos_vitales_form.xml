@@ -6,50 +6,56 @@
     android:background="#F9FAFB">
 
     <!-- Header personalizado -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp"
         android:background="@color/md_light_blue_300">
 
-        <!-- Fila con botón de retroceso y título -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Botón de retroceso -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Volver"
+            android:src="@drawable/ic_back"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvSubtitulo"
+            app:layout_constraintVertical_bias="0" />
+
+        <!-- Título principal -->
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:text="Registrar Signos Vitales"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="@id/btnBack"
+            app:layout_constraintBottom_toBottomOf="@id/btnBack"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_back"
-                android:contentDescription="Volver"
-                android:layout_marginEnd="16dp"
-                app:tint="@android:color/white" />
-
-            <TextView
-                android:id="@+id/tvHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Registrar Signos Vitales"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- Nuevo TextView debajo del header -->
+        <!-- Subtítulo debajo -->
         <TextView
             android:id="@+id/tvSubtitulo"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Historial del paciente"
+            android:text="Pepe Gonzalez"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:layout_marginTop="4dp" />
-    </LinearLayout>
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/btnBack"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <!-- Formulario principal -->
     <ScrollView

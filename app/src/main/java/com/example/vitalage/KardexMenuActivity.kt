@@ -33,7 +33,7 @@ class KardexMenuActivity : AppCompatActivity() {
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
             val tvUser = findViewById<TextView>(R.id.tvUser)
-            tvUser.text = "Usuario: $usuarioActual"
+            tvUser.text = "Enfermera: $usuarioActual"
         }
 
         findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {

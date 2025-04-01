@@ -48,7 +48,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.btnLogout.setOnClickListener {
             auth.signOut()
             startActivity(Intent(this, IniciarSesionActivity::class.java))
-            finish()
+            finishAffinity()
         }
     }
 
