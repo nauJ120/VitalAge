@@ -28,7 +28,7 @@ class DoctorPatientListActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = PatientAdapter(patientList) { patient ->
-            openPatientReport(patient)
+            openInformePaciente(patient)
         }
         recyclerView.adapter = adapter
 
@@ -76,12 +76,10 @@ class DoctorPatientListActivity : AppCompatActivity() {
         adapter.updateData(filteredList)
     }
 
-    private fun openPatientReport(patient: Patient) {
-        val intent = Intent(this, PatientReportActivity::class.java).apply {
+    private fun openInformePaciente(patient: Patient) {
+        val intent = Intent(this, InformePacienteActivity::class.java).apply {
             putExtra("patient_name", patient.name)
             putExtra("patient_id", patient.id)
-            putExtra("patient_gender", patient.gender)
-            putExtra("patient_age", patient.age)
         }
         startActivity(intent)
     }

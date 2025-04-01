@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.vitalage.databinding.ActivityInformePacienteBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,6 +34,11 @@ class InformePacienteActivity : AppCompatActivity() {
 
         firestore = FirebaseFirestore.getInstance()
 
+        // 🔙 Botón de volver
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
         // Recibe datos
         patientId = intent.getStringExtra("patient_id") ?: ""
         patientName = intent.getStringExtra("patient_name") ?: "Paciente"
@@ -58,6 +60,7 @@ class InformePacienteActivity : AppCompatActivity() {
             generarPdfDesdeTexto(binding.tvVistaInforme.text.toString())
         }
     }
+
 
     private fun generarInforme(periodo: String) {
         val db = FirebaseFirestore.getInstance()

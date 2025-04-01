@@ -63,12 +63,13 @@ class IniciarSesionActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.exists()) {
-                    val rol = snapshot.value.toString().trim().lowercase()
-                    Log.d("Firebase", "Rol recuperado: '$rol'")
+                    val rol = snapshot.value.toString().trim()
+                    Log.d("Firebase", "Rol crudo recuperado: '$rol'")
 
                     val intent = when (rol) {
-                        "administrador" -> Intent(this, MenuAdminActivity::class.java)
-                        "enfermera", "medico" -> Intent(this, PatientListActivity::class.java)
+                        "Administrador" -> Intent(this, MenuAdminActivity::class.java)
+                        "Enfermera" -> Intent(this, PatientListActivity::class.java)
+                        "Medico" -> Intent(this, DoctorPatientListActivity::class.java)
                         else -> {
                             Toast.makeText(this, "Rol desconocido: $rol", Toast.LENGTH_SHORT).show()
                             return@addOnSuccessListener
