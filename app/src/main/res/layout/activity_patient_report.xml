@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F6F8"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <TextView
+        android:id="@+id/tvNombrePaciente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paciente: Juan Pérez"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Selector de periodo -->
+    <Spinner
+        android:id="@+id/spPeriodo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:spinnerMode="dropdown"
+        android:background="@android:drawable/btn_dropdown" />
+
+    <!-- Botón de generar informe -->
+    <Button
+        android:id="@+id/btnGenerarInforme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Generar Informe"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:textColor="@android:color/white" />
+
+    <!-- Botón de descargar PDF -->
+    <Button
+        android:id="@+id/btnDescargarPdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descargar PDF"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white" />
+
+    <!-- Vista previa del informe -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:padding="12dp"
+        android:elevation="2dp">
+
+        <TextView
+            android:id="@+id/tvVistaInforme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Aquí se mostrará el contenido del informe..."
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:lineSpacingExtra="6dp" />
+    </ScrollView>
+
+</LinearLayout>
