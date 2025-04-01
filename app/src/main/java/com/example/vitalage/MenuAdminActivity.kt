@@ -3,7 +3,6 @@ package com.example.vitalage
 import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
-import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -38,6 +37,4 @@ class MenuAdminActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this) {
         }
-    }
-
     }

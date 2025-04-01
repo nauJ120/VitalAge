@@ -8,39 +8,28 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.databinding.IniciarSesionBinding
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
-
 
 class IniciarSesionActivity : AppCompatActivity() {
 
     private lateinit var binding: IniciarSesionBinding
-    private var auth: FirebaseAuth = Firebase.auth
-
-
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = IniciarSesionBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
-        val boton = findViewById<AppCompatButton>(R.id.button)
 
-        val boton_registro = findViewById<AppCompatButton>(R.id.button2)
-
-        boton_registro.setOnClickListener{
-            val intent = Intent(this, RegistarseActivityActivity::class.java)
-            startActivity(intent)
-        }
-
-        boton.setOnClickListener{
+        findViewById<AppCompatButton>(R.id.button).setOnClickListener {
             iniciar_sesion()
         }
 
+        findViewById<AppCompatButton>(R.id.button2).setOnClickListener {
+            startActivity(Intent(this, RegistarseActivityActivity::class.java))
+        }
     }
 
     private fun iniciar_sesion() {
@@ -56,7 +45,6 @@ class IniciarSesionActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val userId = FirebaseAuth.getInstance().currentUser?.uid
-
                     if (userId != null) {
                         obtenerRolYRedirigir(userId)
                     } else {
@@ -68,9 +56,6 @@ class IniciarSesionActivity : AppCompatActivity() {
             }
     }
 
-    /**
-     * Obtiene el rol del usuario y lo redirige a la pantalla correspondiente.
-     */
     private fun obtenerRolYRedirigir(userId: String) {
         val database = FirebaseDatabase.getInstance().reference
 
@@ -78,14 +63,15 @@ class IniciarSesionActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.exists()) {
-                    val rol = snapshot.value.toString()
-                    Log.d("Firebase", "El rol del usuario es: $rol")
+                    val rol = snapshot.value.toString().trim()
+                    Log.d("Firebase", "Rol crudo recuperado: '$rol'")
 
                     val intent = when (rol) {
                         "Administrador" -> Intent(this, MenuAdminActivity::class.java)
                         "Enfermera" -> Intent(this, PatientListActivity::class.java)
+                        "Medico" -> Intent(this, DoctorPatientListActivity::class.java)
                         else -> {
-                            Toast.makeText(this, "Rol desconocido", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Rol desconocido: $rol", Toast.LENGTH_SHORT).show()
                             return@addOnSuccessListener
                         }
                     }
@@ -101,7 +87,4 @@ class IniciarSesionActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error al obtener rol", Toast.LENGTH_SHORT).show()
             }
     }
-
-
-
 }
