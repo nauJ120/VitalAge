@@ -38,6 +38,8 @@ class PatientListActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun fetchPatientsFromFirestore() {
         val db = FirebaseFirestore.getInstance()
         db.collection("Pacientes")
