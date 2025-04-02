@@ -2,12 +2,21 @@ package com.example.vitalage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ScaleResultActivity : AppCompatActivity() {
+
+    private var usuarioActual: String = "Desconocido"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +30,7 @@ class ScaleResultActivity : AppCompatActivity() {
         val tvGeneralMessage: TextView = findViewById(R.id.tv_general_message)
         val tvSpecificMessage: TextView = findViewById(R.id.tv_specific_message)
         val btnBack: Button = findViewById(R.id.btn_back)
+        val btnBack2: ImageView = findViewById(R.id.btnBack)
 
         // Obtener datos del Intent
         val scaleType = intent.getStringExtra("scale_type") ?: "Sin información"
@@ -39,8 +49,18 @@ class ScaleResultActivity : AppCompatActivity() {
         tvGeneralMessage.text = generalMessage
         tvSpecificMessage.text = specificMessage
 
+        obtenerNombreUsuario { nombre ->
+            usuarioActual = nombre
+            // Utilizamos findViewById para acceder al TextView
+            val tvSubtitulo = findViewById<TextView>(R.id.tvSubtitulo)
+            tvSubtitulo.text = "Enfermera: $usuarioActual"
+        }
+
         // Configurar botón de volver
         btnBack.setOnClickListener {
+            finish()
+        }
+        btnBack2.setOnClickListener {
             finish()
         }
         findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
@@ -50,6 +70,37 @@ class ScaleResultActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))}
     }
+
+    private fun obtenerNombreUsuario(callback: (String) -> Unit) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid == null) {
+            Log.e("Firebase", "No se encontró un usuario autenticado.")
+            callback("Desconocido")
+            return
+        }
+
+        val databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(uid)
+
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val nombreUsuario = snapshot.child("nombre").value as? String
+                        ?: snapshot.child("nombre_usuario").value as? String
+                        ?: "Desconocido"
+
+                    callback(nombreUsuario)
+                } else {
+                    callback("Desconocido")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                callback("Desconocido")
+            }
+        })
+    }
+
 
     private fun getMessagesForScale(scaleType: String, score: Int): Pair<String, String> {
         return when (scaleType) {

@@ -99,9 +99,7 @@ class ProfileActivity : AppCompatActivity() {
                         startActivity(Intent(this, PatientListActivity::class.java))
                     }
 
-                    findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
-                        startActivity(Intent(this, ProfileActivity::class.java))
-                    }
+
                     disableFields()
                 }
             }

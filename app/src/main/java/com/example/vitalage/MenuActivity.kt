@@ -35,13 +35,14 @@ class MenuActivity : AppCompatActivity() {
         // Obtener nombre de usuario actual
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
-            val tvUser = findViewById<TextView>(R.id.tvUser)
+            val tvUser = findViewById<TextView>(R.id.tvNombreUsuario)
             tvUser.text = "Enfermera: $usuarioActual"
         }
+
         // Botón de retroceso
         val backButton = findViewById<ImageView>(R.id.btnBack)
         backButton.setOnClickListener {
-            finish() // Cierra esta actividad y regresa a la anterior
+            finish()
         }
 
         // Opciones del menú

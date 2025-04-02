@@ -37,8 +37,13 @@ class NursingNotesActivity : AppCompatActivity() {
 
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
-            val tvUser = findViewById<TextView>(R.id.tvUser)
+            val tvUser = findViewById<TextView>(R.id.tvSubtitulo)
             tvUser.text = "Enfermera: $usuarioActual"
+        }
+        // Botón de retroceso
+        val backButton = findViewById<ImageView>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
         }
 
         findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {

@@ -47,7 +47,7 @@
 
         <!-- Subtítulo debajo -->
         <TextView
-            android:id="@+id/tvSubtitulo"
+            android:id="@+id/tvNombreUsuario"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Pepe Gonzalez"
