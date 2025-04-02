@@ -46,7 +46,7 @@ class InformePacienteActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-
+    
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
             binding.tvUser.text = "Usuario: $usuarioActual"

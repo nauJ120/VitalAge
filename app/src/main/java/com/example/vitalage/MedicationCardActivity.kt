@@ -142,8 +142,6 @@ class MedicationCardActivity : AppCompatActivity() {
             Toast.makeText(this, "Error al obtener medicamentos: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
-
-
     private fun obtenerNombreUsuario(callback: (String) -> Unit) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 

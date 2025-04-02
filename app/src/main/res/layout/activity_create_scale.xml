@@ -34,7 +34,7 @@
         android:id="@+id/tvHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Lista de Escalas"
+        android:text="Formulario de Escala"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:textStyle="bold"

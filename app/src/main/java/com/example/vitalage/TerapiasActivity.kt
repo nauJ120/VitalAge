@@ -3,6 +3,7 @@ package com.example.vitalage
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -35,7 +36,10 @@ class TerapiasActivity : AppCompatActivity() {
 
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
-            binding.tvUser.text = "Usuario: $usuarioActual"
+            binding.tvUser.text = "Enfermera: $usuarioActual"
+        }
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
         }
 
         // Recibir datos del Intent
