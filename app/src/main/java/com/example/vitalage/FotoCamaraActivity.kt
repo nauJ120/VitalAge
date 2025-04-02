@@ -227,7 +227,7 @@ class FotoCamaraActivity : AppCompatActivity() {
             .replace(mejorNombre, "", true)
             .replace(cantidadEncontrada, "", true)
             .replace(masaEncontrada, "", true)
-            .replace(Regex("\\d+(?:\\s?(mg|ML|ml|g|GR|gr|MG))?", RegexOption.IGNORE_CASE), "")
+            .replace(Regex("\\d+(?:\\s?(mg|ML|ml|g|GR|gr|MG|Mg|mG))?", RegexOption.IGNORE_CASE), "")
             .trim()
 
         resultado["otros"] = if (textoRestante.isEmpty()) "No detectado" else textoRestante
@@ -242,39 +242,34 @@ class FotoCamaraActivity : AppCompatActivity() {
 
 
     private fun buscarPorSubstring(lista: List<String>, objetivo: String): String {
-        val primeraPalabraObjetivo = extraerPrincipioActivo(objetivo).split("\\s+".toRegex())[0] // Primera palabra limpia
+        val listaMedicamentos = cargarNombresDesdeJson(this, "Lista_casi.json")
+        val palabrasObjetivo = objetivo.split("\\s+".toRegex())
 
-        Log.d("DEBUG", "Buscando coincidencias para: \"$primeraPalabraObjetivo\" en una lista de ${lista.size} elementos.")
+        Log.d("DEBUG", "Buscando coincidencias para: \"$objetivo\" en una lista de ${listaMedicamentos.size} elementos.")
 
-        var inicio = 0
-        var fin = lista.size - 1
         var mejorCoincidencia = "No detectado"
         var maxCoincidencia = 0
-
-        // Lista para almacenar posibles coincidencias ordenadas por prioridad
         val posiblesCoincidencias = mutableListOf<Pair<String, Int>>()
 
-        while (inicio <= fin) {
-            val medio = (inicio + fin) / 2
-            var primeraPalabraElemento = lista[medio].split("\\s+".toRegex())[0]
-            primeraPalabraElemento = extraerPrincipioActivo(primeraPalabraElemento)
+        for (elemento in listaMedicamentos) {
+            val palabrasElemento = elemento.split("\\s+".toRegex())
 
-            val coincidencias = contarLetrasInicialesIguales(primeraPalabraElemento, primeraPalabraObjetivo)
-            Log.d("DEBUG", "Comparando: \"$primeraPalabraElemento\" con \"$primeraPalabraObjetivo\" -> Letras iguales: $coincidencias")
+            for (palabraElemento in palabrasElemento) {
+                for (palabraObjetivo in palabrasObjetivo) {
+                    val longitudDiferencia = kotlin.math.abs(palabraElemento.length - palabraObjetivo.length)
 
-            if (coincidencias > 0) {
-                posiblesCoincidencias.add(primeraPalabraElemento to coincidencias)
-            }
+                    if (longitudDiferencia <= 1) { // Condición de igualdad o diferencia máxima de 1 carácter
+                        val coincidencias = contarLetrasInicialesIguales(palabraElemento, palabraObjetivo)
+                        Log.d("DEBUG", "Comparando: \"$palabraElemento\" con \"$palabraObjetivo\" -> Letras iguales: $coincidencias")
 
-            // Ajustar búsqueda binaria
-            if (primeraPalabraElemento < primeraPalabraObjetivo) {
-                inicio = medio + 1
-            } else {
-                fin = medio - 1
+                        if (coincidencias > 0) {
+                            posiblesCoincidencias.add(palabraElemento to coincidencias)
+                        }
+                    }
+                }
             }
         }
 
-        // Ordenar coincidencias por cantidad de letras iguales en orden descendente
         if (posiblesCoincidencias.isNotEmpty()) {
             val mejor = posiblesCoincidencias.maxByOrNull { it.second }
             mejorCoincidencia = mejor?.first ?: "No detectado"
