@@ -102,6 +102,8 @@ class MedicalControlActivity : AppCompatActivity() {
         val cantidad = intent.getStringExtra("cantidad")?.takeIf { it != "No detectado" } ?: ""
         val masa = intent.getStringExtra("masa")?.takeIf { it != "No detectado" } ?: ""
         val otrosDatos = intent.getStringExtra("otrosDatos")?.takeIf { it != "No detectado" } ?: ""
+        patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
+
 
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_medical_control, null)
@@ -209,6 +211,8 @@ class MedicalControlActivity : AppCompatActivity() {
 
 
     private fun fetchMedicationsFromFirestore() {
+        patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
+        Log.d("DEBUG", "📌 patientId recibido: $patientId")
         val db = FirebaseFirestore.getInstance()
         val patientRef = db.collection("Pacientes").document(patientId)
 

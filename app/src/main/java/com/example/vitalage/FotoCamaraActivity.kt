@@ -27,12 +27,15 @@ class FotoCamaraActivity : AppCompatActivity() {
     private val TAG = FotoCamaraActivity::class.java.simpleName
     private lateinit var textRecognizer: TextRecognizer
     private lateinit var listaMedicamentos: List<String>
+    private lateinit var patientId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fotoCamaraBinding = FotoCamaraBinding.inflate(layoutInflater)
         setContentView(fotoCamaraBinding.root)
         enableEdgeToEdge()
+
+        patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
 
         textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
@@ -76,6 +79,7 @@ class FotoCamaraActivity : AppCompatActivity() {
         // Botón para volver a la cámara
         fotoCamaraBinding.buttonCamera.setOnClickListener {
             val intent = Intent(this, CamaraActivity::class.java)
+
             startActivity(intent)
         }
     }
@@ -156,6 +160,8 @@ class FotoCamaraActivity : AppCompatActivity() {
                         putExtra("masa", clasificacion["masaOriginal"])
                         putExtra("otrosDatos", clasificacion["otrosOriginal"])
                     }
+                    intent.putExtra("patient_id",patientId)
+                    Log.d("DEBUG", "📌 patientId recibido: $patientId")
                     startActivity(intent)
                 }
                 .addOnFailureListener {

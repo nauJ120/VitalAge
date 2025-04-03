@@ -52,12 +52,14 @@ class CamaraActivity : AppCompatActivity() {
     val REQUEST_PICK = 1002
     private var imageFile: File? = null
     var outputPath: Uri? = null
+    private lateinit var patientId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         camaraBinding = CamaraBinding.inflate(layoutInflater)
         setContentView(camaraBinding.root)
         enableEdgeToEdge()
+        patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
 
         camaraBinding.buttonCamera.setOnClickListener{
             when {
@@ -169,6 +171,8 @@ class CamaraActivity : AppCompatActivity() {
                             // Creamos el intent para ir a la otra actividad
                             val intent = Intent(this, FotoCamaraActivity::class.java)
                             intent.putExtra("image_uri", imageUri.toString())  // Pasamos el URI como String
+                            intent.putExtra("patient_id",patientId)
+                            Log.d("DEBUG", "📌 patientId recibido: $patientId")
                             startActivity(intent)
 
                         } catch (e: OutOfMemoryError) {
@@ -227,6 +231,7 @@ class CamaraActivity : AppCompatActivity() {
                             // Enviamos la imagen a la otra actividad
                             val intent = Intent(this, FotoCamaraActivity::class.java).apply {
                                 putExtra("image_uri", imageUri.toString())
+                                intent.putExtra("patient_id",patientId)
                                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // Importante para compartir la Uri
                             }
                             startActivity(intent)
