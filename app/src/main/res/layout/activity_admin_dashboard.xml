@@ -20,47 +20,50 @@
             android:orientation="vertical">
 
             <!-- HEADER -->
-            <LinearLayout
-                android:id="@+id/header_container"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/md_light_blue_300"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
+                android:padding="16dp">
 
                 <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_back"
+                    android:id="@+id/btnBack"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
                     android:contentDescription="Volver"
+                    android:src="@drawable/ic_back"
                     app:tint="@android:color/white"
-                    android:layout_marginEnd="8dp" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/tvUser"
+                    app:layout_constraintVertical_bias="0" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tvHeader"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Dashboard del Administrador"
-                        android:textColor="#FFFFFF"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Resumen general del hogar geriátrico"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:paddingTop="4dp" />
-                </LinearLayout>
-            </LinearLayout>
+                    android:text="Dashboard Del Administrador"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/btnBack"
+                    app:layout_constraintTop_toTopOf="@id/btnBack"
+                    app:layout_constraintBottom_toBottomOf="@id/btnBack"
+                    app:layout_constraintEnd_toEndOf="parent" />
+                <TextView
+                    android:id="@+id/tvUser"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Pepe Gonzalez"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/btnBack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- SECCIÓN 1: Indicadores Clave -->
             <LinearLayout

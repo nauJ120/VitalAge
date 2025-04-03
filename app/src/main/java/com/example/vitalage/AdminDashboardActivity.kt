@@ -14,7 +14,11 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -22,6 +26,8 @@ import java.util.Locale
 import kotlin.collections.HashMap
 
 class AdminDashboardActivity : AppCompatActivity() {
+
+    private var usuarioActual: String = "Desconocido"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +39,17 @@ class AdminDashboardActivity : AppCompatActivity() {
         val layoutMeds = findViewById<LinearLayout>(R.id.layout_alert_meds)
         val barChart = findViewById<BarChart>(R.id.barChartMeds)
 
-        findViewById<ImageView>(R.id.iv_back).setOnClickListener { finish() }
+        obtenerNombreUsuario { nombre ->
+            usuarioActual = nombre
+            val tvUser = findViewById<TextView>(R.id.tvUser)
+            tvUser.text = "Administrador: $usuarioActual"
+        }
+
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
+        }
+
+
         findViewById<ImageView>(R.id.btnHome).setOnClickListener {
             startActivity(Intent(this, MenuAdminActivity::class.java))
             finish()
@@ -104,7 +120,7 @@ class AdminDashboardActivity : AppCompatActivity() {
                         }
 
                         val tvDetalle = TextView(this).apply {
-                            text = "$fecha - $enfermera: \${descripcion.take(100)}"
+                            text = "$fecha - $enfermera: $descripcion"
                             textSize = 14f
                             setTextColor(getColor(R.color.black))
                         }
@@ -226,5 +242,42 @@ class AdminDashboardActivity : AppCompatActivity() {
             barChart.xAxis.granularity = 1f
             barChart.invalidate()
         }
+    }
+
+    private fun obtenerNombreUsuario(callback: (String) -> Unit) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid == null) {
+            Log.e("Firebase", "No se encontró un usuario autenticado.")
+            callback("Desconocido")
+            return
+        }
+
+        Log.d("Firebase", "UID del usuario autenticado: $uid")
+
+        // 🔥 Corregimos la referencia según la estructura: user -> users -> {UID}
+        val databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(uid)
+
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    // Intentamos obtener el nombre desde ambas posibles claves
+                    val nombreUsuario = snapshot.child("nombre").value as? String
+                        ?: snapshot.child("nombre_usuario").value as? String
+                        ?: "Desconocido"
+
+                    Log.d("Firebase", "Nombre obtenido de la base de datos: $nombreUsuario")
+                    callback(nombreUsuario)
+                } else {
+                    Log.e("Firebase", "No se encontró el usuario en la base de datos.")
+                    callback("Desconocido")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al obtener el nombre: ${error.message}")
+                callback("Desconocido")
+            }
+        })
     }
 }
