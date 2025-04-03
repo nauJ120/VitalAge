@@ -98,6 +98,7 @@ class MenuActivity : AppCompatActivity() {
 
                 "Cámara" -> {
                     val intent = Intent(this, CamaraActivity::class.java)
+                    intent.putExtra("patient_id", patientId)
                     startActivity(intent)
                 }
 

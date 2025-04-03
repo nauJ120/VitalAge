@@ -8,7 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
-import android.widget.LinearLayout
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -27,12 +27,15 @@ class FotoCamaraActivity : AppCompatActivity() {
     private val TAG = FotoCamaraActivity::class.java.simpleName
     private lateinit var textRecognizer: TextRecognizer
     private lateinit var listaMedicamentos: List<String>
+    private lateinit var patientId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fotoCamaraBinding = FotoCamaraBinding.inflate(layoutInflater)
         setContentView(fotoCamaraBinding.root)
         enableEdgeToEdge()
+
+        patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
 
         textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
@@ -43,37 +46,44 @@ class FotoCamaraActivity : AppCompatActivity() {
         val imageUriString = intent.getStringExtra("image_uri")
         val imageUri = imageUriString?.let { Uri.parse(it) }
 
-        // Mostrar la imagen en un ImageView
-        val imageView = ImageView(this).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-            )
-            scaleType = ImageView.ScaleType.FIT_CENTER
-            adjustViewBounds = true
-        }
+        if (imageUri != null) {
+            // Crear un ImageView dinámico
+            val imageView = ImageView(this).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                scaleType = ImageView.ScaleType.FIT_CENTER
+                setImageURI(imageUri) // Cargar la imagen
+            }
 
-        imageUri?.let {
-            imageView.setImageURI(it)
-            fotoCamaraBinding.captura.addView(imageView)
+            // Asegurar que `captura` esté vacío antes de agregar la imagen
+            fotoCamaraBinding.captura.removeAllViews()
+
+            // Agregar el ImageView al MaterialCardView
+            fotoCamaraBinding.captura.postDelayed({
+                fotoCamaraBinding.captura.addView(imageView)
+            }, 500) // Pequeño delay para asegurar carga correcta
+
             Log.d(TAG, "Imagen recibida correctamente: $imageUri")
-        } ?: run {
+        } else {
+            Log.e(TAG, "imageUri es null, no se puede cargar la imagen")
             Toast.makeText(this, "Error al cargar la imagen", Toast.LENGTH_SHORT).show()
         }
 
         // Botón para escanear el texto
         fotoCamaraBinding.buttonEscanear.setOnClickListener {
-            imageUri?.let { uri ->
-                escanearTexto(uri)
-            }
+            imageUri?.let { uri -> escanearTexto(uri) }
         }
 
         // Botón para volver a la cámara
         fotoCamaraBinding.buttonCamera.setOnClickListener {
             val intent = Intent(this, CamaraActivity::class.java)
+
             startActivity(intent)
         }
     }
+
 
     private fun cargarNombresDesdeJson(context: Context, fileName: String): List<String> {
         return try {
@@ -150,6 +160,8 @@ class FotoCamaraActivity : AppCompatActivity() {
                         putExtra("masa", clasificacion["masaOriginal"])
                         putExtra("otrosDatos", clasificacion["otrosOriginal"])
                     }
+                    intent.putExtra("patient_id",patientId)
+                    Log.d("DEBUG", "📌 patientId recibido: $patientId")
                     startActivity(intent)
                 }
                 .addOnFailureListener {
@@ -174,14 +186,11 @@ class FotoCamaraActivity : AppCompatActivity() {
             resultado
         }
 
-
         var mejorNombre = "No detectado"
-        var maxCoincidencias = 0
 
         val palabrasTexto = textoNormalizado.split(" ").toSet()
 
         for (nombre in nombresDetectados) {
-            // Normalizamos el nombre detectado y el texto extraído (mayúsculas y sin espacios extra)
             val nombreLetras = nombre.uppercase().replace(Regex("\\s+"), "").toCharArray()
             val textoLetras = palabrasTexto.joinToString("").uppercase().replace(Regex("\\s+"), "").toCharArray()
 
@@ -190,7 +199,6 @@ class FotoCamaraActivity : AppCompatActivity() {
             var indexTexto = 0
             var indexNombre = 0
 
-            // Verificamos si todas las letras del nombre aparecen en el texto en el mismo orden
             while (indexTexto < textoLetras.size && indexNombre < nombreLetras.size) {
                 if (textoLetras[indexTexto] == nombreLetras[indexNombre]) {
                     indexNombre++
@@ -198,7 +206,6 @@ class FotoCamaraActivity : AppCompatActivity() {
                 indexTexto++
             }
 
-            // Si logramos recorrer todas las letras del nombre en orden, hay coincidencia
             if (indexNombre == nombreLetras.size) {
                 mejorNombre = nombre
                 Log.d("DEBUG", "Coincidencia exacta encontrada: $nombre")
@@ -206,9 +213,14 @@ class FotoCamaraActivity : AppCompatActivity() {
             }
         }
 
+        // **Si el nombre sigue siendo "No detectado", llamar a busquedaBinariaUltimoElemento**
+        if (mejorNombre == "No detectado") {
+            mejorNombre = buscarPorSubstring(nombresJsonOrdenados, textoNormalizado)
+            Log.d("DEBUG", "Nombre obtenido por búsqueda binaria: $mejorNombre")
+        }
 
         val regexMasa = Regex("\\d+\\s?(mg|ML|ml|g|GR|gr|MG)", RegexOption.IGNORE_CASE)
-        val regexCantidad = Regex("(\\d+[xX]?\\d*)\\s?(cápsula|tabletas|capsulas|capsules|tablets|tablet|comprimidos  )", RegexOption.IGNORE_CASE)
+        val regexCantidad = Regex("(\\d+[xX]?\\d*)\\s?(cápsula|tabletas|capsulas|capsules|tablets|tablet|comprimidos)", RegexOption.IGNORE_CASE)
 
         val cantidadEncontrada = regexCantidad.find(textoNormalizado)?.value ?: "No detectado"
         val masaEncontrada = regexMasa.find(textoNormalizado)?.value ?: "No detectado"
@@ -217,17 +229,15 @@ class FotoCamaraActivity : AppCompatActivity() {
         resultado["cantidad"] = cantidadEncontrada
         resultado["masa"] = masaEncontrada
 
-        // **Eliminar del texto original lo ya identificado**
         var textoRestante = textoNormalizado
             .replace(mejorNombre, "", true)
             .replace(cantidadEncontrada, "", true)
             .replace(masaEncontrada, "", true)
-            .replace(Regex("\\d+(?:\\s?(mg|ML|ml|g|GR|gr|MG))?", RegexOption.IGNORE_CASE), "")
+            .replace(Regex("\\d+(?:\\s?(mg|ML|ml|g|GR|gr|MG|Mg|mG))?", RegexOption.IGNORE_CASE), "")
             .trim()
 
         resultado["otros"] = if (textoRestante.isEmpty()) "No detectado" else textoRestante
 
-        // **Guardar valores originales**
         resultado["nombreOriginal"] = mejorNombre
         resultado["cantidadOriginal"] = cantidadEncontrada
         resultado["masaOriginal"] = masaEncontrada
@@ -235,6 +245,70 @@ class FotoCamaraActivity : AppCompatActivity() {
 
         return resultado
     }
+
+
+    private fun buscarPorSubstring(lista: List<String>, objetivo: String): String {
+        val listaMedicamentos = cargarNombresDesdeJson(this, "Lista_casi.json")
+        val palabrasObjetivo = objetivo.split("\\s+".toRegex())
+
+        Log.d("DEBUG", "Buscando coincidencias para: \"$objetivo\" en una lista de ${listaMedicamentos.size} elementos.")
+
+        var mejorCoincidencia = "No detectado"
+        var maxCoincidencia = 0
+        val posiblesCoincidencias = mutableListOf<Pair<String, Int>>()
+
+        for (elemento in listaMedicamentos) {
+            val palabrasElemento = elemento.split("\\s+".toRegex())
+
+            for (palabraElemento in palabrasElemento) {
+                for (palabraObjetivo in palabrasObjetivo) {
+                    val longitudDiferencia = kotlin.math.abs(palabraElemento.length - palabraObjetivo.length)
+
+                    if (longitudDiferencia <= 1) { // Condición de igualdad o diferencia máxima de 1 carácter
+                        val coincidencias = contarLetrasInicialesIguales(palabraElemento, palabraObjetivo)
+                        Log.d("DEBUG", "Comparando: \"$palabraElemento\" con \"$palabraObjetivo\" -> Letras iguales: $coincidencias")
+
+                        if (coincidencias > 0) {
+                            posiblesCoincidencias.add(palabraElemento to coincidencias)
+                        }
+                    }
+                }
+            }
+        }
+
+        if (posiblesCoincidencias.isNotEmpty()) {
+            val mejor = posiblesCoincidencias.maxByOrNull { it.second }
+            mejorCoincidencia = mejor?.first ?: "No detectado"
+            maxCoincidencia = mejor?.second ?: 0
+        }
+
+        Log.d("DEBUG", "✅ Mejor coincidencia encontrada: \"$mejorCoincidencia\" con $maxCoincidencia letras iguales")
+        return mejorCoincidencia
+    }
+
+
+    private fun contarLetrasInicialesIguales(a: String, b: String): Int {
+        val minLength = minOf(a.length, b.length)
+        var count = 0
+
+        for (i in 0 until minLength) {
+            if (a[i].equals(b[i], ignoreCase = true)) {
+                count++
+            }
+        }
+
+        return count
+    }
+
+
+    private fun extraerPrincipioActivo(objetivo: String): String {
+        val regex = """"PRINCIPIOACTIVO":"([^"]+)"""".toRegex()
+        val match = regex.find(objetivo)
+        return match?.groupValues?.get(1) ?: objetivo // Si no hay coincidencia, usar el string original
+    }
+
+
+
 
     private fun quitarTildes(input: String): String {
         val normalized = Normalizer.normalize(input, Normalizer.Form.NFD)
