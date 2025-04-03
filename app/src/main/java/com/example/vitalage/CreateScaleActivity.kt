@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -39,6 +40,7 @@ class CreateScaleActivity : AppCompatActivity() {
     private lateinit var questionsContainer: LinearLayout
     private lateinit var btnSave: Button
     private lateinit var btnCancel: Button
+    private lateinit var btnBack: ImageView
 
     private lateinit var patientName: String
     private lateinit var patientId: String
@@ -245,11 +247,13 @@ class CreateScaleActivity : AppCompatActivity() {
 
         // Inicializar vistas
         spinnerScaleType = findViewById(R.id.spinner_scale_type)
-        tvEncargado = findViewById(R.id.tv_encargado)
+        tvEncargado = findViewById(R.id.tvSubtitulo)
         tvFecha = findViewById(R.id.tv_fecha)
         questionsContainer = findViewById(R.id.questions_container)
         btnSave = findViewById(R.id.btn_save)
         btnCancel = findViewById(R.id.btn_cancel)
+
+        btnBack = findViewById<ImageView>(R.id.btnBack)
 
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
@@ -258,6 +262,13 @@ class CreateScaleActivity : AppCompatActivity() {
 
         binding.tvResidentName.text = patientName
         binding.tvResidentInfo.text = "ID: $patientId • Sexo: $patientGender • Edad: $patientAge años"
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
         // Obtener fecha actual formateada
         val fechaActual = com.google.firebase.Timestamp.now().toDate()
@@ -271,7 +282,9 @@ class CreateScaleActivity : AppCompatActivity() {
         btnCancel.setOnClickListener {
             finish()
         }
-
+        btnBack.setOnClickListener {
+            finish()
+        }
         // Obtener nombre del usuario actual
         obtenerNombreUsuario { nombre ->
             encargado = nombre

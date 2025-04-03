@@ -1,13 +1,21 @@
 package com.example.vitalage
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.clases.Terapia
 import com.example.vitalage.databinding.ActivityTerapiaFormBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
@@ -21,6 +29,8 @@ class TerapiaFormActivity : AppCompatActivity() {
     private lateinit var patientId: String
     private lateinit var patientGender: String
     private var patientAge: Int = 0
+
+    private var usuarioActual: String = "Desconocido"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +47,25 @@ class TerapiaFormActivity : AppCompatActivity() {
         // Cancelar
         binding.btnCancelar.setOnClickListener { finish() }
 
+        obtenerNombreUsuario { nombre ->
+            usuarioActual = nombre
+            binding.tvUser.text = "Enfermera: $usuarioActual"
+        }
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
+        }
+
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
         patientGender = intent.getStringExtra("patient_gender") ?: "No especificado"
         patientAge = intent.getIntExtra("patient_age", 0)
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
     }
 
     private fun showDatePicker() {
@@ -92,6 +117,36 @@ class TerapiaFormActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error al agregar terapia: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun obtenerNombreUsuario(callback: (String) -> Unit) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid == null) {
+            Log.e("Firebase", "No se encontró un usuario autenticado.")
+            callback("Desconocido")
+            return
+        }
+
+        val databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(uid)
+
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val nombreUsuario = snapshot.child("nombre").value as? String
+                        ?: snapshot.child("nombre_usuario").value as? String
+                        ?: "Desconocido"
+
+                    callback(nombreUsuario)
+                } else {
+                    callback("Desconocido")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                callback("Desconocido")
+            }
+        })
     }
 
 }

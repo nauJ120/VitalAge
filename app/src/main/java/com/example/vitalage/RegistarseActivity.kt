@@ -122,7 +122,14 @@ class RegistarseActivityActivity : AppCompatActivity() {
 
 
 
-                            val usuario = User(binding.tipoDeDoc.text.toString(),binding.numeroDeDoc.text.toString(),binding.correo.text.toString(),binding.contrasenia.text.toString(),rol,binding.nombreUsuario.text.toString())
+                            val usuario = User(
+                                tipodocumento = binding.tipoDeDoc.text.toString(),
+                                identificacion = binding.numeroDeDoc.text.toString(),
+                                correo = binding.correo.text.toString(),
+                                contrasenia = binding.contrasenia.text.toString(),
+                                rol = rol,
+                                nombre_usuario = binding.nombreUsuario.text.toString()
+                            )
 
                             if (userid != null) {
                                 messageRef.child("users").child(userid).setValue(usuario).addOnSuccessListener {

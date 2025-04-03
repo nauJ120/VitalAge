@@ -1,11 +1,14 @@
 package com.example.vitalage
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +49,17 @@ class MedicationCardActivity : AppCompatActivity() {
             binding.tvUser.text = "Usuario: $usuarioActual"
         }
 
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
+        }
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
+
         // Recibir datos del Intent
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
@@ -64,6 +78,13 @@ class MedicationCardActivity : AppCompatActivity() {
 
         // Obtener los medicamentos del paciente desde Firestore
         fetchMedicationsFromFirestore()
+
+        val btnHomeContainer = findViewById<LinearLayout>(R.id.btnHomeContainer)
+
+        btnHomeContainer.setOnClickListener {
+            val intent = Intent(this, PatientListActivity::class.java) // Reemplaza "NuevaActividad" con el nombre de tu actividad destino
+            startActivity(intent)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -78,31 +99,49 @@ class MedicationCardActivity : AppCompatActivity() {
 
         patientRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
-                val medications = document.get("medicamentos") as? List<Map<String, Any>> ?: emptyList()
+                val medicamentosPaciente = document.get("medicamentos") as? List<Map<String, Any>> ?: emptyList()
 
                 medicationList.clear()
 
-                for (medication in medications) {
-                    val name = medication["nombre"] as? String ?: "Desconocido"
-                    val dose = "${medication["dosis"]?.toString() ?: "N/A"} mg"
-                    val observation = medication["observaciones"] as? String ?: "N/A"
-                    val morning = medication["hora_mañana"] as? String ?: "-"
-                    val afternoon = medication["hora_tarde"] as? String ?: "-"
-                    val night = medication["hora_noche"] as? String ?: "-"
+                for (med in medicamentosPaciente) {
+                    val medId = med["medicamento_id"] as? String ?: continue
 
-                    medicationList.add(MedicationCard(name, dose, observation, morning, afternoon, night))
+                    // Paso 2: Buscar los datos generales en la colección global
+                    db.collection("Medicamentos").document(medId).get()
+                        .addOnSuccessListener { globalDoc ->
+                            if (globalDoc.exists()) {
+                                val nombre = globalDoc.getString("nombre") ?: "Desconocido"
+                                val dosis = "${globalDoc.getLong("dosis")?.toInt() ?: 0} mg"
+                                val observaciones = globalDoc.getString("observaciones") ?: "N/A"
+
+                                val mañana = med["hora_mañana"] as? String ?: "-"
+                                val tarde = med["hora_tarde"] as? String ?: "-"
+                                val noche = med["hora_noche"] as? String ?: "-"
+
+                                medicationList.add(
+                                    MedicationCard(
+                                        nombre,
+                                        dosis,
+                                        observaciones,
+                                        mañana,
+                                        tarde,
+                                        noche
+                                    )
+                                )
+                                medicationAdapter.notifyDataSetChanged() // Se notifica por cada uno porque son async
+                            }
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Error cargando datos del medicamento: ${it.message}", Toast.LENGTH_SHORT).show()
+                        }
                 }
-
-                // Notificar cambios en la lista
-                medicationAdapter.notifyDataSetChanged()
             } else {
-                Toast.makeText(this, "No se encontraron medicamentos para este paciente", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Paciente no encontrado", Toast.LENGTH_SHORT).show()
             }
         }.addOnFailureListener { e ->
             Toast.makeText(this, "Error al obtener medicamentos: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
-
     private fun obtenerNombreUsuario(callback: (String) -> Unit) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 

@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,10 +29,18 @@ class AddNursingNoteActivity : AppCompatActivity() {
     private lateinit var saveButton: Button // Botón Guardar
     private lateinit var titleField: EditText // ✅ Campo de título
     private lateinit var descriptionField: EditText // ✅ Campo de descripción
+    private var usuarioActual: String = "Desconocido"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_nursing_note)
+
+        findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
         db = FirebaseFirestore.getInstance()
 
@@ -49,7 +59,6 @@ class AddNursingNoteActivity : AppCompatActivity() {
         // Inicializar vistas
         saveButton = findViewById(R.id.btn_save)
         val cancelButton = findViewById<Button>(R.id.btn_cancel)
-        val backButton = findViewById<ImageView>(R.id.iv_back)
 
         titleField = findViewById(R.id.et_title) // ✅ Campo de título
         descriptionField = findViewById(R.id.et_description)
@@ -83,7 +92,17 @@ class AddNursingNoteActivity : AppCompatActivity() {
         }
 
         cancelButton.setOnClickListener { finish() }
-        backButton.setOnClickListener { finish() }
+
+        obtenerNombreUsuario { nombre ->
+            usuarioActual = nombre
+            val tvUser = findViewById<TextView>(R.id.tvSubtitulo)
+            tvUser.text = "Enfermera: $usuarioActual"
+        }
+        // Botón de retroceso
+        val backButton = findViewById<ImageView>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
+        }
 
         // ✅ Agregar Footer de Navegación
         setupFooterNavigation()
