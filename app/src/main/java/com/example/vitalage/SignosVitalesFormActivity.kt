@@ -3,6 +3,7 @@ package com.example.vitalage
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.databinding.ActivitySignosVitalesFormBinding
@@ -29,6 +30,13 @@ class SignosVitalesFormActivity : AppCompatActivity() {
 
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
+            binding.tvSubtitulo.text = "Enfermera: $usuarioActual"
+
+        }
+
+        val backButton = findViewById<ImageView>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
         }
 
         // Guardar
@@ -40,6 +48,7 @@ class SignosVitalesFormActivity : AppCompatActivity() {
         binding.btnCancel.setOnClickListener {
             finish()
         }
+
     }
 
     private fun guardarSignosVitales() {

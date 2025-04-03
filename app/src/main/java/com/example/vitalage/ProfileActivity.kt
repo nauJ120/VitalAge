@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,10 @@ class ProfileActivity : AppCompatActivity() {
             return
         }
 
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
+        }
+
         databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(userId!!)
 
         // Configurar el spinner de tipo de documento
@@ -41,6 +46,7 @@ class ProfileActivity : AppCompatActivity() {
         // Cargar información del usuario
         loadUserData()
 
+
         // Botón Guardar Cambios (Solo Admin)
         binding.btnSaveChanges.setOnClickListener { saveChanges() }
 
@@ -48,7 +54,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.btnLogout.setOnClickListener {
             auth.signOut()
             startActivity(Intent(this, IniciarSesionActivity::class.java))
-            finish()
+            finishAffinity()
         }
     }
 
@@ -67,12 +73,11 @@ class ProfileActivity : AppCompatActivity() {
                 val identificacion = snapshot.child("identificacion").value.toString()
                 val tipoDocumento = snapshot.child("tipodocumento").value.toString()
                 userRole = snapshot.child("rol").value.toString()
-
+                binding.tvRole.text = "Rol: $userRole"
                 // Mostrar datos en los campos
                 binding.etFullName.setText(nombre)
                 binding.etEmail.setText(correo)
                 binding.etIdentification.setText(identificacion)
-                binding.tvRole.text = "Rol: $userRole"
 
                 // Seleccionar el tipo de documento en el Spinner
                 val tiposDocumento = resources.getStringArray(R.array.Tipos_de_documentos)
@@ -99,9 +104,7 @@ class ProfileActivity : AppCompatActivity() {
                         startActivity(Intent(this, PatientListActivity::class.java))
                     }
 
-                    findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
-                        startActivity(Intent(this, ProfileActivity::class.java))
-                    }
+
                     disableFields()
                 }
             }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -21,6 +22,7 @@ class KardexMenuActivity : AppCompatActivity() {
     private lateinit var patientName: String
     private lateinit var patientId: String
     private lateinit var patientGender: String
+
     private var patientAge: Int = 0
 
     private var usuarioActual: String = "Desconocido"
@@ -33,7 +35,11 @@ class KardexMenuActivity : AppCompatActivity() {
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
             val tvUser = findViewById<TextView>(R.id.tvUser)
-            tvUser.text = "Usuario: $usuarioActual"
+            tvUser.text = "Enfermera: $usuarioActual"
+        }
+
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
         }
 
         findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {

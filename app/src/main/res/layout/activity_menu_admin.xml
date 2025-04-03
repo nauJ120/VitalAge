@@ -33,6 +33,7 @@
             android:paddingTop="4dp"/>
     </LinearLayout>
 
+
     <!-- CONTENEDOR PRINCIPAL -->
     <ScrollView
         android:id="@+id/scrollView"

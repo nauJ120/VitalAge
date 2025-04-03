@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -46,6 +47,10 @@ class MedicationCardActivity : AppCompatActivity() {
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
             binding.tvUser.text = "Usuario: $usuarioActual"
+        }
+
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
         }
 
         findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
@@ -137,8 +142,6 @@ class MedicationCardActivity : AppCompatActivity() {
             Toast.makeText(this, "Error al obtener medicamentos: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
-
-
     private fun obtenerNombreUsuario(callback: (String) -> Unit) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
