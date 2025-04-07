@@ -3,6 +3,7 @@ package com.example.vitalage
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -23,6 +24,10 @@ class EscaneoActivity: AppCompatActivity() {
         setContentView(escaneadoBinding.root)
         enableEdgeToEdge()
 
+        findViewById<ImageView>(R.id.btnProfile).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+            finish()
+        }
 
         val botoncancelar = findViewById<AppCompatButton>(R.id.buttonCamera)
 

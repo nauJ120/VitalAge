@@ -35,6 +35,11 @@ class FotoCamaraActivity : AppCompatActivity() {
         setContentView(fotoCamaraBinding.root)
         enableEdgeToEdge()
 
+        findViewById<ImageView>(R.id.btnProfile).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+            finish()
+        }
+
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
 
         textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)

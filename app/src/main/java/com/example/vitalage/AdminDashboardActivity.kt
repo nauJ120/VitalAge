@@ -55,7 +55,8 @@ class AdminDashboardActivity : AppCompatActivity() {
             finish()
         }
         findViewById<ImageView>(R.id.btnProfile).setOnClickListener {
-            Toast.makeText(this, "Perfil en construcción", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ProfileActivity::class.java))
+            finish()
         }
 
         val db = FirebaseFirestore.getInstance()

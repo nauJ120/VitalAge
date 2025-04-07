@@ -61,6 +61,11 @@ class CamaraActivity : AppCompatActivity() {
         enableEdgeToEdge()
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
 
+        findViewById<ImageView>(R.id.btnProfile).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+            finish()
+        }
+
         camaraBinding.buttonCamera.setOnClickListener{
             when {
                 ContextCompat.checkSelfPermission(
