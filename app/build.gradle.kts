@@ -35,10 +35,11 @@ android {
         jvmTarget = "11"
     }
     buildFeatures{
-
+        buildConfig = true
         viewBinding = true
     }
 }
+
 
 dependencies {
     implementation(libs.androidx.core.ktx)
@@ -49,7 +50,12 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.cardview)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.play.services.mlkit.text.recognition)
+    implementation (libs.lottie)
+    implementation(libs.mpandroidchart)
 }

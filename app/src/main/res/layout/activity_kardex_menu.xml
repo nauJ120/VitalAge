@@ -1,0 +1,260 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F9FD"
+    tools:context=".KardexMenuActivity">
+
+    <!-- Encabezado -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_light_blue_300"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Volver"
+            android:src="@drawable/ic_back"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvUser"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Kardex"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="@id/btnBack"
+            app:layout_constraintBottom_toBottomOf="@id/btnBack"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:id="@+id/tvUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Pepe Gonzalez"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/btnBack"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- Tarjeta del Residente -->
+    <LinearLayout
+        android:id="@+id/cardResident"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/card_background"
+        android:elevation="4dp"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:layout_below="@id/header">
+
+        <!-- Foto del residente -->
+        <ImageView
+            android:id="@+id/imgResident"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_resident"
+            android:contentDescription="Resident Photo"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:tint="#4A90E2" />
+
+        <!-- Información del residente -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvResidentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre del Paciente"
+                android:textSize="20sp"
+                android:textColor="#333333"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:id="@+id/tvResidentInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Información del Paciente"
+                android:textSize="14sp"
+                android:textColor="#777777"
+                android:fontFamily="sans-serif-light" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Botones de menú -->
+    <LinearLayout
+        android:id="@+id/menuButtons"
+        android:layout_width="match_parent"
+        android:layout_height="334dp"
+        android:layout_below="@id/cardResident"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+        <!-- Botón Tarjeta de Medicamentos -->
+        <!-- Botón Inventario de Medicamentos -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnInventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:minHeight="64dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="Inventario de medicamentos"
+            android:textColor="#333333"
+            app:backgroundTint="@color/md_cyan_400"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_checklist"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:iconSize="24dp" />
+
+        <!-- Botón Tarjeta de Medicamentos -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMedCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:minHeight="64dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="Tarjeta de medicamentos"
+            android:textColor="#333333"
+            app:backgroundTint="@color/md_cyan_400"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_pills"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:iconSize="24dp" />
+
+        <!-- Botón Formato Ingreso y Control Médico -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnControl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:minHeight="64dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="Formato ingreso y control médico"
+            android:textColor="#333333"
+            app:backgroundTint="@color/md_cyan_400"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_medical_form"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:iconSize="24dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDoseHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:minHeight="64dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="Historial de Dosis Administradas"
+            android:textColor="#333333"
+            app:backgroundTint="@color/md_cyan_400"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_dose_history"
+            app:iconGravity="start"
+            app:iconPadding="12dp"
+            app:iconSize="24dp" />
+
+
+    </LinearLayout>
+
+    <!-- Barra de navegación inferior -->
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:elevation="8dp"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2">
+
+        <!-- Contenedor del Botón de Inicio -->
+        <LinearLayout
+            android:id="@+id/btnHomeContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Home"
+                android:src="@drawable/ic_home"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+
+        <!-- Separador entre los íconos -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#DDDDDD" />
+
+        <!-- Contenedor del Botón de Perfil -->
+        <LinearLayout
+            android:id="@+id/btnProfileContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_profile"
+                android:contentDescription="Profile"
+                app:tint="#4A90E2" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
