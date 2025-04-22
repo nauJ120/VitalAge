@@ -1,56 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Marco superior -->
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/marcoSuperior"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:background="@drawable/marco_registrarse"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Título -->
+        <ImageView
+            android:id="@+id/icon_scan"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_back"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0" />
         <TextView
             android:id="@+id/textoregistrarse"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/escaneo_medi"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textColor="@android:color/white"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="50dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/icon_scan"
+            app:layout_constraintTop_toTopOf="@id/icon_scan"
+            app:layout_constraintBottom_toBottomOf="@id/icon_scan"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!-- Ícono hamburguesa -->
-        <ImageView
-            android:id="@+id/hamburguesa"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/ic_menu_icon" />
-
-        <!-- Campo de entrada de enfermera -->
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/enfermera"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="Pepe Gonzalez"
-            android:background="@drawable/formato_enfermera"
-            android:drawableStart="@drawable/enfermera"
-            android:gravity="center_vertical"/>
-    </FrameLayout>
+            android:layout_width="0dp"
+            android:layout_height= "wrap_content"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/icon_scan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Contenedor de información -->
     <LinearLayout
@@ -58,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="10dp"
         android:padding="16dp"
         android:background="@color/md_grey_200"
         app:layout_constraintTop_toBottomOf="@id/marcoSuperior">

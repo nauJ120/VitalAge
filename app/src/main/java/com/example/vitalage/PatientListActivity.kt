@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.annotation.CallSuper
 import androidx.annotation.MainThread
@@ -61,9 +62,14 @@ class PatientListActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))}
 
-        onBackPressedDispatcher.addCallback(this) {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Toast.makeText(this@PatientListActivity, "No puedes volver atrás.", Toast.LENGTH_SHORT).show()
             }
+        })
     }
+
+
 
 
 

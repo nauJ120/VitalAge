@@ -18,6 +18,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.MediaController
+import android.widget.TextView
 import android.widget.Toast
 import android.widget.VideoView
 
@@ -30,6 +31,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.example.vitalage.databinding.CamaraBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 import java.io.File
@@ -46,20 +52,37 @@ class CamaraActivity : AppCompatActivity() {
 
     private lateinit var camaraBinding: CamaraBinding
     val PERM_CAMERA_CODE = 101
-    private val TAG = CamaraActivity::class.java.simpleName
+
     val REQUEST_IMAGE_CAPTURE = 1
     val PERM_GALERY_GROUP_CODE = 1001
     val REQUEST_PICK = 1002
-    private var imageFile: File? = null
-    var outputPath: Uri? = null
+    private lateinit var photoUri: Uri
+    private lateinit var imageFile: File
+
     private lateinit var patientId: String
+    private var usuarioActual: String = "Desconocido"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         camaraBinding = CamaraBinding.inflate(layoutInflater)
         setContentView(camaraBinding.root)
-        enableEdgeToEdge()
+
+
+        obtenerNombreUsuario { nombre ->
+            usuarioActual = nombre
+            val tvUser = findViewById<TextView>(R.id.enfermera)
+            tvUser.text = "Enfermera: $usuarioActual"
+        }
+
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
+        val cachePath = File(cacheDir, "images")
+        if (!cachePath.exists()) cachePath.mkdirs()
+
+        imageFile = File(cachePath, "captured_image.jpg")
+        photoUri = FileProvider.getUriForFile(this, "com.example.vitalage.fileprovider", imageFile)
+
+
+
 
         camaraBinding.buttonCamera.setOnClickListener{
             when {
@@ -82,6 +105,20 @@ class CamaraActivity : AppCompatActivity() {
                 }
             }
         }
+        camaraBinding.btnHome.setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
+        }
+
+        camaraBinding.iconScan.setOnClickListener{
+            finish()
+        }
+
+
+        camaraBinding.btnProfile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
 
         camaraBinding.buttonGalery.setOnClickListener {
             when {
@@ -125,14 +162,7 @@ class CamaraActivity : AppCompatActivity() {
         startActivityForResult(intentPick, REQUEST_PICK)
     }
 
-    private fun lanzar() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, "No se pudo tomar la foto", Toast.LENGTH_SHORT).show()
-        }
-    }
+
 
 
     private fun dispatchTakePictureIntent() {
@@ -144,6 +174,42 @@ class CamaraActivity : AppCompatActivity() {
             Toast.makeText(this, "Foto capturada correctamente", Toast.LENGTH_SHORT).show()
         }
     }
+    private fun obtenerNombreUsuario(callback: (String) -> Unit) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid == null) {
+            Log.e("Firebase", "No se encontró un usuario autenticado.")
+            callback("Desconocido")
+            return
+        }
+
+        Log.d("Firebase", "UID del usuario autenticado: $uid")
+
+        // 🔥 Corregimos la referencia según la estructura: user -> users -> {UID}
+        val databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(uid)
+
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    // Intentamos obtener el nombre desde ambas posibles claves
+                    val nombreUsuario = snapshot.child("nombre").value as? String
+                        ?: snapshot.child("nombre_usuario").value as? String
+                        ?: "Desconocido"
+
+                    Log.d("Firebase", "Nombre obtenido de la base de datos: $nombreUsuario")
+                    callback(nombreUsuario)
+                } else {
+                    Log.e("Firebase", "No se encontró el usuario en la base de datos.")
+                    callback("Desconocido")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al obtener el nombre: ${error.message}")
+                callback("Desconocido")
+            }
+        })
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -151,41 +217,30 @@ class CamaraActivity : AppCompatActivity() {
         when (requestCode) {
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == RESULT_OK) {
-                    data?.extras?.get("data")?.let { imageBitmap ->
-                        try {
-                            // Convertimos la imagen a Bitmap
-                            val bitmap = imageBitmap as Bitmap
-
-                            // Guardamos la imagen en caché para compartirla entre actividades
-                            val cacheDir = File(cacheDir, "images")
-                            if (!cacheDir.exists()) cacheDir.mkdirs()
-                            val imageFile = File(cacheDir, "captured_image.png")
-
-                            FileOutputStream(imageFile).use { fos ->
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-                            }
-
-                            // Obtenemos URI usando FileProvider
+                    try {
+                        // Validamos que el archivo exista
+                        if (imageFile.exists()) {
                             val imageUri = FileProvider.getUriForFile(this, "com.example.vitalage.fileprovider", imageFile)
 
-                            // Creamos el intent para ir a la otra actividad
+                            // Enviamos a la siguiente actividad
                             val intent = Intent(this, FotoCamaraActivity::class.java)
-                            intent.putExtra("image_uri", imageUri.toString())  // Pasamos el URI como String
-                            intent.putExtra("patient_id",patientId)
+                            intent.putExtra("image_uri", imageUri.toString())
+                            intent.putExtra("patient_id", patientId)
                             Log.d("DEBUG", "📌 patientId recibido: $patientId")
                             startActivity(intent)
-
-                        } catch (e: OutOfMemoryError) {
-                            Toast.makeText(this, "Imagen demasiado grande para procesar", Toast.LENGTH_SHORT).show()
-                        } catch (e: Exception) {
-                            Toast.makeText(this, "Error al procesar la imagen: ${e.message}", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "La imagen no se pudo guardar correctamente", Toast.LENGTH_SHORT).show()
                         }
+
+                    } catch (e: OutOfMemoryError) {
+                        Toast.makeText(this, "Imagen demasiado grande para procesar", Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(this, "Error al procesar la imagen: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(this, "No se pudo tomar la foto", Toast.LENGTH_SHORT).show()
                 }
             }
-
             REQUEST_PICK -> {
                 if (resultCode == RESULT_OK) {
                     Toast.makeText(this, "Se seleccionó un archivo de galería", Toast.LENGTH_SHORT).show()
@@ -231,9 +286,11 @@ class CamaraActivity : AppCompatActivity() {
                             // Enviamos la imagen a la otra actividad
                             val intent = Intent(this, FotoCamaraActivity::class.java).apply {
                                 putExtra("image_uri", imageUri.toString())
-                                intent.putExtra("patient_id",patientId)
+
+                                Log.d("DEBUG", "📌 patientId recibidomandando: $patientId")
                                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // Importante para compartir la Uri
                             }
+                            intent.putExtra("patient_id",patientId)
                             startActivity(intent)
 
                         } catch (e: OutOfMemoryError) {

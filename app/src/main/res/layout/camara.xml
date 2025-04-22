@@ -1,54 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@android:color/white">
 
 
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/marcoSuperior"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:background="@drawable/marco_registrarse"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+        <ImageView
+            android:id="@+id/icon_scan"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_back"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0" />
         <TextView
             android:id="@+id/textoregistrarse"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/escaneo_medi"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textColor="@android:color/white"
-            android:layout_marginTop="20.3dp"
-            android:layout_marginStart="50dp"
-            android:textStyle="bold"/>
-        <ImageView
-            android:id="@+id/hamburguesa"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginStart="10dp"
-            app:layout_constraintStart_toStartOf="@id/marcoSuperior"
-            app:layout_constraintTop_toTopOf="@id/marcoSuperior"
-            app:layout_constraintEnd_toEndOf="@id/marcoSuperior"
-            android:src="@drawable/ic_menu_icon" />
-        <com.google.android.material.textfield.TextInputEditText
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/icon_scan"
+            app:layout_constraintTop_toTopOf="@id/icon_scan"
+            app:layout_constraintBottom_toBottomOf="@id/icon_scan"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
             android:id="@+id/enfermera"
-            android:layout_width="430dp"
-            android:layout_height= "40dp"
-            android:layout_marginTop="73dp"
-            android:layout_marginStart="-10dp"
-            android:hint="Pepe Gonzalez"
-            app:layout_constraintStart_toStartOf="@id/marcoSuperior"
-            app:layout_constraintTop_toTopOf="@id/marcoSuperior"
-            app:layout_constraintEnd_toEndOf="@id/marcoSuperior"
-            android:background="@drawable/formato_enfermera"
-            android:drawableStart="@drawable/enfermera" />
-    </FrameLayout>
+            android:layout_width="0dp"
+            android:layout_height= "wrap_content"
+            android:hint=""
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/icon_scan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/captura"
@@ -131,8 +134,7 @@
     android:layout_alignParentBottom="true"
     app:layout_constraintBottom_toBottomOf="parent"
     android:weightSum="2"
-    android:fitsSystemWindows="true"
-    tools:ignore="MissingConstraints">
+    android:fitsSystemWindows="true">
 
     <!-- Contenedor del Botón de Inicio -->
     <LinearLayout
