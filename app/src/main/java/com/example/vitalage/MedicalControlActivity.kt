@@ -68,8 +68,12 @@ class MedicalControlActivity : AppCompatActivity() {
 
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
+
+
+
         patientGender = intent.getStringExtra("patient_gender") ?: "No especificado"
         patientAge = intent.getIntExtra("patient_age", 0)
+
 
         // Mostrar datos del paciente
         binding.tvResidentName.text = patientName
@@ -111,6 +115,7 @@ class MedicalControlActivity : AppCompatActivity() {
         val masa = intent.getStringExtra("masa")?.takeIf { it != "No detectado" } ?: ""
         val otrosDatos = intent.getStringExtra("otrosDatos")?.takeIf { it != "No detectado" } ?: ""
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
+        Log.d("DEBUG", "📌 Id del paciente: ${patientId}")
 
 
 
@@ -292,6 +297,7 @@ class MedicalControlActivity : AppCompatActivity() {
                         }
                         .addOnFailureListener { e ->
                             Toast.makeText(this, "Error al guardar: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Log.d("DEBUG", "📌 Error: ${e.message}")
                         }
                 }
             }

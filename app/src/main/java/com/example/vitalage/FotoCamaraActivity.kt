@@ -9,10 +9,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.databinding.FotoCamaraBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
@@ -28,14 +34,26 @@ class FotoCamaraActivity : AppCompatActivity() {
     private lateinit var textRecognizer: TextRecognizer
     private lateinit var listaMedicamentos: List<String>
     private lateinit var patientId: String
+    private var usuarioActual: String = "Desconocido"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fotoCamaraBinding = FotoCamaraBinding.inflate(layoutInflater)
         setContentView(fotoCamaraBinding.root)
-        enableEdgeToEdge()
+
 
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
+
+
+
+        obtenerNombreUsuario { nombre ->
+            usuarioActual = nombre
+            val tvUser = findViewById<TextView>(R.id.enfermera)
+            tvUser.text = "Enfermera: $usuarioActual"
+        }
+
+
+
 
         textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
@@ -65,9 +83,9 @@ class FotoCamaraActivity : AppCompatActivity() {
                 fotoCamaraBinding.captura.addView(imageView)
             }, 500) // Pequeño delay para asegurar carga correcta
 
-            Log.d(TAG, "Imagen recibida correctamente: $imageUri")
+
         } else {
-            Log.e(TAG, "imageUri es null, no se puede cargar la imagen")
+
             Toast.makeText(this, "Error al cargar la imagen", Toast.LENGTH_SHORT).show()
         }
 
@@ -76,11 +94,24 @@ class FotoCamaraActivity : AppCompatActivity() {
             imageUri?.let { uri -> escanearTexto(uri) }
         }
 
+        fotoCamaraBinding.iconScan.setOnClickListener{
+            finish()
+        }
+
+        fotoCamaraBinding.btnProfile.setOnClickListener{
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
         // Botón para volver a la cámara
         fotoCamaraBinding.buttonCamera.setOnClickListener {
             val intent = Intent(this, CamaraActivity::class.java)
 
             startActivity(intent)
+        }
+
+        fotoCamaraBinding.btnHome.setOnClickListener {
+            startActivity(Intent(this, PatientListActivity::class.java))
         }
     }
 
@@ -131,9 +162,9 @@ class FotoCamaraActivity : AppCompatActivity() {
             }
         }
 
-
         return mejorCoincidencia
     }
+
 
 
     private fun escanearTexto(imageUri: Uri) {
@@ -161,7 +192,7 @@ class FotoCamaraActivity : AppCompatActivity() {
                         putExtra("otrosDatos", clasificacion["otrosOriginal"])
                     }
                     intent.putExtra("patient_id",patientId)
-                    Log.d("DEBUG", "📌 patientId recibido: $patientId")
+
                     startActivity(intent)
                 }
                 .addOnFailureListener {
@@ -194,7 +225,7 @@ class FotoCamaraActivity : AppCompatActivity() {
             val nombreLetras = nombre.uppercase().replace(Regex("\\s+"), "").toCharArray()
             val textoLetras = palabrasTexto.joinToString("").uppercase().replace(Regex("\\s+"), "").toCharArray()
 
-            Log.d("DEBUG", "Comparando: Texto -> ${textoLetras.joinToString("")} con Nombre -> ${nombreLetras.joinToString("")}")
+
 
             var indexTexto = 0
             var indexNombre = 0
@@ -208,7 +239,7 @@ class FotoCamaraActivity : AppCompatActivity() {
 
             if (indexNombre == nombreLetras.size) {
                 mejorNombre = nombre
-                Log.d("DEBUG", "Coincidencia exacta encontrada: $nombre")
+
                 break
             }
         }
@@ -248,34 +279,39 @@ class FotoCamaraActivity : AppCompatActivity() {
 
 
     private fun buscarPorSubstring(lista: List<String>, objetivo: String): String {
-        val listaMedicamentos = cargarNombresDesdeJson(this, "Lista_casi.json")
-        val palabrasObjetivo = objetivo.split("\\s+".toRegex())
+        val primeraPalabraObjetivo = extraerPrincipioActivo(objetivo).split("\\s+".toRegex())[0] // Primera palabra limpia
 
-        Log.d("DEBUG", "Buscando coincidencias para: \"$objetivo\" en una lista de ${listaMedicamentos.size} elementos.")
+        Log.d("DEBUG", "Buscando coincidencias para: \"$primeraPalabraObjetivo\" en una lista de ${lista.size} elementos.")
 
+        var inicio = 0
+        var fin = lista.size - 1
         var mejorCoincidencia = "No detectado"
         var maxCoincidencia = 0
+
+        // Lista para almacenar posibles coincidencias ordenadas por prioridad
         val posiblesCoincidencias = mutableListOf<Pair<String, Int>>()
 
-        for (elemento in listaMedicamentos) {
-            val palabrasElemento = elemento.split("\\s+".toRegex())
+        while (inicio <= fin) {
+            val medio = (inicio + fin) / 2
+            var primeraPalabraElemento = lista[medio].split("\\s+".toRegex())[0]
+            primeraPalabraElemento = extraerPrincipioActivo(primeraPalabraElemento)
 
-            for (palabraElemento in palabrasElemento) {
-                for (palabraObjetivo in palabrasObjetivo) {
-                    val longitudDiferencia = kotlin.math.abs(palabraElemento.length - palabraObjetivo.length)
+            val coincidencias = contarLetrasInicialesIguales(primeraPalabraElemento, primeraPalabraObjetivo)
+            Log.d("DEBUG", "Comparando: \"$primeraPalabraElemento\" con \"$primeraPalabraObjetivo\" -> Letras iguales: $coincidencias")
 
-                    if (longitudDiferencia <= 1) { // Condición de igualdad o diferencia máxima de 1 carácter
-                        val coincidencias = contarLetrasInicialesIguales(palabraElemento, palabraObjetivo)
-                        Log.d("DEBUG", "Comparando: \"$palabraElemento\" con \"$palabraObjetivo\" -> Letras iguales: $coincidencias")
+            if (coincidencias > 0) {
+                posiblesCoincidencias.add(primeraPalabraElemento to coincidencias)
+            }
 
-                        if (coincidencias > 0) {
-                            posiblesCoincidencias.add(palabraElemento to coincidencias)
-                        }
-                    }
-                }
+            // Ajustar búsqueda binaria
+            if (primeraPalabraElemento < primeraPalabraObjetivo) {
+                inicio = medio + 1
+            } else {
+                fin = medio - 1
             }
         }
 
+        // Ordenar coincidencias por cantidad de letras iguales en orden descendente
         if (posiblesCoincidencias.isNotEmpty()) {
             val mejor = posiblesCoincidencias.maxByOrNull { it.second }
             mejorCoincidencia = mejor?.first ?: "No detectado"
@@ -313,5 +349,42 @@ class FotoCamaraActivity : AppCompatActivity() {
     private fun quitarTildes(input: String): String {
         val normalized = Normalizer.normalize(input, Normalizer.Form.NFD)
         return normalized.replace(Regex("\\p{InCombiningDiacriticalMarks}+"), "")
+    }
+
+    private fun obtenerNombreUsuario(callback: (String) -> Unit) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid == null) {
+
+            callback("Desconocido")
+            return
+        }
+
+        Log.d("Firebase", "UID del usuario autenticado: $uid")
+
+        // 🔥 Corregimos la referencia según la estructura: user -> users -> {UID}
+        val databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(uid)
+
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    // Intentamos obtener el nombre desde ambas posibles claves
+                    val nombreUsuario = snapshot.child("nombre").value as? String
+                        ?: snapshot.child("nombre_usuario").value as? String
+                        ?: "Desconocido"
+
+
+                    callback(nombreUsuario)
+                } else {
+
+                    callback("Desconocido")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al obtener el nombre: ${error.message}")
+                callback("Desconocido")
+            }
+        })
     }
 }
