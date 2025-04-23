@@ -5,7 +5,7 @@ data class SignosVitales(
     val frecuenciaCardiaca: Int = 0,
     val frecuenciaRespiratoria: Int = 0,
     val saturacionOxigeno: Int = 0,
-    val presionArterial: String = "",
+    val presionArterial: Int = 0,
     val temperatura: Double = 0.0,
     val peso: Double = 0.0,
     val imc: Double = 0.0,
