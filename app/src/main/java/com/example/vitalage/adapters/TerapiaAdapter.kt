@@ -18,11 +18,15 @@ class TerapiaAdapter(
         private val fechaText: TextView = view.findViewById(R.id.tvTerapiaFecha)
         private val encargadoText: TextView = view.findViewById(R.id.tvTerapiaEncargado)
         private val estadoText: TextView = view.findViewById(R.id.tvTerapiaEstado)
+        private val doctorText: TextView = view.findViewById(R.id.tvTerapiaDoctor)
+        private val descripcionText: TextView = view.findViewById(R.id.tvDescripcion)
 
         fun bind(terapia: Terapia) {
             tipoTerapiaText.text = terapia.tipo
             fechaText.text = "Fecha: ${terapia.fecha}"
             encargadoText.text = "Encargado: ${terapia.encargado}"
+            doctorText.text = "Doctor: ${terapia.doctor}"
+            descripcionText.text = "Descripción: ${terapia.descripcion}"
             estadoText.text = if (terapia.realizada) {
                 "Estado: Realizada"
             } else {

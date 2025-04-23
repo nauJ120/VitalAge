@@ -124,41 +124,28 @@
         android:id="@+id/filterContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvInventory"
+        android:layout_below="@id/tvInventory"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
 
-        <!-- Campo de texto para el filtro -->
+        <!-- Campo de búsqueda -->
         <EditText
-            android:id="@+id/etSearchMedication"
-            android:layout_width="0dp"
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Buscar medicamento..."
-            android:padding="8dp"
-            android:background="@android:drawable/editbox_background"
-            android:inputType="text" />
-
-        <!-- Botón para aplicar filtro -->
-        <Button
-            android:id="@+id/btnApplyFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filtrar"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="#4A90E2"
-            android:textColor="#FFFFFF"/>
-
-        <!-- Botón para resetear filtro -->
-        <Button
-            android:id="@+id/btnResetFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reset"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="#FF5252"
-            android:textColor="#FFFFFF"/>
+            android:hint="Buscar por nombre o clave"
+            android:padding="12dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:inputType="text"
+            android:drawablePadding="8dp"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="#CCCCCC" />
     </LinearLayout>
+
 
 
 

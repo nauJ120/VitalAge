@@ -84,9 +84,11 @@ class TerapiaFormActivity : AppCompatActivity() {
 
     private fun saveTerapia() {
         val tipo = binding.spTipoTerapia.text?.toString()?.trim() ?: ""
+        val descripcion = binding.etDescripcion.text.toString().trim() ?: ""
         val fecha = binding.etFecha.text.toString().trim()
         val realizada = binding.switchRealizada.isChecked
-        val encargado = FirebaseAuth.getInstance().currentUser?.displayName ?: "Desconocido"
+        val encargado = usuarioActual
+        val doctor = binding.etDoctor.text.toString().trim()
 
         if (tipo.isEmpty() || fecha.isEmpty()) {
             Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
@@ -102,7 +104,9 @@ class TerapiaFormActivity : AppCompatActivity() {
         // Crear una nueva terapia como mapa
         val nuevaTerapia = hashMapOf(
             "tipo" to tipo,
+            "descripcion" to descripcion,
             "fecha" to fecha,
+            "doctor" to doctor,
             "encargado" to encargado,
             "realizada" to realizada
         )

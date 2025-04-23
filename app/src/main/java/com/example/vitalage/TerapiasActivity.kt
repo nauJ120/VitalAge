@@ -95,6 +95,8 @@ class TerapiasActivity : AppCompatActivity() {
                 for (terapiaData in terapias) {
                     val terapia = Terapia(
                         tipo = terapiaData["tipo"] as? String ?: "",
+                        descripcion = terapiaData["descripcion"] as? String ?: "",
+                        doctor = terapiaData["doctor"] as? String ?: "",
                         fecha = terapiaData["fecha"] as? String ?: "",
                         encargado = terapiaData["encargado"] as? String ?: "",
                         realizada = terapiaData["realizada"] as? Boolean ?: false
