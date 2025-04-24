@@ -75,8 +75,11 @@
     <color name="md_indigo_500">#3F51B5</color>
     <color name="md_indigo_700">#303F9F</color>
 
-
-    <color name="md_red_500">#FF0000</color>
-
+    <!-- Colores adicionales para el gráfico de medicamentos -->
+    <color name="md_green_500">#4CAF50</color>
+    <color name="md_red_500">#F44336</color>
+    <color name="md_orange_500">#FF9800</color>
+    <color name="md_purple_500">#9C27B0</color>
+    <color name="md_teal_500">#009688</color>
 
 </resources>
