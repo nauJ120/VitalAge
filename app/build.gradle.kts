@@ -35,10 +35,11 @@ android {
         jvmTarget = "11"
     }
     buildFeatures{
-
+        buildConfig = true
         viewBinding = true
     }
 }
+
 
 dependencies {
     implementation(libs.androidx.core.ktx)
@@ -56,4 +57,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.play.services.mlkit.text.recognition)
     implementation (libs.lottie)
+    implementation(libs.mpandroidchart)
 }

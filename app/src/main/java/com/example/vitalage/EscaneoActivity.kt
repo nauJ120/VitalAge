@@ -3,6 +3,7 @@ package com.example.vitalage
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -15,6 +16,7 @@ class EscaneoActivity: AppCompatActivity() {
 
     private lateinit var escaneadoBinding: EscaneadoBinding
     private val TAG = EscaneoActivity::class.java.simpleName
+    private lateinit var patientId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +24,14 @@ class EscaneoActivity: AppCompatActivity() {
         setContentView(escaneadoBinding.root)
         enableEdgeToEdge()
 
+        findViewById<ImageView>(R.id.btnProfile).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+            finish()
+        }
 
         val botoncancelar = findViewById<AppCompatButton>(R.id.buttonCamera)
 
-         //
+        patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
 
         val nombre = intent.getStringExtra("nombreMedicamento") ?: "No detectado"
         val cantidad = intent.getStringExtra("cantidad") ?: "No detectado"
@@ -47,6 +53,8 @@ class EscaneoActivity: AppCompatActivity() {
             intent.putExtra("cantidad", cantidad)
             intent.putExtra("masa", masa)
             intent.putExtra("otrosDatos", otrosDatos)
+            intent.putExtra("patient_id",patientId)
+            Log.d("DEBUG", "📌 patientId recibido: $patientId")
             startActivity(intent)
         }
 

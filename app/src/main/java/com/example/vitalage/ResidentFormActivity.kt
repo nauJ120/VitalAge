@@ -3,10 +3,17 @@ package com.example.vitalage
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.databinding.ActivityResidentFormBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ResidentFormActivity : AppCompatActivity() {
@@ -14,6 +21,7 @@ class ResidentFormActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResidentFormBinding
     private val db = FirebaseFirestore.getInstance()
     private var residentId: String? = null // ID del residente (cedula)
+    private var usuarioActual: String = "Desconocido"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +50,16 @@ class ResidentFormActivity : AppCompatActivity() {
 
         findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
+        }
+
+        obtenerNombreUsuario { nombre ->
+            usuarioActual = nombre
+            val tvUser = findViewById<TextView>(R.id.tvUser)
+            tvUser.text = "Administrador: $usuarioActual"
+        }
+
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
         }
     }
 
@@ -92,5 +110,42 @@ class ResidentFormActivity : AppCompatActivity() {
                 Log.e("Firestore", "Error al guardar residente", e)
                 Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun obtenerNombreUsuario(callback: (String) -> Unit) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid == null) {
+            Log.e("Firebase", "No se encontró un usuario autenticado.")
+            callback("Desconocido")
+            return
+        }
+
+        Log.d("Firebase", "UID del usuario autenticado: $uid")
+
+        // 🔥 Corregimos la referencia según la estructura: user -> users -> {UID}
+        val databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(uid)
+
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    // Intentamos obtener el nombre desde ambas posibles claves
+                    val nombreUsuario = snapshot.child("nombre").value as? String
+                        ?: snapshot.child("nombre_usuario").value as? String
+                        ?: "Desconocido"
+
+                    Log.d("Firebase", "Nombre obtenido de la base de datos: $nombreUsuario")
+                    callback(nombreUsuario)
+                } else {
+                    Log.e("Firebase", "No se encontró el usuario en la base de datos.")
+                    callback("Desconocido")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al obtener el nombre: ${error.message}")
+                callback("Desconocido")
+            }
+        })
     }
 }

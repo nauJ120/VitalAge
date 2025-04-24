@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -21,6 +22,7 @@ class KardexMenuActivity : AppCompatActivity() {
     private lateinit var patientName: String
     private lateinit var patientId: String
     private lateinit var patientGender: String
+
     private var patientAge: Int = 0
 
     private var usuarioActual: String = "Desconocido"
@@ -33,16 +35,19 @@ class KardexMenuActivity : AppCompatActivity() {
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
             val tvUser = findViewById<TextView>(R.id.tvUser)
-            tvUser.text = "Usuario: $usuarioActual"
+            tvUser.text = "Enfermera: $usuarioActual"
+        }
+
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
         }
 
         findViewById<LinearLayout>(R.id.btnHomeContainer).setOnClickListener {
-            startActivity(Intent(this, MenuActivity::class.java))
+            startActivity(Intent(this, PatientListActivity::class.java))
         }
 
         findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
-        }
+            startActivity(Intent(this, ProfileActivity::class.java))}
 
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
@@ -62,6 +67,13 @@ class KardexMenuActivity : AppCompatActivity() {
         val btnMedCard = findViewById<Button>(R.id.btnMedCard)
         val btnControl = findViewById<Button>(R.id.btnControl)
         val btnHistory = findViewById<Button>(R.id.btnDoseHistory)
+
+        val btnHomeContainer = findViewById<LinearLayout>(R.id.btnHomeContainer)
+
+        btnHomeContainer.setOnClickListener {
+            val intent = Intent(this, PatientListActivity::class.java) // Reemplaza "NuevaActividad" con el nombre de tu actividad destino
+            startActivity(intent)
+        }
 
         btnInventory.setOnClickListener {
             val intent = Intent(this, InventoryActivity::class.java)

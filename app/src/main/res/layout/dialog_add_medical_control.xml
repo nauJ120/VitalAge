@@ -11,6 +11,16 @@
         android:orientation="vertical"
         android:paddingBottom="16dp">
 
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteMedicamento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Selecciona un medicamento"
+            android:background="@android:drawable/editbox_background"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+
         <!-- Nombre del Medicamento -->
         <TextView
             android:layout_width="match_parent"
@@ -135,6 +145,8 @@
             android:hint="Fecha de Vencimiento (DD/MM/AAAA)"
             android:padding="12dp"
             android:textSize="14sp"
+            android:focusable="false"
+            android:clickable="true"
             android:inputType="date" />
 
         <EditText
@@ -143,6 +155,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:hint="Fecha de Inicio (DD/MM/AAAA)"
+            android:focusable="false"
+            android:clickable="true"
             android:padding="12dp"
             android:textSize="14sp"
             android:inputType="date" />
@@ -154,6 +168,8 @@
             android:background="@drawable/edit_text_background"
             android:hint="Fecha de Finalización (DD/MM/AAAA)"
             android:padding="12dp"
+            android:focusable="false"
+            android:clickable="true"
             android:textSize="14sp"
             android:inputType="date" />
 
@@ -172,6 +188,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:hint="Hora Mañana (Ej: 08:00 AM)"
+            android:focusable="false"
+            android:clickable="true"
             android:padding="12dp"
             android:textSize="14sp" />
 
@@ -181,6 +199,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:hint="Hora Tarde (Ej: 02:00 PM)"
+            android:focusable="false"
+            android:clickable="true"
             android:padding="12dp"
             android:textSize="14sp" />
 
@@ -190,6 +210,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:hint="Hora Noche (Ej: 08:00 PM)"
+            android:focusable="false"
+            android:clickable="true"
             android:padding="12dp"
             android:textSize="14sp" />
 
