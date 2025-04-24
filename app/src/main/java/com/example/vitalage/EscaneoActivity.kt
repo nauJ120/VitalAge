@@ -40,13 +40,16 @@ class EscaneoActivity: AppCompatActivity() {
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
 
         val nombre = intent.getStringExtra("nombreMedicamento") ?: "No detectado"
-        val cantidad = intent.getStringExtra("cantidad") ?: "No detectado"
-        val masa = intent.getStringExtra("masa") ?: "No detectado"
+        var cantidad = intent.getStringExtra("cantidad") ?: "No detectado"
+        var masa = intent.getStringExtra("masa") ?: "No detectado"
         val maxLongitud = 450  // Ajusta el límite según lo necesites
         val otrosDatos = intent.getStringExtra("otrosDatos")?.let {
             val datosProcesados = it.replace("\n", ", ").take(maxLongitud)
             if (it.length > maxLongitud) "$datosProcesados..." else datosProcesados
         } ?: "No detectado"
+
+        cantidad = Regex("\\d+").find(cantidad)?.value ?: "No detectado"
+        masa = Regex("\\d+").find(masa)?.value ?: "No detectado"
 
 
         escaneadoBinding.nombreMedicamento.text = "Nombre: $nombre\nCantidad: $cantidad\nMasa: $masa\nOtros: $otrosDatos"

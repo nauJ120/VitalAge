@@ -78,8 +78,12 @@ class CamaraActivity : AppCompatActivity() {
         val cachePath = File(cacheDir, "images")
         if (!cachePath.exists()) cachePath.mkdirs()
 
-        imageFile = File(cachePath, "captured_image.jpg")
-        photoUri = FileProvider.getUriForFile(this, "com.example.vitalage.fileprovider", imageFile)
+        imageFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "IMG_20250423_225515_8072563812882029060.jpg")
+        photoUri = FileProvider.getUriForFile(
+            this,
+            "${BuildConfig.APPLICATION_ID}.fileprovider",
+            imageFile
+        )
 
 
 
@@ -168,10 +172,23 @@ class CamaraActivity : AppCompatActivity() {
     private fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, "Foto capturada correctamente", Toast.LENGTH_SHORT).show()
+        // Verifica que hay una app para manejar el intent
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            try {
+                // Asegúrate de tener un archivo nuevo cada vez
+                imageFile = createImageFile()
+                photoUri = FileProvider.getUriForFile(this, "com.example.vitalage.fileprovider", imageFile)
+
+                // Pasa el URI como salida
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+
+                // Da permisos de lectura
+                takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            } catch (e: IOException) {
+                Toast.makeText(this, "Error creando archivo de imagen", Toast.LENGTH_SHORT).show()
+                Log.e("CameraError", "IOException: ${e.message}", e)
+            }
         }
     }
     private fun obtenerNombreUsuario(callback: (String) -> Unit) {

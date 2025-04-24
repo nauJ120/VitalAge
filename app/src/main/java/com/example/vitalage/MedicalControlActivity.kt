@@ -95,12 +95,200 @@ class MedicalControlActivity : AppCompatActivity() {
 
         val fromScan = intent.getBooleanExtra("from_scan", false)
         if (fromScan) {
-            showAddMedicationDialog()
+            showAddMedicationDialogScan()
         }
 
 
     }
 
+    private fun showAddMedicationDialogScan() {
+
+        val nombre = intent.getStringExtra("nombre")?.takeIf { it != "No detectado" } ?: ""
+        val cantidad = intent.getStringExtra("cantidad")?.takeIf { it != "No detectado" } ?: ""
+        val masa = intent.getStringExtra("masa")?.takeIf { it != "No detectado" } ?: ""
+        val otrosDatos = intent.getStringExtra("otrosDatos")?.takeIf { it != "No detectado" } ?: ""
+        patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
+
+
+
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_medical_control, null)
+        val dialogBuilder = AlertDialog.Builder(this).setView(dialogView)
+        val dialog = dialogBuilder.create()
+        dialog.show()
+
+        // Referencias a los campos de texto
+        val etDosis = dialogView.findViewById<EditText>(R.id.etMedicationDosis)
+        val etName = dialogView.findViewById<EditText>(R.id.etMedicationName)
+        val etLot = dialogView.findViewById<EditText>(R.id.etMedicationLot)
+        val etInvima = dialogView.findViewById<EditText>(R.id.etMedicationInvima)
+        val etQuantity = dialogView.findViewById<EditText>(R.id.etMedicationQuantity)
+        val etExpirationDate = dialogView.findViewById<EditText>(R.id.etMedicationExpirationDate)
+        val etStartDate = dialogView.findViewById<EditText>(R.id.etMedicationStartDate)
+        val etEndDate = dialogView.findViewById<EditText>(R.id.etMedicationEndDate)
+        val etObservations = dialogView.findViewById<EditText>(R.id.etMedicationObservations)
+        val etMorningTime = dialogView.findViewById<EditText>(R.id.etMedicationMorningTime)
+        val etAfternoonTime = dialogView.findViewById<EditText>(R.id.etMedicationAfternoonTime)
+        val etNightTime = dialogView.findViewById<EditText>(R.id.etMedicationNightTime)
+
+        etExpirationDate.setOnClickListener {
+            showDatePicker(etExpirationDate)
+        }
+
+        etStartDate.setOnClickListener {
+            showDatePicker(etStartDate)
+        }
+
+        etEndDate.setOnClickListener {
+            showDatePicker(etEndDate)
+        }
+
+        etMorningTime.setOnClickListener {
+            showTimePicker(etMorningTime)
+        }
+        etAfternoonTime.setOnClickListener {
+            showTimePicker(etAfternoonTime)
+        }
+        etNightTime.setOnClickListener {
+            showTimePicker(etNightTime)
+        }
+
+
+        val autoCompleteMedicamento = dialogView.findViewById<AutoCompleteTextView>(R.id.autoCompleteMedicamento)
+        val medicamentosGenerales = mutableListOf<String>()
+        val medicamentosMap = mutableMapOf<String, Map<String, Any>>() // nombre → info
+
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Medicamentos")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (doc in documents) {
+                    val nombre = doc.getString("nombre") ?: continue
+                    medicamentosGenerales.add(nombre)
+                    medicamentosMap[nombre] = doc.data
+                }
+
+                autoCompleteMedicamento.setText(nombre)
+            }
+
+
+
+        etName.setText(nombre)
+        etQuantity.setText(cantidad.toString())
+        etDosis.setText(masa)
+        etObservations.setText(otrosDatos)
+
+        // Botón para agregar el medicamento
+        dialogView.findViewById<Button>(R.id.btnDialogAdd).setOnClickListener {
+            val name = etName.text.toString().trim()
+            val lot = etLot.text.toString().trim()
+            val invima = etInvima.text.toString().trim()
+            val dosis = etDosis.text.toString().trim().toIntOrNull()
+            val cantidad = etQuantity.text.toString().trim().toIntOrNull()
+            val observaciones = etObservations.text.toString().trim()
+            val fechaVencimiento = etExpirationDate.text.toString().trim()
+            val fechaInicio = etStartDate.text.toString().trim()
+            val fechaFin = etEndDate.text.toString().trim()
+            val horaMañana = etMorningTime.text.toString().trim()
+            val horaTarde = etAfternoonTime.text.toString().trim()
+            val horaNoche = etNightTime.text.toString().trim()
+            val auxiliar = usuarioActual
+
+            if (name.isEmpty() || invima.isEmpty() || dosis == null || cantidad == null ||
+                lot.isEmpty() || fechaVencimiento.isEmpty() || fechaInicio.isEmpty() || fechaFin.isEmpty() ||
+                horaMañana.isEmpty() || horaTarde.isEmpty() || horaNoche.isEmpty()) {
+                Toast.makeText(this, "Por favor completa todos los campos obligatorios", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val db = FirebaseFirestore.getInstance()
+            val globalId = "${name.lowercase()}_${dosis}mg"
+
+            val globalMedData = mapOf(
+                "id" to globalId,
+                "nombre" to name,
+                "invima" to invima,
+                "dosis" to dosis,
+                "cantidad" to cantidad,
+                "observaciones" to observaciones
+            )
+
+            val nuevoRegistro = mapOf(
+                "medicamento_id" to globalId,
+                "lote" to lot,
+                "fecha_vencimiento" to fechaVencimiento,
+                "fecha_inicio" to fechaInicio,
+                "fecha_fin" to fechaFin,
+                "hora_mañana" to horaMañana,
+                "hora_tarde" to horaTarde,
+                "hora_noche" to horaNoche,
+                "auxiliar" to auxiliar,
+                "cantidad_paciente" to cantidad
+            )
+
+            // 1. Crear medicamento global si no existe
+            db.collection("Medicamentos").document(globalId).get().addOnSuccessListener { globalDoc ->
+                if (!globalDoc.exists()) {
+                    db.collection("Medicamentos").document(globalId).set(globalMedData)
+                }
+
+                // 2. Obtener y actualizar los medicamentos del paciente
+                val patientRef = db.collection("Pacientes").document(patientId)
+                patientRef.get().addOnSuccessListener { doc ->
+                    val existingList = doc.get("medicamentos") as? MutableList<Map<String, Any>> ?: mutableListOf()
+                    val updatedList = mutableListOf<Map<String, Any>>()
+                    var yaExistia = false
+
+                    for (med in existingList) {
+                        if ((med["medicamento_id"] as? String) == globalId) {
+                            val cantidadActual = (med["cantidad_paciente"] as? Long ?: 0)
+
+                            val actualizado = mutableMapOf<String, Any>(
+                                "medicamento_id" to globalId,
+                                "lote" to lot,
+                                "fecha_vencimiento" to fechaVencimiento,
+                                "fecha_inicio" to fechaInicio,
+                                "fecha_fin" to fechaFin,
+                                "hora_mañana" to horaMañana,
+                                "hora_tarde" to horaTarde,
+                                "hora_noche" to horaNoche,
+                                "auxiliar" to auxiliar,
+                                "cantidad_paciente" to cantidadActual + cantidad
+                            )
+
+                            updatedList.add(actualizado)
+                            yaExistia = true
+                        } else {
+                            updatedList.add(med)
+                        }
+                    }
+
+                    if (!yaExistia) {
+                        updatedList.add(nuevoRegistro)
+                    }
+
+                    // 3. Guardar cambios
+                    patientRef.update("medicamentos", updatedList)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Medicamento registrado correctamente", Toast.LENGTH_SHORT).show()
+                            fetchMedicationsFromFirestore()
+                            dialog.dismiss()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Error al guardar: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Log.d("DEBUG", "📌 Error: ${e.message}")
+                        }
+                }
+            }
+        }
+
+
+
+        // Botón para cancelar
+        dialogView.findViewById<Button>(R.id.btnDialogCancel).setOnClickListener {
+            dialog.dismiss()
+        }
+    }
 
     private fun setupRecyclerView() {
         medicalControlAdapter = MedicalControlAdapter(medicationList)
@@ -115,7 +303,7 @@ class MedicalControlActivity : AppCompatActivity() {
         val masa = intent.getStringExtra("masa")?.takeIf { it != "No detectado" } ?: ""
         val otrosDatos = intent.getStringExtra("otrosDatos")?.takeIf { it != "No detectado" } ?: ""
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
-        Log.d("DEBUG", "📌 Id del paciente: ${patientId}")
+
 
 
 
