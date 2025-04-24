@@ -10,7 +10,7 @@ import com.example.vitalage.R
 import com.example.vitalage.model.Medication
 
 class MedicationAdapter(
-    private var medications: MutableList<Medication>, // 🔥 Cambiar a `var` para permitir actualizaciones
+    private var medications: MutableList<Medication>,
     private val onAdministerClick: (Medication) -> Unit
 ) : RecyclerView.Adapter<MedicationAdapter.MedicationViewHolder>() {
 

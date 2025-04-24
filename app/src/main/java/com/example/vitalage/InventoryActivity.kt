@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vitalage.MedicationAdapter
 import com.example.vitalage.databinding.ActivityInventoryBinding
@@ -29,6 +30,7 @@ class InventoryActivity : AppCompatActivity() {
 
     private lateinit var firestore: FirebaseFirestore
     private lateinit var patientId: String
+    private lateinit var searchField: EditText
 
     private var usuarioActual: String = "Desconocido"
 
@@ -80,14 +82,13 @@ class InventoryActivity : AppCompatActivity() {
         // Cargar medicamentos desde Firestore
         fetchMedicationsFromFirestore()
 
-        binding.btnApplyFilter.setOnClickListener {
-            val query = binding.etSearchMedication.text.toString().trim()
-            applyFilter(query)
+        searchField = findViewById(R.id.et_search)
+
+        searchField.addTextChangedListener { query ->
+            filterMedications(query.toString())
         }
 
-        binding.btnResetFilter.setOnClickListener {
-            resetFilter()
-        }
+
     }
 
     private fun setupRecyclerView() {
@@ -299,18 +300,12 @@ class InventoryActivity : AppCompatActivity() {
         })
     }
 
-    private fun applyFilter(query: String) {
-        if (query.isNotEmpty()) {
-            val filteredList = medicationList.filter { it.nombre.contains(query, ignoreCase = true) }
-            medicationAdapter.updateData(filteredList)
-        } else {
-            Toast.makeText(this, "Ingrese un nombre para filtrar", Toast.LENGTH_SHORT).show()
-        }
-    }
 
-    private fun resetFilter() {
-        binding.etSearchMedication.text.clear()
-        medicationAdapter.updateData(medicationList)
+    private fun filterMedications(query: String) {
+        val filteredList = medicationList.filter {
+            it.nombre.contains(query, ignoreCase = true) || it.id.contains(query)
+        }
+        medicationAdapter.updateData(filteredList)
     }
 
 

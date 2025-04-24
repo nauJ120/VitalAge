@@ -56,7 +56,7 @@ class SignosVitalesFormActivity : AppCompatActivity() {
             val frecuenciaCardiaca = binding.etFrecuenciaCardiaca.text.toString().toInt()
             val frecuenciaRespiratoria = binding.etFrecuenciaRespiratoria.text.toString().toInt()
             val saturacionOxigeno = binding.etSaturacionOxigeno.text.toString().toInt()
-            val presionArterial = binding.etPresionArterial.text.toString()
+            val presionArterial = binding.etPresionArterial.text.toString().toInt()
             val temperatura = binding.etTemperatura.text.toString().toDouble()
             val peso = binding.etPeso.text.toString().toDouble()
             val imc = binding.etIMC.text.toString().toDouble()

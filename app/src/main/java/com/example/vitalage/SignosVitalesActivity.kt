@@ -103,7 +103,7 @@ class SignosVitalesActivity : AppCompatActivity() {
                                 frecuenciaCardiaca = (registro["frecuencia_cardiaca"] as? Number)?.toInt() ?: 0,
                                 frecuenciaRespiratoria = (registro["frecuencia_respiratoria"] as? Number)?.toInt() ?: 0,
                                 saturacionOxigeno = (registro["saturacion_oxigeno"] as? Number)?.toInt() ?: 0,
-                                presionArterial = registro["presion_arterial"] as? String ?: "",
+                                presionArterial = (registro["presion_arterial"] as? Number)?.toInt() ?: 0,
                                 temperatura = (registro["temperatura"] as? Number)?.toDouble() ?: 0.0,
                                 peso = (registro["peso"] as? Number)?.toDouble() ?: 0.0,
                                 imc = (registro["imc"] as? Number)?.toDouble() ?: 0.0,
