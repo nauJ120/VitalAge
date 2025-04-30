@@ -126,6 +126,8 @@
         <activity android:name=".NursingNotesActivity" />
         <activity android:name=".AddNursingNoteActivity" />
         <activity android:name=".DoctorPatientListActivity" />
+        <activity android:name=".RegistroNotaMedicaActivity" />
+        <activity android:name=".DoctorPatientDetailActivity" />
 
     </application>
 
