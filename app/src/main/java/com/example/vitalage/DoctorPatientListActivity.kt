@@ -13,10 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DoctorPatientListActivity : AppCompatActivity() {
@@ -36,7 +33,7 @@ class DoctorPatientListActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = PatientAdapter(patientList) { patient ->
-            openInformePaciente(patient)
+            openPacienteDetalle(patient) // <- cambia la función a la intermedia
         }
         recyclerView.adapter = adapter
 
@@ -57,10 +54,11 @@ class DoctorPatientListActivity : AppCompatActivity() {
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
             val tvUser = findViewById<TextView>(R.id.tvUser)
-            tvUser.text = "Enfermera: $usuarioActual"
+            tvUser.text = "Médico: $usuarioActual"
         }
 
         onBackPressedDispatcher.addCallback(this) {
+            // Evita retroceso
         }
     }
 
@@ -75,7 +73,6 @@ class DoctorPatientListActivity : AppCompatActivity() {
                     val id = document.id
                     val gender = document.getString("sexo") ?: "No especificado"
                     val age = document.getLong("edad")?.toInt() ?: 0
-
                     patientList.add(Patient(name, id, gender, age))
                 }
                 adapter.updateData(patientList)
@@ -93,8 +90,9 @@ class DoctorPatientListActivity : AppCompatActivity() {
         adapter.updateData(filteredList)
     }
 
-    private fun openInformePaciente(patient: Patient) {
-        val intent = Intent(this, InformePacienteActivity::class.java).apply {
+    // Esta es la nueva función que redirige a la pantalla intermedia
+    private fun openPacienteDetalle(patient: Patient) {
+        val intent = Intent(this, DoctorPatientDetailActivity::class.java).apply {
             putExtra("patient_name", patient.name)
             putExtra("patient_id", patient.id)
         }
@@ -103,32 +101,19 @@ class DoctorPatientListActivity : AppCompatActivity() {
 
     private fun obtenerNombreUsuario(callback: (String) -> Unit) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
-
         if (uid == null) {
             Log.e("Firebase", "No se encontró un usuario autenticado.")
             callback("Desconocido")
             return
         }
 
-        Log.d("Firebase", "UID del usuario autenticado: $uid")
-
-        // 🔥 Corregimos la referencia según la estructura: user -> users -> {UID}
         val databaseRef = FirebaseDatabase.getInstance().getReference("user").child("users").child(uid)
-
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    // Intentamos obtener el nombre desde ambas posibles claves
-                    val nombreUsuario = snapshot.child("nombre").value as? String
-                        ?: snapshot.child("nombre_usuario").value as? String
-                        ?: "Desconocido"
-
-                    Log.d("Firebase", "Nombre obtenido de la base de datos: $nombreUsuario")
-                    callback(nombreUsuario)
-                } else {
-                    Log.e("Firebase", "No se encontró el usuario en la base de datos.")
-                    callback("Desconocido")
-                }
+                val nombreUsuario = snapshot.child("nombre").value as? String
+                    ?: snapshot.child("nombre_usuario").value as? String
+                    ?: "Desconocido"
+                callback(nombreUsuario)
             }
 
             override fun onCancelled(error: DatabaseError) {
