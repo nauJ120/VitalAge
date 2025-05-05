@@ -107,8 +107,7 @@ class SignosVitalesActivity : AppCompatActivity() {
                                 temperatura = (registro["temperatura"] as? Number)?.toDouble() ?: 0.0,
                                 peso = (registro["peso"] as? Number)?.toDouble() ?: 0.0,
                                 imc = (registro["imc"] as? Number)?.toDouble() ?: 0.0,
-                                encargado = registro["encargado"] as? String ?: "",
-                                escalaDolor = (registro["escala_dolor"] as? Number)?.toInt() ?: 0
+                                encargado = registro["encargado"] as? String ?: ""
                             )
                             signosList.add(signo)
                         } catch (e: Exception) {

@@ -56,24 +56,38 @@ class SignosVitalesFormActivity : AppCompatActivity() {
             val frecuenciaCardiaca = binding.etFrecuenciaCardiaca.text.toString().toInt()
             val frecuenciaRespiratoria = binding.etFrecuenciaRespiratoria.text.toString().toInt()
             val saturacionOxigeno = binding.etSaturacionOxigeno.text.toString().toInt()
-            val presionArterial = binding.etPresionArterial.text.toString().toInt()
+            val presionDiastolica = binding.etPresionDiastolica.text.toString().toInt()
+            val presionSistolica = binding.etPresionSistolica.text.toString().toInt()
             val temperatura = binding.etTemperatura.text.toString().toDouble()
-            val peso = binding.etPeso.text.toString().toDouble()
-            val imc = binding.etIMC.text.toString().toDouble()
+            val escalaDolor = binding.etDolor.text.toString().toInt()
+
+            val pesoText = binding.etPeso.text.toString()
+            val imcText = binding.etIMC.text.toString()
+
+            val peso = if (pesoText.isNotBlank()) pesoText.toDoubleOrNull() else null
+            val imc = if (imcText.isNotBlank()) imcText.toDoubleOrNull() else null
+
+            val presionArterialTexto = "$presionSistolica/$presionDiastolica"
+            val presionMedia = (presionSistolica + 2 * presionDiastolica) / 3.0
 
             val fechaActual = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
 
-            val nuevoRegistro = mapOf(
+            val nuevoRegistro = mutableMapOf<String, Any>(
                 "fecha" to fechaActual,
                 "frecuencia_cardiaca" to frecuenciaCardiaca,
                 "frecuencia_respiratoria" to frecuenciaRespiratoria,
                 "saturacion_oxigeno" to saturacionOxigeno,
-                "presion_arterial" to presionArterial,
+                "presion_sistolica" to presionSistolica,
+                "presion_diastolica" to presionDiastolica,
+                "presion_arterial" to presionArterialTexto,
+                "presion_media" to presionMedia,
                 "temperatura" to temperatura,
-                "peso" to peso,
-                "imc" to imc,
+                "escala_dolor" to escalaDolor,
                 "encargado" to usuarioActual
             )
+
+            peso?.let { nuevoRegistro["peso"] = it }
+            imc?.let { nuevoRegistro["imc"] = it }
 
             val docRef = firestore.collection("Pacientes").document(patientId)
             docRef.get().addOnSuccessListener { document ->
@@ -90,9 +104,10 @@ class SignosVitalesFormActivity : AppCompatActivity() {
                     }
             }
         } catch (e: Exception) {
-            Toast.makeText(this, "Por favor llena todos los campos correctamente", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Por favor llena todos los campos obligatorios correctamente", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun obtenerNombreUsuario(callback: (String) -> Unit) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return callback("Desconocido")

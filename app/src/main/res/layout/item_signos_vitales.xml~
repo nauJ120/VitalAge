@@ -64,13 +64,13 @@
             android:textColor="#333333" />
 
         <TextView
-            android:id="@+id/tvDolor"
+            android:id="@+id/tvTemperatura"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="🌡️ Temperatura: 36.7 °C"
             android:textSize="14sp"
             android:textColor="#333333" />
-
+        
         <TextView
             android:id="@+id/tvTemperatura"
             android:layout_width="wrap_content"

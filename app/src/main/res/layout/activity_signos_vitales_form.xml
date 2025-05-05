@@ -80,8 +80,17 @@
             android:divider="?android:attr/dividerHorizontal"
             android:showDividers="middle">
 
-            <!-- Campo reutilizable -->
-            <!-- Repite este bloque para cada campo con el icono, nombre, unidad, y EditText -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Signos Vitales"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:background="#F1F1F1"
+                android:padding="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp" />
 
             <!-- Ejemplo: Frecuencia cardíaca -->
             <LinearLayout
@@ -188,25 +197,57 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@drawable/ic_pressure"
-                    app:tint="#FF5722" />
+                    app:tint="#FB0000" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="12dp"
-                    android:text="Presión arterial"
+                    android:text="Presión sistólica"
                     android:textSize="16sp"
                     android:textColor="#333333" />
 
                 <EditText
-                    android:id="@+id/etPresionArterial"
+                    android:id="@+id/etPresionSistolica"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:hint="mmHg"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:textAlignment="viewEnd" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_pressure"
+                    app:tint="#A20000" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="Presión diastólica"
+                    android:textSize="16sp"
+                    android:textColor="#333333" />
+
+                <EditText
+                    android:id="@+id/etPresionDiastolica"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:hint="mmHg"
+                    android:inputType="number"
+                    android:textAlignment="viewEnd" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -238,6 +279,49 @@
                     android:inputType="numberDecimal"
                     android:textAlignment="viewEnd" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_escala_dolor"
+                    app:tint="@android:color/holo_blue_dark" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="Escala del dolor"
+                    android:textSize="16sp"
+                    android:textColor="#333333" />
+
+                <EditText
+                    android:id="@+id/etDolor"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:hint="1-10"
+                    android:inputType="numberDecimal"
+                    android:textAlignment="viewEnd" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Signos Vitales Adicionales"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:background="#F1F1F1"
+                android:padding="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -300,6 +384,8 @@
                     android:inputType="numberDecimal"
                     android:textAlignment="viewEnd" />
             </LinearLayout>
+
+
 
 
 
