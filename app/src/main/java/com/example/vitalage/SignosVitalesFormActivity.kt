@@ -67,8 +67,7 @@ class SignosVitalesFormActivity : AppCompatActivity() {
             val peso = if (pesoText.isNotBlank()) pesoText.toDoubleOrNull() else null
             val imc = if (imcText.isNotBlank()) imcText.toDoubleOrNull() else null
 
-            val presionArterialTexto = "$presionSistolica/$presionDiastolica"
-            val presionMedia = (presionSistolica + 2 * presionDiastolica) / 3.0
+            val presionArterialTexto = (presionSistolica + 2 * presionDiastolica) / 3.0
 
             val fechaActual = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
 
@@ -77,10 +76,7 @@ class SignosVitalesFormActivity : AppCompatActivity() {
                 "frecuencia_cardiaca" to frecuenciaCardiaca,
                 "frecuencia_respiratoria" to frecuenciaRespiratoria,
                 "saturacion_oxigeno" to saturacionOxigeno,
-                "presion_sistolica" to presionSistolica,
-                "presion_diastolica" to presionDiastolica,
                 "presion_arterial" to presionArterialTexto,
-                "presion_media" to presionMedia,
                 "temperatura" to temperatura,
                 "escala_dolor" to escalaDolor,
                 "encargado" to usuarioActual

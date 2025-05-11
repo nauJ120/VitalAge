@@ -67,7 +67,7 @@
             android:id="@+id/tvDolor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🌡️ Temperatura: 36.7 °C"
+            android:text="💢 Escala del dolor: 5"
             android:textSize="14sp"
             android:textColor="#333333" />
 
