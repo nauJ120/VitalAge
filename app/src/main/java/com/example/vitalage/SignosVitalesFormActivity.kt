@@ -12,6 +12,7 @@ import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class SignosVitalesFormActivity : AppCompatActivity() {
 
@@ -67,7 +68,9 @@ class SignosVitalesFormActivity : AppCompatActivity() {
             val peso = if (pesoText.isNotBlank()) pesoText.toDoubleOrNull() else null
             val imc = if (imcText.isNotBlank()) imcText.toDoubleOrNull() else null
 
-            val presionArterialTexto = (presionSistolica + 2 * presionDiastolica) / 3.0
+
+            val presionMedia = (presionSistolica + 2 * presionDiastolica) / 3.0
+            val presionArterialTexto: Int = presionMedia.roundToInt()
 
             val fechaActual = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
 
