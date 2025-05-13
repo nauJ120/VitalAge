@@ -20,6 +20,7 @@ class SignosVitalesAdapter(private val listaSignos: List<SignosVitales>) :
         val tvTemperatura: TextView = itemView.findViewById(R.id.tvTemperatura)
         val tvPeso: TextView = itemView.findViewById(R.id.tvPeso)
         val tvImc: TextView = itemView.findViewById(R.id.tvImc)
+        val tvDolor: TextView = itemView.findViewById(R.id.tvDolor)
         val tvEncargado: TextView = itemView.findViewById(R.id.tvEncargado)
     }
 
@@ -36,10 +37,19 @@ class SignosVitalesAdapter(private val listaSignos: List<SignosVitales>) :
         holder.tvFrecuenciaCardiaca.text = "❤️ Frecuencia Cardíaca: ${signo.frecuenciaCardiaca} bpm"
         holder.tvFrecuenciaRespiratoria.text = "💨 Frecuencia Respiratoria: ${signo.frecuenciaRespiratoria} rpm"
         holder.tvSaturacionOxigeno.text = "🫁 Saturación de Oxígeno: ${signo.saturacionOxigeno}%"
-        holder.tvPresionArterial.text = "🩸 Presión Arterial: ${signo.presionArterial}"
+        holder.tvPresionArterial.text = "🩸 Presión Arterial: ${signo.presionArterial} mmHg"
         holder.tvTemperatura.text = "🌡️ Temperatura: ${signo.temperatura} °C"
-        holder.tvPeso.text = "⚖️ Peso: ${signo.peso} kg"
-        holder.tvImc.text = "📊 IMC: ${signo.imc}"
+        if (signo.peso == 0.0) {
+            holder.tvPeso.text = "⚖️ Peso: No registrado"
+        } else {
+            holder.tvPeso.text = "⚖️ Peso: ${signo.peso} kg"
+        }
+        if (signo.imc == 0.0) {
+            holder.tvImc.text = "📊 IMC: No registrado"
+        } else {
+            holder.tvImc.text = "📊 IMC: ${signo.imc}"
+        }
+        holder.tvDolor.text = "😖 Escala del dolor: ${signo.escalaDolor}"
         holder.tvEncargado.text = "😷 Encargada: ${signo.encargado}"
     }
 

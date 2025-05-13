@@ -9,6 +9,6 @@ data class SignosVitales(
     val temperatura: Double = 0.0,
     val peso: Double = 0.0,
     val imc: Double = 0.0,
-    val encargado: String = ""
-
+    val encargado: String = "",
+    val escalaDolor: Int = 0
 )

@@ -76,6 +76,15 @@ class SignosVitalesActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.fabSecundario.setOnClickListener {
+            val intent = Intent(this, GraficasSignosActivity::class.java)
+            intent.putExtra("patient_id", patientId)
+            intent.putExtra("patient_name", patientName)
+            intent.putExtra("patient_gender", patientGender)
+            intent.putExtra("patient_age", patientAge)
+            startActivity(intent)
+        }
+
         obtenerSignosVitales()
 
         obtenerNombreUsuario { nombre ->
@@ -107,7 +116,8 @@ class SignosVitalesActivity : AppCompatActivity() {
                                 temperatura = (registro["temperatura"] as? Number)?.toDouble() ?: 0.0,
                                 peso = (registro["peso"] as? Number)?.toDouble() ?: 0.0,
                                 imc = (registro["imc"] as? Number)?.toDouble() ?: 0.0,
-                                encargado = registro["encargado"] as? String ?: ""
+                                encargado = registro["encargado"] as? String ?: "",
+                                escalaDolor = (registro["escala_dolor"] as? Number)?.toInt() ?: 0
                             )
                             signosList.add(signo)
                         } catch (e: Exception) {

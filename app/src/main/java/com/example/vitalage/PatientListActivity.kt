@@ -64,7 +64,7 @@ class PatientListActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                Toast.makeText(this@PatientListActivity, "No puedes volver atrás.", Toast.LENGTH_SHORT).show()
+
             }
         })
     }
