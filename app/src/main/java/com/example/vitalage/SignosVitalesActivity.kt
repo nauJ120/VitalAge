@@ -76,6 +76,15 @@ class SignosVitalesActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.fabSecundario.setOnClickListener {
+            val intent = Intent(this, GraficasSignosActivity::class.java)
+            intent.putExtra("patient_id", patientId)
+            intent.putExtra("patient_name", patientName)
+            intent.putExtra("patient_gender", patientGender)
+            intent.putExtra("patient_age", patientAge)
+            startActivity(intent)
+        }
+
         obtenerSignosVitales()
 
         obtenerNombreUsuario { nombre ->

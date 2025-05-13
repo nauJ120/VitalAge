@@ -67,7 +67,62 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- EJEMPLO: sección para una gráfica -->
+            <!-- Gráfico de Escala de Dolor -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Escala de Dolor"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <!-- Botones de rango de tiempo para escala de dolor -->
+            <LinearLayout
+                android:id="@+id/rangeButtonsEscalaDolor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/btnEscalaDolor1D"
+                    android:text="1D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnEscalaDolor5D"
+                    android:text="5D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnEscalaDolor1M"
+                    android:text="1M"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnEscalaDolor1A"
+                    android:text="1A"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Gráfico de escala de dolor -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartEscalaDolor"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Gráfico de Frecuencia Cardíaca -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,28 +131,381 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp" />
 
-
-            <!-- Botones de rango de tiempo -->
+            <!-- Botones de rango de tiempo para frecuencia cardíaca -->
             <LinearLayout
                 android:id="@+id/rangeButtonsFC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="4dp">
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_horizontal">
 
-                <Button android:id="@+id/btnFC1D" android:text="1D" style="@style/TimeButton"/>
-                <Button android:id="@+id/btnFC5D" android:text="5D" style="@style/TimeButton"/>
-                <Button android:id="@+id/btnFC1M" android:text="1M" style="@style/TimeButton"/>
+                <Button
+                    android:id="@+id/btnFC1D"
+                    android:text="1D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnFC5D"
+                    android:text="5D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnFC1M"
+                    android:text="1M"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnFC1A"
+                    android:text="1A"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
-            <!-- Gráfico -->
+            <!-- Gráfico de frecuencia cardíaca -->
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chartFrecuenciaCardiaca"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="8dp"/>
 
-            <!-- Repite este bloque para los demás signos vitales (temperatura, presión, etc.) -->
+            <!-- Gráfico de Frecuencia Respiratoria -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Frecuencia Respiratoria"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <!-- Botones de rango de tiempo para frecuencia respiratoria -->
+            <LinearLayout
+                android:id="@+id/rangeButtonsFR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/btnFR1D"
+                    android:text="1D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnFR5D"
+                    android:text="5D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnFR1M"
+                    android:text="1M"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnFR1A"
+                    android:text="1A"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Gráfico de frecuencia respiratoria -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartFrecuenciaRespiratoria"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Gráfico de IMC -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="IMC"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <!-- Botones de rango de tiempo para IMC -->
+            <LinearLayout
+                android:id="@+id/rangeButtonsIMC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/btnIMC1D"
+                    android:text="1D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnIMC5D"
+                    android:text="5D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnIMC1M"
+                    android:text="1M"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnIMC1A"
+                    android:text="1A"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Gráfico de IMC -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartIMC"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Gráfico de Peso -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Peso"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <!-- Botones de rango de tiempo para peso -->
+            <LinearLayout
+                android:id="@+id/rangeButtonsPeso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/btnPeso1D"
+                    android:text="1D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnPeso5D"
+                    android:text="5D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnPeso1M"
+                    android:text="1M"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnPeso1A"
+                    android:text="1A"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Gráfico de peso -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartPeso"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Gráfico de Presión Arterial -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Presión Arterial"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <!-- Botones de rango de tiempo para presión arterial -->
+            <LinearLayout
+                android:id="@+id/rangeButtonsPA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/btnPA1D"
+                    android:text="1D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnPA5D"
+                    android:text="5D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnPA1M"
+                    android:text="1M"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnPA1A"
+                    android:text="1A"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Gráfico de presión arterial -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartPresionArterial"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Gráfico de Saturación de Oxígeno -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saturación de Oxígeno"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <!-- Botones de rango de tiempo para saturación de oxígeno -->
+            <LinearLayout
+                android:id="@+id/rangeButtonsSO2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/btnSO21D"
+                    android:text="1D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnSO25D"
+                    android:text="5D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnSO21M"
+                    android:text="1M"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnSO21A"
+                    android:text="1A"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Gráfico de saturación de oxígeno -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartSaturacionOxigeno"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Gráfico de Temperatura -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Temperatura"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <!-- Botones de rango de tiempo para temperatura -->
+            <LinearLayout
+                android:id="@+id/rangeButtonsTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/btnTemp1D"
+                    android:text="1D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnTemp5D"
+                    android:text="5D"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnTemp1M"
+                    android:text="1M"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnTemp1A"
+                    android:text="1A"
+                    style="@style/TimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Gráfico de temperatura -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartTemperatura"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"/>
 
         </LinearLayout>
     </ScrollView>
