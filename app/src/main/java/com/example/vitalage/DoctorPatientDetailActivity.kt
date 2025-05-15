@@ -3,6 +3,7 @@ package com.example.vitalage
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -48,6 +49,11 @@ class DoctorPatientDetailActivity : AppCompatActivity() {
 
         findViewById<LinearLayout>(R.id.btnProfileContainer).setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
+        }
+
+        // Botón de regresar (flecha)
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish() // Cierra la actividad actual y vuelve a la anterior
         }
     }
 }

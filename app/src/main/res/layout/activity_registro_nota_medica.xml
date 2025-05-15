@@ -1,222 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@android:color/white">
 
-    <LinearLayout
+    <!-- HEADER CON BOTÓN DE VOLVER -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="top">
+        android:background="@color/md_light_blue_300"
+        android:padding="16dp">
 
-        <!-- Sección: Consulta -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Finalidad de la consulta" />
-        <Spinner
-            android:id="@+id/spFinalidadConsulta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Causa externa" />
-        <Spinner
-            android:id="@+id/spCausaExterna"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Volver"
+            app:tint="@android:color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
+            android:id="@+id/tvHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Motivo de consulta" />
-        <EditText
-            android:id="@+id/etMotivo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="2"
-            android:inputType="textMultiLine"/>
+            android:text="Registrar Nota Médica"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enfermedad actual" />
-        <EditText
-            android:id="@+id/etEnfermedadActual"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="2"
-            android:inputType="textMultiLine"/>
+    <!-- CONTENIDO SCROLLABLE -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ayuda diagnóstica" />
-        <EditText
-            android:id="@+id/etAyudaDiagnostica"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minLines="2"
-            android:inputType="textMultiLine"/>
+            android:orientation="vertical">
 
-        <!-- Sección: Antecedentes -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Antecedentes ginecológicos" />
-        <EditText
-            android:id="@+id/etAntecedenteGinecologico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <!-- CARD: Consulta médica -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="12dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Antecedentes alérgicos" />
-        <EditText
-            android:id="@+id/etAntecedenteAlergico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="#FAFAFA">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Antecedentes quirúrgicos" />
-        <EditText
-            android:id="@+id/etAntecedenteQuirurgico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                    <TextView
+                        android:text="Consulta médica"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Antecedentes patológicos" />
-        <EditText
-            android:id="@+id/etAntecedentePatologico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                    <TextView android:text="Finalidad de la consulta" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
+                    <Spinner android:id="@+id/spFinalidadConsulta" android:layout_width="match_parent" android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Antecedentes farmacológicos" />
-        <EditText
-            android:id="@+id/etAntecedenteFarmacologico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                    <TextView android:text="Causa externa" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
+                    <Spinner android:id="@+id/spCausaExterna" android:layout_width="match_parent" android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Antecedentes toxicológicos" />
-        <EditText
-            android:id="@+id/etAntecedenteToxicologico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                    <TextView android:text="Motivo de consulta" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
+                    <EditText android:id="@+id/etMotivo" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="2" android:inputType="textMultiLine" android:hint="Ninguno" android:textColorHint="#999999"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Otros antecedentes" />
-        <EditText
-            android:id="@+id/etAntecedenteOtro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                    <TextView android:text="Enfermedad actual" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
+                    <EditText android:id="@+id/etEnfermedadActual" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="2" android:inputType="textMultiLine" android:hint="Ninguno" android:textColorHint="#999999"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Antecedentes familiares" />
-        <EditText
-            android:id="@+id/etAntecedenteFamiliar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                    <TextView android:text="Ayuda diagnóstica" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
+                    <EditText android:id="@+id/etAyudaDiagnostica" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="2" android:inputType="textMultiLine" android:hint="Ninguno" android:textColorHint="#999999"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-        <!-- Sección: Examen y diagnóstico -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Revisión por sistemas" />
-        <EditText
-            android:id="@+id/etRevisionSistemas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="2"
-            android:inputType="textMultiLine"/>
+            <!-- CARD: Antecedentes -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="12dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Examen físico" />
-        <EditText
-            android:id="@+id/etExamenFisico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="2"
-            android:inputType="textMultiLine"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="#FAFAFA">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Análisis" />
-        <EditText
-            android:id="@+id/etAnalisis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="2"
-            android:inputType="textMultiLine"/>
+                    <TextView android:text="Antecedentes" android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="8dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Diagnóstico principal" />
-        <EditText
-            android:id="@+id/etDxPrincipal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                    <TextView android:text="Antecedentes ginecológicos" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etAntecedenteGinecologico" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ninguno" android:textColorHint="#999999"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tipo de diagnóstico" />
-        <Spinner
-            android:id="@+id/spTipoDiagnostico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                    <TextView android:text="Antecedentes alérgicos" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etAntecedenteAlergico" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ninguno" android:textColorHint="#999999"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tratamiento" />
-        <EditText
-            android:id="@+id/etTratamiento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="2"
-            android:inputType="textMultiLine"/>
+                    <TextView android:text="Antecedentes quirúrgicos" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etAntecedenteQuirurgico" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ninguno" android:textColorHint="#999999"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Recomendación" />
-        <EditText
-            android:id="@+id/etRecomendacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="2"
-            android:inputType="textMultiLine"/>
+                    <TextView android:text="Antecedentes patológicos" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etAntecedentePatologico" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ninguno" android:textColorHint="#999999"/>
 
-        <!-- Botón Guardar -->
-        <Button
-            android:id="@+id/btnGuardarNota"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Guardar Nota Médica"
-            android:layout_marginTop="24dp"/>
-    </LinearLayout>
-</ScrollView>
+                    <TextView android:text="Antecedentes farmacológicos" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etAntecedenteFarmacologico" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ninguno" android:textColorHint="#999999"/>
+
+                    <TextView android:text="Antecedentes toxicológicos" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etAntecedenteToxicologico" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ninguno" android:textColorHint="#999999"/>
+
+                    <TextView android:text="Otros antecedentes" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etAntecedenteOtro" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ninguno" android:textColorHint="#999999"/>
+
+                    <TextView android:text="Antecedentes familiares" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etAntecedenteFamiliar" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ninguno" android:textColorHint="#999999"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CARD: Examen y diagnóstico -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="#FAFAFA">
+
+                    <TextView android:text="Examen y diagnóstico" android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="8dp" />
+
+                    <TextView android:text="Revisión por sistemas" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etRevisionSistemas" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="2" android:inputType="textMultiLine" android:hint="Ninguno" android:textColorHint="#999999"/>
+
+                    <TextView android:text="Examen físico" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etExamenFisico" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="2" android:inputType="textMultiLine" android:hint="Ninguno" android:textColorHint="#999999"/>
+
+                    <TextView android:text="Análisis" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etAnalisis" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="2" android:inputType="textMultiLine" android:hint="Ninguno" android:textColorHint="#999999"/>
+
+                    <TextView android:text="Diagnóstico principal" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etDxPrincipal" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ninguno" android:textColorHint="#999999"/>
+
+                    <TextView android:text="Tipo de diagnóstico" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <Spinner android:id="@+id/spTipoDiagnostico" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+                    <TextView android:text="Tratamiento" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etTratamiento" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="2" android:inputType="textMultiLine" android:hint="Ninguno" android:textColorHint="#999999"/>
+
+                    <TextView android:text="Recomendación" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <EditText android:id="@+id/etRecomendacion" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="2" android:inputType="textMultiLine" android:hint="Ninguno" android:textColorHint="#999999"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- BOTÓN GUARDAR -->
+            <Button
+                android:id="@+id/btnGuardarNota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar Nota Médica"
+                android:layout_marginTop="24dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
