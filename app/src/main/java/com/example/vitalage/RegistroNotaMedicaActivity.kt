@@ -3,7 +3,6 @@ package com.example.vitalage
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,6 +16,11 @@ class RegistroNotaMedicaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro_nota_medica)
+
+        // Botón de volver
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            finish()
+        }
 
         // Obtener ID del paciente desde intent
         patientId = intent.getStringExtra("patient_id") ?: ""

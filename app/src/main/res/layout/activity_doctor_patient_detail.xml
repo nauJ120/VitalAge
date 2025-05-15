@@ -17,6 +17,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Botón Volver -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Volver"
+            app:tint="@android:color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
         <TextView
             android:id="@+id/tvHeader"
             android:layout_width="wrap_content"
@@ -25,8 +37,10 @@
             android:textColor="#FFFFFF"
             android:textSize="28sp"
             android:fontFamily="sans-serif-medium"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            android:layout_marginStart="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/tvNombrePaciente" />
 
         <TextView
             android:id="@+id/tvNombrePaciente"
@@ -37,7 +51,7 @@
             android:textSize="18sp"
             android:fontFamily="sans-serif-light"
             app:layout_constraintTop_toBottomOf="@id/tvHeader"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvHeader"
             android:layout_marginTop="4dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
