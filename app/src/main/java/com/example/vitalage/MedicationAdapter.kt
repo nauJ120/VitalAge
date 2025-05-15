@@ -39,5 +39,5 @@ class MedicationAdapter(
         medications = newList.toMutableList() // 🔥 Crear una nueva lista mutable
         notifyDataSetChanged()
     }
-
+    fun getMedications() = medications
 }

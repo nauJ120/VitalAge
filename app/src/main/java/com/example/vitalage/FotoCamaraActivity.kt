@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.databinding.FotoCamaraBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -32,7 +31,7 @@ class FotoCamaraActivity : AppCompatActivity() {
     private lateinit var fotoCamaraBinding: FotoCamaraBinding
     private val TAG = FotoCamaraActivity::class.java.simpleName
     private lateinit var textRecognizer: TextRecognizer
-    private lateinit var listaMedicamentos: List<String>
+    private lateinit var listaMedicamentos: List<JSONObject>
     private lateinit var patientId: String
     private var usuarioActual: String = "Desconocido"
 
@@ -116,12 +115,11 @@ class FotoCamaraActivity : AppCompatActivity() {
     }
 
 
-    private fun cargarNombresDesdeJson(context: Context, fileName: String): List<String> {
+    private fun cargarNombresDesdeJson(context: Context, fileName: String): List<JSONObject> {
         return try {
             val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
             val jsonArray = JSONArray(jsonString)
-
-            List(jsonArray.length()) { jsonArray.getString(it).uppercase() }
+            List(jsonArray.length()) { jsonArray.getJSONObject(it) }
         } catch (e: Exception) {
             Log.e(TAG, "Error al cargar el archivo JSON", e)
             emptyList()
@@ -135,33 +133,28 @@ class FotoCamaraActivity : AppCompatActivity() {
             .trim()                            // Eliminar espacios al inicio y final
     }
 
-    private fun buscarCoincidencia(nombreDetectado: String, listaOrdenada: List<String>): String {
-        val textoLimpio = limpiarTexto(nombreDetectado.uppercase()).trim()
-        val palabrasTexto = quitarTildes(textoLimpio).split(" ").map { it.trim() }
+    private fun buscarCoincidencia(nombreDetectado: String, listaOrdenada: List<JSONObject>): String {
+        val palabrasTexto = quitarTildes(limpiarTexto(nombreDetectado.uppercase()))
+            .split(" ").map { it.trim() }.filter { it.isNotBlank() }
 
         var mejorCoincidencia = "No detectado"
         var maxCoincidencias = 0
 
-
-
-        for (jsonStr in listaOrdenada) {
-            val jsonObject = JSONObject(jsonStr)
-            val principioActivo = jsonObject.getString("PRINCIPIOACTIVO").uppercase()
-            val palabrasMedicamento = quitarTildes(principioActivo).split(" ").map { it.trim() }
-
+        for (obj in listaOrdenada) {
+            val principioActivo = quitarTildes(obj.optString("principioactivo", "").uppercase()).trim()
+            val palabrasMedicamento = principioActivo.split(" ").map { it.trim() }.filter { it.isNotBlank() }
 
             val palabrasCoincidentes = palabrasTexto.intersect(palabrasMedicamento.toSet()).size
 
-
-
+            Log.d("COINCIDENCIA", "Comparando: $palabrasTexto vs $palabrasMedicamento -> $palabrasCoincidentes coincidencias")
 
             if (palabrasCoincidentes > maxCoincidencias) {
                 maxCoincidencias = palabrasCoincidentes
                 mejorCoincidencia = principioActivo
-
             }
         }
 
+        Log.d("COINCIDENCIA", "✅ Mejor coincidencia: $mejorCoincidencia con $maxCoincidencias palabras")
         return mejorCoincidencia
     }
 
@@ -205,7 +198,7 @@ class FotoCamaraActivity : AppCompatActivity() {
         }
     }
 
-    private fun clasificarTexto(texto: String, nombresJsonOrdenados: List<String>): Map<String, String> {
+    private fun clasificarTexto(texto: String, nombresJsonOrdenados: List<JSONObject>): Map<String, String> {
         val resultado = mutableMapOf<String, String>()
 
         val textoNormalizado = quitarTildes(texto.uppercase())
@@ -278,36 +271,26 @@ class FotoCamaraActivity : AppCompatActivity() {
     }
 
 
-    private fun buscarPorSubstring(lista: List<String>, objetivo: String): String {
+    private fun buscarPorSubstring(lista: List<JSONObject>, objetivo: String): String {
         val primeraPalabraObjetivo = extraerPrincipioActivo(objetivo).split("\\s+".toRegex())[0] // Primera palabra limpia
 
         Log.d("DEBUG", "Buscando coincidencias para: \"$primeraPalabraObjetivo\" en una lista de ${lista.size} elementos.")
 
-        var inicio = 0
-        var fin = lista.size - 1
         var mejorCoincidencia = "No detectado"
         var maxCoincidencia = 0
 
         // Lista para almacenar posibles coincidencias ordenadas por prioridad
         val posiblesCoincidencias = mutableListOf<Pair<String, Int>>()
 
-        while (inicio <= fin) {
-            val medio = (inicio + fin) / 2
-            var primeraPalabraElemento = lista[medio].split("\\s+".toRegex())[0]
-            primeraPalabraElemento = extraerPrincipioActivo(primeraPalabraElemento)
+        for (jsonObj in lista) {
+            val nombre = jsonObj.optString("nombre").trim() // Ajusta la clave según el campo real
+            val primeraPalabraElemento = extraerPrincipioActivo(nombre).split("\\s+".toRegex())[0]
 
             val coincidencias = contarLetrasInicialesIguales(primeraPalabraElemento, primeraPalabraObjetivo)
             Log.d("DEBUG", "Comparando: \"$primeraPalabraElemento\" con \"$primeraPalabraObjetivo\" -> Letras iguales: $coincidencias")
 
             if (coincidencias > 0) {
                 posiblesCoincidencias.add(primeraPalabraElemento to coincidencias)
-            }
-
-            // Ajustar búsqueda binaria
-            if (primeraPalabraElemento < primeraPalabraObjetivo) {
-                inicio = medio + 1
-            } else {
-                fin = medio - 1
             }
         }
 
