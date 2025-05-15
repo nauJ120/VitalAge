@@ -49,13 +49,36 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.cardview)
     implementation(libs.firebase.auth)
-    implementation(libs.androidx.cardview)
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.firestore.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.play.services.mlkit.text.recognition)
-    implementation (libs.lottie)
+    implementation(libs.lottie)
     implementation(libs.mpandroidchart)
+
+    // Unit testing dependencies
+    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.androidx.uiautomator)
+
+    // Android testing (instrumentation)
+    testImplementation(libs.androidx.junit)
+
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+
+
+    // Additional dependencies
+    implementation(libs.androidx.junit.ktx)
+
+    androidTestImplementation(libs.androidx.test.runner)
+
+    testImplementation(libs.mockito.kotlin)
+
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.intents)
+    androidTestImplementation(libs.androidx.espresso.contrib)
+
+    testImplementation(libs.mockito.inline)
+    // UIAutomator dependency for UI testing
+    androidTestImplementation(libs.androidx.uiautomator)
 }
