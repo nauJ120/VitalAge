@@ -181,11 +181,11 @@
                             false
                         }
                     }.forEach {
-                        builder.appendLine("📅 Fecha: ${it["fecha"]}")
-                        builder.appendLine("   ❤️ FC: ${it["frecuencia_cardiaca"]} bpm   💨 FR: ${it["frecuencia_respiratoria"]} rpm")
-                        builder.appendLine("   🫁 Oxígeno: ${it["saturacion_oxigeno"]}%   🌡️ Temp: ${it["temperatura"]} °C")
-                        builder.appendLine("   🩸 PA: ${it["presion_arterial"]}   ⚖️ Peso: ${it["peso"]} kg   📊 IMC: ${it["imc"]}")
-                        builder.appendLine("   👩 Encargado: ${it["encargado"]}\n")
+                        builder.appendLine("Fecha: ${it["fecha"]}")
+                        builder.appendLine("   FC: ${it["frecuencia_cardiaca"]} bpm   FR: ${it["frecuencia_respiratoria"]} rpm")
+                        builder.appendLine("   Oxígeno: ${it["saturacion_oxigeno"]}%   Temp: ${it["temperatura"]} °C")
+                        builder.appendLine("   PA: ${it["presion_arterial"]}   Peso: ${it["peso"]} kg   IMC: ${it["imc"]}")
+                        builder.appendLine("   Encargado: ${it["encargado"]}\n")
                     }
 
                     // 2. MEDICAMENTOS ADMINISTRADOS
@@ -199,10 +199,10 @@
                         fecha?.toDate()?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate()?.isAfter(desde) ?: false
                     }.forEach {
                         val fechaFormateada = (it["fecha_hora"] as? Timestamp)?.toDate()?.let { date -> sdf.format(date) }
-                        builder.appendLine("📅 $fechaFormateada")
-                        builder.appendLine("   💊 Medicamento: ${it["medicamento"]}")
-                        builder.appendLine("   🧪 Dosis: ${it["dosis"]} mg   Cantidad: ${it["cantidad"]}u")
-                        builder.appendLine("   👩 Administrado por: ${it["usuario"]}\n")
+                        builder.appendLine("$fechaFormateada")
+                        builder.appendLine("   Medicamento: ${it["medicamento"]}")
+                        builder.appendLine("   Dosis: ${it["dosis"]} mg   Cantidad: ${it["cantidad"]}u")
+                        builder.appendLine("   Administrado por: ${it["usuario"]}\n")
                     }
 
                     // 3. TERAPIAS
@@ -219,9 +219,9 @@
                         }
                     }.forEach {
                         val realizada = it["realizada"] as? Boolean ?: false
-                        builder.appendLine("📅 Fecha: ${it["fecha"]}")
-                        builder.appendLine("   🧠 Tipo: ${it["tipo"]}   ✅ Realizada: ${if (realizada) "Si" else "No"}")
-                        builder.appendLine("   👨 Encargado: ${it["encargado"]}\n")
+                        builder.appendLine("Fecha: ${it["fecha"]}")
+                        builder.appendLine("   Tipo: ${it["tipo"]}   Realizada: ${if (realizada) "Si" else "No"}")
+                        builder.appendLine("   Encargado: ${it["encargado"]}\n")
                     }
 
                     // 4. ESCALAS APLICADAS
@@ -241,9 +241,9 @@
                             false
                         }
                     }.forEach {
-                        builder.appendLine("📅 Fecha: ${it["fecha"]}")
-                        builder.appendLine("   📌 Tipo: ${it["tipo"]}   🧮 Puntaje: ${it["puntaje"]}")
-                        builder.appendLine("   👩 Encargado: ${it["encargado"]}\n")
+                        builder.appendLine("Fecha: ${it["fecha"]}")
+                        builder.appendLine("   Tipo: ${it["tipo"]}   Puntaje: ${it["puntaje"]}")
+                        builder.appendLine("   Encargado: ${it["encargado"]}\n")
                     }
 
 
@@ -275,10 +275,10 @@
                             false  // Si no se puede parsear la fecha, la excluimos
                         }
                     }.forEach {
-                        builder.appendLine("📅 Fecha: ${it["fecha"]}")
-                        builder.appendLine("   📝 Título: ${it["titulo"]}")
-                        builder.appendLine("   📄 Descripción: ${it["descripcion"]}")
-                        builder.appendLine("   👩 Enfermera: ${it["enfermera"]}\n")
+                        builder.appendLine("Fecha: ${it["fecha"]}")
+                        builder.appendLine("   Título: ${it["titulo"]}")
+                        builder.appendLine("   Descripción: ${it["descripcion"]}")
+                        builder.appendLine("   Enfermera: ${it["enfermera"]}\n")
                     }
 
     // Mostrar el informe generado
