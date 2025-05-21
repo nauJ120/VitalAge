@@ -1,8 +1,16 @@
 package com.example.vitalage
 
+import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -11,10 +19,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.vitalage.AlarmaDeToma.Companion.TITLEEXTRA
+
 import com.example.vitalage.databinding.ActivityMedicalControlBinding
 import com.example.vitalage.model.MedicalControl
 import com.example.vitalage.model.MedicationCard
@@ -25,9 +38,16 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class MedicalControlActivity : AppCompatActivity() {
+    companion object{
+        const val MY_CHANNEL_ID = "Channel1"
+        const val NOTIFICATION_ID = 1
+    }
 
     private lateinit var binding: ActivityMedicalControlBinding
     private lateinit var medicalControlAdapter: MedicalControlAdapter
@@ -48,6 +68,18 @@ class MedicalControlActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMedicalControlBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13 o superior
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    1001
+                )
+            }
+        }
+
+
 
         obtenerNombreUsuario { nombre ->
             usuarioActual = nombre
@@ -96,6 +128,19 @@ class MedicalControlActivity : AppCompatActivity() {
         val fromScan = intent.getBooleanExtra("from_scan", false)
         if (fromScan) {
             showAddMedicationDialogScan()
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "MED_CHANNEL",
+                "Recordatorios de Medicación",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Canal para recordatorios diarios de medicamentos"
+            }
+
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
 
 
@@ -482,6 +527,36 @@ class MedicalControlActivity : AppCompatActivity() {
                             Toast.makeText(this, "Medicamento registrado correctamente", Toast.LENGTH_SHORT).show()
                             fetchMedicationsFromFirestore()
                             dialog.dismiss()
+
+                            val baseRequestCode = (0..9999).random()
+
+                            scheduleDailyNotificationBetweenDates(
+                                context = this,
+                                hora = horaMañana,
+                                fechaInicio = fechaInicio,
+                                fechaFin = fechaFin,
+                                medicamentoNombre = name,
+                                requestCodeBase = baseRequestCode
+
+                            )
+
+                            scheduleDailyNotificationBetweenDates(
+                                context = this,
+                                hora = horaTarde,
+                                fechaInicio = fechaInicio,
+                                fechaFin = fechaFin,
+                                medicamentoNombre = name,
+                                requestCodeBase = baseRequestCode + 10000 // Para evitar conflictos
+                            )
+
+                            scheduleDailyNotificationBetweenDates(
+                                context = this,
+                                hora = horaNoche,
+                                fechaInicio = fechaInicio,
+                                fechaFin = fechaFin,
+                                medicamentoNombre = name,
+                                requestCodeBase = baseRequestCode + 20000 // Para evitar conflictos
+                            )
                         }
                         .addOnFailureListener { e ->
                             Toast.makeText(this, "Error al guardar: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -618,6 +693,89 @@ class MedicalControlActivity : AppCompatActivity() {
             }
         })
     }
+
+    @SuppressLint("ScheduleExactAlarm")
+    private fun scheduleDailyNotificationBetweenDates(
+        context: Context,
+        hora: String,
+        fechaInicio: String,
+        fechaFin: String,
+        medicamentoNombre: String,
+        requestCodeBase: Int
+    ) {
+        val sdfFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val sdfHora = SimpleDateFormat("hh:mm a", Locale.US)  // Usa "HH:mm" si prefieres formato 24h
+
+        val calInicio = Calendar.getInstance()
+        val calFin = Calendar.getInstance()
+
+        try {
+            calInicio.time = sdfFecha.parse(fechaInicio)!!
+            calFin.time = sdfFecha.parse(fechaFin)!!
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("Notificacion", "Error al parsear las fechas: $fechaInicio o $fechaFin")
+            return
+        }
+
+        var dia = 0
+        while (!calInicio.after(calFin)) {
+            val calNotificacion = Calendar.getInstance()
+            calNotificacion.time = calInicio.time
+
+            val horaParseada = try {
+                sdfHora.parse(hora)
+            } catch (e: Exception) {
+                Log.e("Notificacion", "Error al parsear la hora: $hora")
+                null
+            }
+
+            if (horaParseada != null) {
+                val calHora = Calendar.getInstance()
+                calHora.time = horaParseada
+                calNotificacion.set(Calendar.HOUR_OF_DAY, calHora.get(Calendar.HOUR_OF_DAY))
+                calNotificacion.set(Calendar.MINUTE, calHora.get(Calendar.MINUTE))
+                calNotificacion.set(Calendar.SECOND, 0)
+                calNotificacion.set(Calendar.MILLISECOND, 0)
+
+                val fechaProgramada = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(calNotificacion.time)
+
+                if (calNotificacion.after(Calendar.getInstance())) {
+                    val intent = Intent(context, AlarmaDeToma::class.java).apply {
+                        action = "ALARM_NOTIFICATION"
+                        putExtra(AlarmaDeToma.TITLEEXTRA, "Recordatorio de medicamento")
+                        putExtra("nombrePaciente", usuarioActual)
+                        putExtra("medicamento", medicamentoNombre)
+                        putExtra("horario", hora)
+                    }
+
+                    val pendingIntent = PendingIntent.getBroadcast(
+                        context,
+                        requestCodeBase + dia,
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+
+                    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                    alarmManager.setExactAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        calNotificacion.timeInMillis,
+                        pendingIntent
+                    )
+
+                    Log.d("Notificacion", "Notificación programada para el $fechaProgramada (requestCode: ${requestCodeBase + dia})")
+                } else {
+                    Log.d("Notificacion", "Hora ya pasada para el $fechaProgramada, no se programa notificación")
+                }
+            }
+
+            calInicio.add(Calendar.DAY_OF_MONTH, 1)
+            dia++
+        }
+    }
+
+
+
 
 
 }
