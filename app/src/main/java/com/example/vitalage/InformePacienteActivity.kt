@@ -104,34 +104,16 @@
                 val periodoSeleccionado = binding.spPeriodo.selectedItem.toString()
                 generarInforme(periodoSeleccionado)
                 calcularPromediosSignosVitales(patientId, periodoSeleccionado) { promedios ->
-                    if (promedios != null) {
-                        // Mostrar gráfico
-                        mostrarGraficoSignosVitales(binding.barChartSignosVitales, promedios)
-                        obtenerYGraficarEscalas(patientId,
-                            periodoSeleccionado,
-                            binding.lineChartEscalas,
-                            this
-                        )
-                    } else {
-                        Toast.makeText(this, "No hay datos para graficar", Toast.LENGTH_SHORT).show()
-                    }
                 }
 
             }
 
             binding.btnDescargarPdf.setOnClickListener {
-                binding.barChartSignosVitales.post {
-                    val bitmapSignos = binding.barChartSignosVitales.chartBitmap
-
-                    binding.lineChartEscalas.post {
-                        val bitmapEscalas = binding.lineChartEscalas.chartBitmap
-
-                        generarPdfDesdeTexto(
-                            texto = binding.tvVistaInforme.text.toString(),
-                            bitmap1 = bitmapSignos,
-                            bitmap2 = bitmapEscalas
-                        )
-                    }
+                val textoInforme = binding.tvVistaInforme.text.toString()
+                if (textoInforme.isNotEmpty()) {
+                    generarPdfDesdeTexto(textoInforme)
+                } else {
+                    Toast.makeText(this, "No hay datos para generar el PDF", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -181,11 +163,11 @@
                             false
                         }
                     }.forEach {
-                        builder.appendLine("📅 Fecha: ${it["fecha"]}")
-                        builder.appendLine("   ❤️ FC: ${it["frecuencia_cardiaca"]} bpm   💨 FR: ${it["frecuencia_respiratoria"]} rpm")
-                        builder.appendLine("   🫁 Oxígeno: ${it["saturacion_oxigeno"]}%   🌡️ Temp: ${it["temperatura"]} °C")
-                        builder.appendLine("   🩸 PA: ${it["presion_arterial"]}   ⚖️ Peso: ${it["peso"]} kg   📊 IMC: ${it["imc"]}")
-                        builder.appendLine("   👩 Encargado: ${it["encargado"]}\n")
+                        builder.appendLine("Fecha: ${it["fecha"]}")
+                        builder.appendLine("   FC: ${it["frecuencia_cardiaca"]} bpm   FR: ${it["frecuencia_respiratoria"]} rpm")
+                        builder.appendLine("   Oxígeno: ${it["saturacion_oxigeno"]}%   Temp: ${it["temperatura"]} °C")
+                        builder.appendLine("   PA: ${it["presion_arterial"]}   Peso: ${it["peso"]} kg   IMC: ${it["imc"]}")
+                        builder.appendLine("   Encargado: ${it["encargado"]}\n")
                     }
 
                     // 2. MEDICAMENTOS ADMINISTRADOS
@@ -199,10 +181,10 @@
                         fecha?.toDate()?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate()?.isAfter(desde) ?: false
                     }.forEach {
                         val fechaFormateada = (it["fecha_hora"] as? Timestamp)?.toDate()?.let { date -> sdf.format(date) }
-                        builder.appendLine("📅 $fechaFormateada")
-                        builder.appendLine("   💊 Medicamento: ${it["medicamento"]}")
-                        builder.appendLine("   🧪 Dosis: ${it["dosis"]} mg   Cantidad: ${it["cantidad"]}u")
-                        builder.appendLine("   👩 Administrado por: ${it["usuario"]}\n")
+                        builder.appendLine("$fechaFormateada")
+                        builder.appendLine("   Medicamento: ${it["medicamento"]}")
+                        builder.appendLine("   Dosis: ${it["dosis"]} mg   Cantidad: ${it["cantidad"]}u")
+                        builder.appendLine("   Administrado por: ${it["usuario"]}\n")
                     }
 
                     // 3. TERAPIAS
@@ -219,9 +201,9 @@
                         }
                     }.forEach {
                         val realizada = it["realizada"] as? Boolean ?: false
-                        builder.appendLine("📅 Fecha: ${it["fecha"]}")
-                        builder.appendLine("   🧠 Tipo: ${it["tipo"]}   ✅ Realizada: ${if (realizada) "Si" else "No"}")
-                        builder.appendLine("   👨 Encargado: ${it["encargado"]}\n")
+                        builder.appendLine("Fecha: ${it["fecha"]}")
+                        builder.appendLine("   Tipo: ${it["tipo"]}   Realizada: ${if (realizada) "Si" else "No"}")
+                        builder.appendLine("   Encargado: ${it["encargado"]}\n")
                     }
 
                     // 4. ESCALAS APLICADAS
@@ -241,9 +223,9 @@
                             false
                         }
                     }.forEach {
-                        builder.appendLine("📅 Fecha: ${it["fecha"]}")
-                        builder.appendLine("   📌 Tipo: ${it["tipo"]}   🧮 Puntaje: ${it["puntaje"]}")
-                        builder.appendLine("   👩 Encargado: ${it["encargado"]}\n")
+                        builder.appendLine("Fecha: ${it["fecha"]}")
+                        builder.appendLine("   Tipo: ${it["tipo"]}   Puntaje: ${it["puntaje"]}")
+                        builder.appendLine("   Encargado: ${it["encargado"]}\n")
                     }
 
 
@@ -275,10 +257,10 @@
                             false  // Si no se puede parsear la fecha, la excluimos
                         }
                     }.forEach {
-                        builder.appendLine("📅 Fecha: ${it["fecha"]}")
-                        builder.appendLine("   📝 Título: ${it["titulo"]}")
-                        builder.appendLine("   📄 Descripción: ${it["descripcion"]}")
-                        builder.appendLine("   👩 Enfermera: ${it["enfermera"]}\n")
+                        builder.appendLine("Fecha: ${it["fecha"]}")
+                        builder.appendLine("   Título: ${it["titulo"]}")
+                        builder.appendLine("   Descripción: ${it["descripcion"]}")
+                        builder.appendLine("   Enfermera: ${it["enfermera"]}\n")
                     }
 
     // Mostrar el informe generado
@@ -332,39 +314,7 @@
                 y += lineHeight
             }
 
-// Incluir gráfico 1 escalado
-            bitmap1?.let {
-                val scaledBitmap = escalarBitmap(it, (pageWidth - 2 * margin).toInt())
 
-                if (y + scaledBitmap.height > pageHeight - margin) {
-                    pdfDocument.finishPage(page)
-                    pageNumber++
-                    pageInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create()
-                    page = pdfDocument.startPage(pageInfo)
-                    canvas = page.canvas
-                    y = margin
-                }
-
-                canvas.drawBitmap(scaledBitmap, margin, y, null)
-                y += scaledBitmap.height + 20f
-            }
-
-// Incluir gráfico 2 escalado
-            bitmap2?.let {
-                val scaledBitmap = escalarBitmap(it, (pageWidth - 2 * margin).toInt())
-
-                if (y + scaledBitmap.height > pageHeight - margin) {
-                    pdfDocument.finishPage(page)
-                    pageNumber++
-                    pageInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create()
-                    page = pdfDocument.startPage(pageInfo)
-                    canvas = page.canvas
-                    y = margin
-                }
-
-                canvas.drawBitmap(scaledBitmap, margin, y, null)
-                y += scaledBitmap.height + 20f
-            }
 
             // Finalizar última página
             pdfDocument.finishPage(page)
@@ -512,204 +462,6 @@
                 onResultado(null)
             }
         }
-
-        fun mostrarGraficoSignosVitales(barChart: BarChart, datos: PromediosSignosVitales) {
-            barChart.visibility = View.VISIBLE
-            binding.tituloSignos.visibility = View.VISIBLE
-
-            // 1. Entradas del gráfico de barras
-            val entries = listOf(
-                BarEntry(0f, datos.fc),
-                BarEntry(1f, datos.fr),
-                BarEntry(2f, datos.oxigeno),
-                BarEntry(3f, datos.temperatura),
-                BarEntry(4f, datos.peso),
-                BarEntry(5f, datos.imc)
-            )
-
-            // 2. Etiquetas para el eje X (puedes cambiarlas por nombres completos si deseas)
-            val labels = listOf("FC", "FR", "O₂", "Temp", "Peso", "IMC")
-
-            // 3. Dataset con los valores y colores personalizados
-            val dataSet = BarDataSet(entries, "").apply {
-                valueTextSize = 12f
-                colors = listOf(
-                    Color.parseColor("#4CAF50"), // Verde
-                    Color.parseColor("#2196F3"), // Azul
-                    Color.parseColor("#FFC107"), // Amarillo
-                    Color.parseColor("#F44336"), // Rojo
-                    Color.parseColor("#9C27B0"), // Morado
-                    Color.parseColor("#00BCD4")  // Cyan
-                )
-            }
-
-            // 4. Asignar los datos al gráfico
-            barChart.data = BarData(dataSet)
-
-            // 5. Configurar eje X
-            barChart.xAxis.apply {
-                valueFormatter = IndexAxisValueFormatter(labels)
-                position = XAxis.XAxisPosition.BOTTOM
-                granularity = 1f
-                setDrawGridLines(false)
-                textSize = 12f
-            }
-
-            // 6. Configurar eje Y
-            barChart.axisRight.isEnabled = false
-            barChart.axisLeft.axisMinimum = 0f
-
-            // 7. Descripción desactivada
-            barChart.description.isEnabled = false
-
-            // 8. Desactivar zoom
-            barChart.setScaleEnabled(false)
-            barChart.setPinchZoom(false)
-            barChart.isDoubleTapToZoomEnabled = false
-
-
-            barChart.legend.isWordWrapEnabled = true
-
-            // 10. Animación y render final
-            barChart.setFitBars(true)
-            barChart.animateY(1000)
-            barChart.invalidate()
-        }
-
-        fun obtenerYGraficarEscalas(
-            pacienteId: String,
-            periodo: String,
-            lineChart: LineChart,
-            contexto: Context // Para logs si deseas usar Toasts o errores
-        ) {
-            lineChart.visibility = View.VISIBLE
-            binding.tituloEscalas.visibility = View.VISIBLE
-            val db = FirebaseFirestore.getInstance()
-            val docRef = db.collection("Pacientes").document(pacienteId)
-
-            val hoy = LocalDate.now()
-            val desde = when (periodo) {
-                "Mensual" -> hoy.minusMonths(1)
-                "Semestral" -> hoy.minusMonths(6)
-                else -> hoy.minusMonths(1)
-            }
-
-            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-
-            docRef.get().addOnSuccessListener { document ->
-                if (!document.exists()) {
-                    Log.w("Firestore", "Paciente no encontrado: $pacienteId")
-                    return@addOnSuccessListener
-                }
-
-                val escalas = document.get("escalas") as? List<Map<String, Any>> ?: emptyList()
-
-                val escalasFiltradas = escalas.filter {
-                    val fechaStr = it["fecha"] as? String
-                    try {
-                        fechaStr?.let { f ->
-                            val fechaEscala = LocalDate.parse(f, formatter)
-                            fechaEscala in desde..hoy
-                        } ?: false
-                    } catch (e: Exception) {
-                        Log.e("Escalas", "Error al parsear fecha: $fechaStr")
-                        false
-                    }
-                }
-
-                mostrarEvolucionEscalas(lineChart, escalasFiltradas)
-
-            }.addOnFailureListener {
-                Log.e("Firestore", "Error al obtener paciente: ${it.message}")
-            }
-        }
-
-        fun mostrarEvolucionEscalas(lineChart: LineChart, escalas: List<Map<String, Any>>) {
-            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-            val tipoMap = mutableMapOf<String, MutableList<Entry>>() // tipo -> datos
-            val fechasOrdenadas = mutableListOf<String>() // para el eje X
-
-            // Mapeamos fechas únicas ordenadas para el eje X
-            val fechasUnicas = escalas.mapNotNull {
-                it["fecha"] as? String
-            }.distinct().sortedBy {
-                try {
-                    LocalDate.parse(it, formatter)
-                } catch (e: Exception) {
-                    null
-                }
-            }
-
-            // Mapa fecha → índice
-            val fechaIndexMap = fechasUnicas.mapIndexed { index, fecha -> fecha to index.toFloat() }.toMap()
-
-            // Recolectar datos por tipo de escala
-            for (escala in escalas) {
-                val tipo = escala["tipo"] as? String ?: continue
-                val puntaje = (escala["puntaje"] as? Number)?.toFloat() ?: continue
-                val fecha = escala["fecha"] as? String ?: continue
-                val index = fechaIndexMap[fecha] ?: continue
-
-                tipoMap.getOrPut(tipo) { mutableListOf() }.add(Entry(index, puntaje))
-            }
-
-            // Etiquetas para el eje X (solo día)
-            val etiquetasX = fechasUnicas.map {
-                try {
-                    val date = LocalDate.parse(it, formatter)
-                    date.dayOfMonth.toString().padStart(2, '0') // ejemplo: "01", "02"
-                } catch (e: Exception) {
-                    "??"
-                }
-            }
-
-            // Dataset y colores
-            val dataSets = mutableListOf<ILineDataSet>()
-            val colores = listOf("#4CAF50", "#2196F3", "#FFC107", "#F44336", "#9C27B0", "#00BCD4")
-            var colorIndex = 0
-
-            for ((tipo, entries) in tipoMap) {
-                val dataSet = LineDataSet(entries, tipo).apply {
-                    color = Color.parseColor(colores[colorIndex % colores.size])
-                    lineWidth = 2f
-                    valueTextSize = 10f
-                    setDrawCircles(true)
-                    setDrawValues(true)
-                    setCircleColor(color)
-                    mode = LineDataSet.Mode.LINEAR
-                }
-                dataSets.add(dataSet)
-                colorIndex++
-            }
-
-            // Configuración del gráfico
-            lineChart.data = LineData(dataSets)
-
-            lineChart.xAxis.apply {
-                position = XAxis.XAxisPosition.BOTTOM
-                granularity = 1f
-                setDrawGridLines(false)
-                textSize = 10f
-                valueFormatter = IndexAxisValueFormatter(etiquetasX)
-            }
-
-            lineChart.axisRight.isEnabled = false
-            lineChart.axisLeft.axisMinimum = 0f
-            lineChart.description.isEnabled = false
-            lineChart.legend.isEnabled = true
-            lineChart.setScaleEnabled(false)
-            lineChart.setPinchZoom(false)
-            lineChart.animateX(1000)
-            lineChart.invalidate()
-        }
-
-        fun escalarBitmap(bitmap: Bitmap, targetWidth: Int): Bitmap {
-            val aspectRatio = bitmap.height.toFloat() / bitmap.width.toFloat()
-            val targetHeight = (targetWidth * aspectRatio).toInt()
-            return Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, true)
-        }
-
-
 
 
 

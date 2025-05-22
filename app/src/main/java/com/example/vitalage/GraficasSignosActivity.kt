@@ -15,9 +15,12 @@ import com.example.vitalage.databinding.ActivityGraficasSignosBinding
 import com.example.vitalage.databinding.ActivityInformePacienteBinding
 import com.example.vitalage.model.SignosVitales
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -76,6 +79,8 @@ class GraficasSignosActivity : AppCompatActivity() {
 
         // Setear listeners para los botones de rango
         setListenersParaBotones()
+
+
     }
 
     // Función para obtener los datos desde Firestore
@@ -131,76 +136,122 @@ class GraficasSignosActivity : AppCompatActivity() {
     }
 
 
-    // Función genérica para graficar datos
-// Función para graficar los datos
-    private fun graficar(
-        lista: List<SignosVitales>,
-        chartId: Int,
-        selector: (SignosVitales) -> Float,
-        rango: Long // Parámetro adicional para determinar el rango (1D, 5D, 30D, 1A)
-    ) {
-        val entries = lista.mapIndexed { index, it ->
-            // Usamos la fecha como el valor del eje X
-            val fecha = LocalDateTime.parse(it.fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-            val x: Float
 
-            // Dependiendo del rango seleccionado, calculamos el eje X de manera diferente
-            when (rango) {
-                1L -> {
-                    // Si es 1D, usamos las horas transcurridas
-                    x = ChronoUnit.HOURS.between(fecha, LocalDateTime.now()).toFloat()
+// Función para graficar los datos
+private fun graficar(
+    lista: List<SignosVitales>,
+    chartId: Int,
+    selector: (SignosVitales) -> Float,
+    rango: Long
+) {
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+    val now = LocalDateTime.now()
+
+    // Generar las entradas de la gráfica
+    val entries = lista.map {
+        val fecha = LocalDateTime.parse(it.fecha, formatter)
+        val x = when (rango) {
+            1L -> fecha.hour + (fecha.minute / 60.0)
+            5L -> ChronoUnit.DAYS.between(fecha.toLocalDate(), now.toLocalDate()).toDouble()
+            30L -> fecha.dayOfMonth.toFloat()
+            365L -> ((fecha.monthValue - 1) / 2.0)
+            else -> 0.0
+        }.toFloat()
+        Entry(x, selector(it))
+    }
+
+    val validEntries = entries.filter { !it.x.isNaN() && !it.y.isNaN() }
+    val chart = findViewById<LineChart>(chartId)
+
+    if (validEntries.isEmpty()) {
+        chart.clear()
+        chart.setNoDataText("No hay datos disponibles.")
+        return
+    }
+
+    // Dataset
+    val dataSet = LineDataSet(validEntries, "").apply {
+        setDrawFilled(true)
+        fillColor = Color.parseColor("#BBDEFB")
+        color = Color.parseColor("#1E88E5")
+        setDrawCircles(true)
+        lineWidth = 2f
+        mode = LineDataSet.Mode.LINEAR
+        setDrawValues(true)
+        valueTextSize = 10f
+    }
+
+    val lineData = LineData(dataSet)
+    chart.data = lineData
+
+    // 🔒 Desactiva interacción
+    chart.setTouchEnabled(false)
+    chart.setDragEnabled(false)
+    chart.setScaleEnabled(false)
+    chart.setPinchZoom(false)
+    chart.setDoubleTapToZoomEnabled(false)
+
+    // Eje Y izquierdo
+    chart.axisLeft.apply {
+        axisMinimum = 0f
+        axisMaximum = when (chartId) {
+            R.id.chartTemperatura -> 45f
+            R.id.chartFrecuenciaCardiaca, R.id.chartFrecuenciaRespiratoria -> 200f
+            R.id.chartPresionArterial -> 200f
+            R.id.chartIMC -> 60f
+            R.id.chartPeso -> 200f
+            R.id.chartSaturacionOxigeno -> 100f
+            R.id.chartEscalaDolor -> 10f
+            else -> 100f
+        }
+        labelCount = 6
+        granularity = 1f
+    }
+
+    chart.axisRight.isEnabled = false
+    chart.description.isEnabled = false
+
+    // Configurar eje X
+    configurarEjeX(chart.xAxis, rango, now)
+
+    chart.invalidate()
+}
+
+    private fun configurarEjeX(xAxis: XAxis, rango: Long, now: LocalDateTime) {
+        xAxis.granularity = 1f
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+        xAxis.labelRotationAngle = -30f
+        xAxis.setLabelCount(5, true)
+
+        xAxis.valueFormatter = when (rango) {
+            1L -> object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    val hour = value.toInt()
+                    val minute = ((value - hour) * 60).toInt()
+                    return String.format("%02d:%02d", hour, minute)
                 }
-                5L -> {
-                    // Si es 5D, usamos los días transcurridos
-                    x = ChronoUnit.DAYS.between(fecha, LocalDateTime.now()).toFloat()
+            }
+            5L -> object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return now.minusDays(value.toLong()).format(DateTimeFormatter.ofPattern("d MMM"))
                 }
-                30L -> {
-                    // Si es 1M (30 días), usamos los días del mes
-                    x = ChronoUnit.DAYS.between(fecha.withDayOfMonth(1), fecha).toFloat() // Días desde el inicio del mes
-                }
-                365L -> {
-                    // Si es 1A (365 días), usamos los meses del año
-                    x = fecha.monthValue.toFloat() // Usamos el número del mes
-                }
-                else -> {
-                    // Para otros rangos (por ejemplo, 1D si no es reconocido), usamos un valor por defecto
-                    x = ChronoUnit.DAYS.between(fecha, LocalDateTime.now()).toFloat()
+            }
+            30L -> object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return "Día ${value.toInt()}"
                 }
             }
 
-            // Generamos las entradas para la gráfica
-            Entry(x, selector(it)) // El valor de Y se obtiene usando el selector (frecuencia, temperatura, etc.)
+            365L -> IndexAxisValueFormatter(listOf("Ene-Feb", "Mar-Abr", "May-Jun", "Jul-Ago", "Sep-Oct", "Nov-Dic"))
+            else -> IndexAxisValueFormatter()
         }
-
-        // Crear el conjunto de datos
-        val dataSet = LineDataSet(entries, "").apply {
-            setDrawFilled(true)
-            fillColor = Color.parseColor("#BBDEFB")
-            color = Color.parseColor("#1E88E5")
-            setDrawCircles(false)
-            lineWidth = 2f
-            mode = LineDataSet.Mode.LINEAR
-        }
-
-        val lineData = LineData(dataSet)
-        val chart = findViewById<LineChart>(chartId)
-        chart.data = lineData
-        chart.description.isEnabled = false
-        chart.invalidate()
-
-        // Configuración de los ejes X y Y
-        val xAxis = chart.xAxis
-        xAxis.granularity = 1f // Hace que el eje X solo tenga valores enteros
-        xAxis.setLabelCount(5, false) // Número de etiquetas en el eje X (puedes ajustarlo)
-
-        val yAxis = chart.axisLeft
-        yAxis.setLabelCount(6, false) // Número de etiquetas en el eje Y (ajústalo según tus datos)
-        yAxis.axisMinimum = 0f // Asegúrate de que el eje Y comience en 0
-
-        // Para el eje derecho (si lo usas)
-        val yAxisRight = chart.axisRight
-        yAxisRight.isEnabled = false // Desactiva el eje Y derecho si no lo necesitas
     }
+
+
+
+
+
 
 
 

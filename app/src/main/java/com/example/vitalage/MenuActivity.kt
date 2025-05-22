@@ -14,6 +14,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MenuActivity : AppCompatActivity() {
 
@@ -26,6 +29,8 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+
 
         patientName = intent.getStringExtra("patient_name") ?: "Desconocido"
         patientId = intent.getStringExtra("patient_id") ?: "Sin ID"
@@ -175,4 +180,84 @@ class MenuActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun insertarSignosVitalesPrueba(patientId: String) {
+        val db = FirebaseFirestore.getInstance()
+        val signosVitales = mutableListOf<Map<String, Any>>()
+
+        // FORMATO DE FECHA
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+
+        // === REGISTROS PARA HOY (1 día) ===
+        signosVitales.add(mapOf(
+            "fecha" to LocalDateTime.now().withHour(6).withMinute(0).format(formatter),
+            "frecuencia_cardiaca" to 65, "frecuencia_respiratoria" to 20,
+            "saturacion_oxigeno" to 96, "presion_arterial" to 110,
+            "temperatura" to 36.5, "peso" to 60.0, "imc" to 21.5,
+            "escala_dolor" to 2, "encargado" to "Simulación 1 Día - AM"
+        ))
+
+        signosVitales.add(mapOf(
+            "fecha" to LocalDateTime.now().withHour(14).withMinute(30).format(formatter),
+            "frecuencia_cardiaca" to 70, "frecuencia_respiratoria" to 22,
+            "saturacion_oxigeno" to 95, "presion_arterial" to 115,
+            "temperatura" to 37.1, "peso" to 60.5, "imc" to 21.8,
+            "escala_dolor" to 4, "encargado" to "Simulación 1 Día - PM"
+        ))
+
+        signosVitales.add(mapOf(
+            "fecha" to LocalDateTime.now().withHour(20).withMinute(45).format(formatter),
+            "frecuencia_cardiaca" to 68, "frecuencia_respiratoria" to 19,
+            "saturacion_oxigeno" to 97, "presion_arterial" to 118,
+            "temperatura" to 36.9, "peso" to 60.2, "imc" to 21.6,
+            "escala_dolor" to 3, "encargado" to "Simulación 1 Día - Noche"
+        ))
+
+        // === REGISTROS PARA 5 días atrás ===
+        for (i in 1..3) {
+            val fecha = LocalDateTime.now().minusDays(5 - i.toLong()).withHour(10 + i)
+            signosVitales.add(mapOf(
+                "fecha" to fecha.format(formatter),
+                "frecuencia_cardiaca" to (60 + i), "frecuencia_respiratoria" to (18 + i),
+                "saturacion_oxigeno" to (94 + i), "presion_arterial" to (108 + i),
+                "temperatura" to (36 + i * 0.2), "peso" to (60 + i), "imc" to (20 + i),
+                "escala_dolor" to i, "encargado" to "Simulación 5 Días #$i"
+            ))
+        }
+
+        // === REGISTROS PARA 1 mes atrás ===
+        for (i in 1..3) {
+            val fecha = LocalDateTime.now().minusDays(10 * i.toLong()).withHour(9 + i)
+            signosVitales.add(mapOf(
+                "fecha" to fecha.format(formatter),
+                "frecuencia_cardiaca" to (72 + i), "frecuencia_respiratoria" to (21 + i),
+                "saturacion_oxigeno" to (93 + i), "presion_arterial" to (110 + i * 2),
+                "temperatura" to (36.3 + i * 0.3), "peso" to (62 + i), "imc" to (22 + i),
+                "escala_dolor" to (i + 1), "encargado" to "Simulación 1 Mes #$i"
+            ))
+        }
+
+        // === REGISTROS PARA 1 año atrás ===
+        for (i in 1..3) {
+            val fecha = LocalDateTime.now().minusMonths(4 * i.toLong()).withDayOfMonth(10 + i).withHour(10)
+            signosVitales.add(mapOf(
+                "fecha" to fecha.format(formatter),
+                "frecuencia_cardiaca" to (75 + i), "frecuencia_respiratoria" to (20 + i),
+                "saturacion_oxigeno" to (92 + i), "presion_arterial" to (120 + i * 2),
+                "temperatura" to (36.7 + i * 0.2), "peso" to (63 + i), "imc" to (22 + i * 0.5),
+                "escala_dolor" to (i + 2), "encargado" to "Simulación 1 Año #$i"
+            ))
+        }
+
+        // Actualizar Firestore
+        db.collection("Pacientes").document(patientId)
+            .update("signos_vitales", signosVitales)
+            .addOnSuccessListener {
+                Log.d("FirestoreTest", "Datos insertados correctamente")
+            }
+            .addOnFailureListener {
+                Log.e("FirestoreTest", "Error insertando datos: ${it.message}")
+            }
+    }
+
 }
