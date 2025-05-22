@@ -744,7 +744,7 @@ class MedicalControlActivity : AppCompatActivity() {
                     val intent = Intent(context, AlarmaDeToma::class.java).apply {
                         action = "ALARM_NOTIFICATION"
                         putExtra(AlarmaDeToma.TITLEEXTRA, "Recordatorio de medicamento")
-                        putExtra("nombrePaciente", usuarioActual)
+                        putExtra("nombrePaciente", patientName)
                         putExtra("medicamento", medicamentoNombre)
                         putExtra("horario", hora)
                     }
