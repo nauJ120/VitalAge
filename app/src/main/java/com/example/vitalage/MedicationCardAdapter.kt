@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.vitalage.R
+
 import com.example.vitalage.model.MedicationCard
 
 class MedicationCardAdapter(private val medications: List<MedicationCard>) :
