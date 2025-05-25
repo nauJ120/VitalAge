@@ -27,7 +27,7 @@
         android:theme="@style/Theme.VitalAge"
         tools:targetApi="31">
         <activity
-            android:name=".GraficasSignosActivity"
+            android:name=".enfermera.GraficasSignosActivity"
             android:exported="false" />
 
         <provider
@@ -41,11 +41,11 @@
         </provider>
 
         <activity
-            android:name=".SignosVitalesFormActivity"
+            android:name=".enfermera.SignosVitalesFormActivity"
             android:exported="false" />
 
         <receiver
-            android:name=".AlarmaDeToma"
+            android:name=".enfermera.AlarmaDeToma"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -56,86 +56,86 @@
 
 
         <activity
-            android:name=".InformePacienteActivity"
+            android:name=".generales.InformePacienteActivity"
             android:exported="false" />
         <activity
-            android:name=".TerapiaFormActivity"
+            android:name=".enfermera.TerapiaFormActivity"
             android:exported="false" />
         <activity
-            android:name=".SignosVitalesActivity"
+            android:name=".enfermera.SignosVitalesActivity"
             android:exported="false" />
         <activity
-            android:name=".TerapiasActivity"
+            android:name=".enfermera.TerapiasActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".generales.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".UserFormActivity"
+            android:name=".administrador.UserFormActivity"
             android:exported="false" />
         <activity
-            android:name=".ResidentFormActivity"
+            android:name=".administrador.ResidentFormActivity"
             android:exported="false" />
         <activity
-            android:name=".UserManagementActivity"
+            android:name=".administrador.UserManagementActivity"
             android:exported="false" />
         <activity
-            android:name=".ResidentManagementActivity"
+            android:name=".administrador.ResidentManagementActivity"
             android:exported="false" />
         <activity
-            android:name=".MenuAdminActivity"
+            android:name=".administrador.MenuAdminActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminDashboardActivity"
+            android:name=".administrador.AdminDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".DoseHistoryActivity"
+            android:name=".enfermera.DoseHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".IniciarSesionActivity"
+            android:name=".generales.IniciarSesionActivity"
             android:exported="false" />
         <activity
-            android:name=".EscaneoActivity"
+            android:name=".enfermera.EscaneoActivity"
             android:exported="false"
             android:noHistory="true" />
         <activity
-            android:name=".CamaraActivity"
+            android:name=".enfermera.CamaraActivity"
             android:exported="false" />
         <activity
-            android:name=".FotoCamaraActivity"
+            android:name=".enfermera.FotoCamaraActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistarseActivityActivity"
+            android:name=".generales.RegistarseActivityActivity"
             android:exported="false" />
         <activity
-            android:name=".TipoDocumentoActivity"
+            android:name=".generales.TipoDocumentoActivity"
             android:exported="false" />
         <activity
-            android:name=".MedicalControlActivity"
+            android:name=".enfermera.MedicalControlActivity"
             android:exported="false" />
         <activity
-            android:name=".MedicationCardActivity"
+            android:name=".enfermera.MedicationCardActivity"
             android:exported="false" />
         <activity
-            android:name=".InventoryActivity"
+            android:name=".enfermera.InventoryActivity"
             android:exported="false" />
         <activity
-            android:name=".KardexMenuActivity"
+            android:name=".enfermera.KardexMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".PatientListActivity"
+            android:name=".enfermera.PatientListActivity"
             android:exported="false" />
         <activity
-            android:name=".ListaEscalasActivity"
+            android:name=".enfermera.ListaEscalasActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateScaleActivity"
+            android:name=".enfermera.CreateScaleActivity"
             android:exported="false" />
         <activity
-            android:name=".ScaleResultActivity"
+            android:name=".enfermera.ScaleResultActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".generales.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -143,12 +143,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuActivity" />
-        <activity android:name=".NursingNotesActivity" />
-        <activity android:name=".AddNursingNoteActivity" />
-        <activity android:name=".DoctorPatientListActivity" />
-        <activity android:name=".RegistroNotaMedicaActivity" />
-        <activity android:name=".DoctorPatientDetailActivity" />
+        <activity android:name=".enfermera.MenuActivity" />
+        <activity android:name=".enfermera.NursingNotesActivity" />
+        <activity android:name=".enfermera.AddNursingNoteActivity" />
+        <activity android:name=".medico.DoctorPatientListActivity" />
+        <activity android:name=".medico.RegistroNotaMedicaActivity" />
+        <activity android:name=".medico.DoctorPatientDetailActivity" />
     </application>
 
 </manifest>

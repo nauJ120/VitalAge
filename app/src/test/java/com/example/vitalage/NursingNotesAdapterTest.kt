@@ -3,9 +3,7 @@ package com.example.vitalage
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.vitalage.adapters.NursingNotesAdapter
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*

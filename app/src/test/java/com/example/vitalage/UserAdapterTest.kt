@@ -3,6 +3,7 @@ package com.example.vitalage
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import com.example.vitalage.adapters.UserAdapter
 import com.example.vitalage.model.User
 import org.mockito.Mockito.doNothing
 import org.mockito.kotlin.argumentCaptor
