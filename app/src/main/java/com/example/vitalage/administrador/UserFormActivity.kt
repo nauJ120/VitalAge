@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.generales.ProfileActivity
 import com.example.vitalage.R
 import com.example.vitalage.databinding.ActivityUserFormBinding
+import com.example.vitalage.generales.IniciarSesionActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
@@ -224,5 +225,43 @@ class UserFormActivity : AppCompatActivity() {
                 callback("Desconocido")
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+
+        if (user == null) {
+            // Usuario no logeado
+            val intent = Intent(this, IniciarSesionActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+            return
+        }
+
+        val userId = user.uid
+        val dbRef = FirebaseDatabase.getInstance().getReference("user/users/$userId")
+
+        dbRef.get().addOnSuccessListener { snapshot ->
+            val rol = snapshot.child("rol").value.toString()
+
+            // Aquí comparas según el rol esperado
+            if (rol != "Administrador") {
+                Toast.makeText(this, "Acceso restringido a administradores", Toast.LENGTH_SHORT).show()
+                FirebaseAuth.getInstance().signOut()
+                startActivity(Intent(this, IniciarSesionActivity::class.java))
+                finish()
+            }
+
+
+        }.addOnFailureListener {
+            Toast.makeText(this, "Error al verificar el rol", Toast.LENGTH_SHORT).show()
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, IniciarSesionActivity::class.java))
+            finish()
+        }
     }
 }

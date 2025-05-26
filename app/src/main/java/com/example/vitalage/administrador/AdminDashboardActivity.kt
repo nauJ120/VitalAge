@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vitalage.R
+import com.example.vitalage.generales.IniciarSesionActivity
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -268,4 +269,44 @@ class AdminDashboardActivity : AppCompatActivity() {
             }
         })
     }
+
+    override fun onStart() {
+        super.onStart()
+
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+
+        if (user == null) {
+            // Usuario no logeado
+            val intent = Intent(this, IniciarSesionActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+            return
+        }
+
+        val userId = user.uid
+        val dbRef = FirebaseDatabase.getInstance().getReference("user/users/$userId")
+
+        dbRef.get().addOnSuccessListener { snapshot ->
+            val rol = snapshot.child("rol").value.toString()
+
+            // Aquí comparas según el rol esperado
+            if (rol != "Administrador") {
+                Toast.makeText(this, "Acceso restringido a administradores", Toast.LENGTH_SHORT).show()
+                FirebaseAuth.getInstance().signOut()
+                startActivity(Intent(this, IniciarSesionActivity::class.java))
+                finish()
+            }
+
+
+        }.addOnFailureListener {
+            Toast.makeText(this, "Error al verificar el rol", Toast.LENGTH_SHORT).show()
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, IniciarSesionActivity::class.java))
+            finish()
+        }
+    }
+
+
 }

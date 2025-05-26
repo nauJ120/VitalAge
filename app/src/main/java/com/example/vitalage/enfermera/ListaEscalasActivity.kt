@@ -16,6 +16,7 @@ import com.example.vitalage.adapters.ScaleAdapter
 import com.example.vitalage.clases.DateFilter
 import com.example.vitalage.clases.Escala
 import com.example.vitalage.databinding.ActivityListaEscalasBinding
+import com.example.vitalage.generales.IniciarSesionActivity
 import com.example.vitalage.model.SpaceItemDecoration
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -296,5 +297,43 @@ class ListaEscalasActivity : AppCompatActivity() {
                 Log.e("Firebase", "Error al obtener encargados: ${error.message}")
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+
+        if (user == null) {
+            // Usuario no logeado
+            val intent = Intent(this, IniciarSesionActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+            return
+        }
+
+        val userId = user.uid
+        val dbRef = FirebaseDatabase.getInstance().getReference("user/users/$userId")
+
+        dbRef.get().addOnSuccessListener { snapshot ->
+            val rol = snapshot.child("rol").value.toString()
+
+            // Aquí comparas según el rol esperado
+            if (rol != "Enfermera") {
+                Toast.makeText(this, "Acceso solo para enfermeras", Toast.LENGTH_SHORT).show()
+                FirebaseAuth.getInstance().signOut()
+                startActivity(Intent(this, IniciarSesionActivity::class.java))
+                finish()
+            }
+
+
+        }.addOnFailureListener {
+            Toast.makeText(this, "Error al verificar el rol", Toast.LENGTH_SHORT).show()
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, IniciarSesionActivity::class.java))
+            finish()
+        }
     }
 }

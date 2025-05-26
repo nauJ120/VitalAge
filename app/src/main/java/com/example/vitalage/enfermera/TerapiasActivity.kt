@@ -13,6 +13,7 @@ import com.example.vitalage.R
 import com.example.vitalage.adapters.TerapiaAdapter
 import com.example.vitalage.clases.Terapia
 import com.example.vitalage.databinding.ActivityTerapiasBinding
+import com.example.vitalage.generales.IniciarSesionActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -140,5 +141,43 @@ class TerapiasActivity : AppCompatActivity() {
                 callback("Desconocido")
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+
+        if (user == null) {
+            // Usuario no logeado
+            val intent = Intent(this, IniciarSesionActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+            return
+        }
+
+        val userId = user.uid
+        val dbRef = FirebaseDatabase.getInstance().getReference("user/users/$userId")
+
+        dbRef.get().addOnSuccessListener { snapshot ->
+            val rol = snapshot.child("rol").value.toString()
+
+            // Aquí comparas según el rol esperado
+            if (rol != "Enfermera") {
+                Toast.makeText(this, "Acceso solo para enfermeras", Toast.LENGTH_SHORT).show()
+                FirebaseAuth.getInstance().signOut()
+                startActivity(Intent(this, IniciarSesionActivity::class.java))
+                finish()
+            }
+
+
+        }.addOnFailureListener {
+            Toast.makeText(this, "Error al verificar el rol", Toast.LENGTH_SHORT).show()
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, IniciarSesionActivity::class.java))
+            finish()
+        }
     }
 }
