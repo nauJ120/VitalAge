@@ -30,6 +30,7 @@ import com.example.vitalage.generales.ProfileActivity
 import com.example.vitalage.R
 
 import com.example.vitalage.databinding.ActivityMedicalControlBinding
+import com.example.vitalage.generales.IniciarSesionActivity
 import com.example.vitalage.model.MedicalControl
 import com.example.vitalage.model.SpaceItemDecoration
 import com.google.firebase.auth.FirebaseAuth
@@ -743,7 +744,7 @@ class MedicalControlActivity : AppCompatActivity() {
                     val intent = Intent(context, AlarmaDeToma::class.java).apply {
                         action = "ALARM_NOTIFICATION"
                         putExtra(AlarmaDeToma.TITLEEXTRA, "Recordatorio de medicamento")
-                        putExtra("nombrePaciente", usuarioActual)
+                        putExtra("nombrePaciente", patientName)
                         putExtra("medicamento", medicamentoNombre)
                         putExtra("horario", hora)
                     }
@@ -770,6 +771,44 @@ class MedicalControlActivity : AppCompatActivity() {
 
             calInicio.add(Calendar.DAY_OF_MONTH, 1)
             dia++
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+
+        if (user == null) {
+            // Usuario no logeado
+            val intent = Intent(this, IniciarSesionActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+            return
+        }
+
+        val userId = user.uid
+        val dbRef = FirebaseDatabase.getInstance().getReference("user/users/$userId")
+
+        dbRef.get().addOnSuccessListener { snapshot ->
+            val rol = snapshot.child("rol").value.toString()
+
+            // Aquí comparas según el rol esperado
+            if (rol != "Enfermera") {
+                Toast.makeText(this, "Acceso solo para enfermeras", Toast.LENGTH_SHORT).show()
+                FirebaseAuth.getInstance().signOut()
+                startActivity(Intent(this, IniciarSesionActivity::class.java))
+                finish()
+            }
+
+
+        }.addOnFailureListener {
+            Toast.makeText(this, "Error al verificar el rol", Toast.LENGTH_SHORT).show()
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, IniciarSesionActivity::class.java))
+            finish()
         }
     }
 
