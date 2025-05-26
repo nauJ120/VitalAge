@@ -3,7 +3,8 @@ package com.example.vitalage
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import com.example.vitalage.adapters.Patient
+import com.example.vitalage.adapters.PatientAdapter
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

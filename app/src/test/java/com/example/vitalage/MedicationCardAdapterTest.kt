@@ -2,7 +2,8 @@ package com.example.vitalage
 
 import android.view.View
 import android.widget.TextView
-import com.example.vitalage.MedicationCardAdapter.MedicationCardViewHolder
+import com.example.vitalage.adapters.MedicationCardAdapter
+import com.example.vitalage.adapters.MedicationCardAdapter.MedicationCardViewHolder
 import com.example.vitalage.model.MedicationCard
 import org.junit.Test
 import org.junit.runner.RunWith

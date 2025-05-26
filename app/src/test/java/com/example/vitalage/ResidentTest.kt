@@ -4,6 +4,8 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.vitalage.adapters.Resident
+import com.example.vitalage.adapters.ResidentAdapter
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

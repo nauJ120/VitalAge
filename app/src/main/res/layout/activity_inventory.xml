@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F4F9FD"
 
-    tools:context=".InventoryActivity">
+    tools:context=".enfermera.InventoryActivity">
 
     <!-- Encabezado -->
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,9 +1,9 @@
 package com.example.vitalage
 
 
-import android.R.attr.name
 import android.view.View
 import android.widget.TextView
+import com.example.vitalage.adapters.MedicalControlAdapter
 import com.example.vitalage.model.MedicalControl
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner

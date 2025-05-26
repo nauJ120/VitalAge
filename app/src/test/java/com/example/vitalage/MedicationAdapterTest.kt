@@ -1,9 +1,9 @@
 package com.example.vitalage
 
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.example.vitalage.adapters.MedicationAdapter
 import com.example.vitalage.model.Medication
 import org.junit.Test
 import org.junit.runner.RunWith

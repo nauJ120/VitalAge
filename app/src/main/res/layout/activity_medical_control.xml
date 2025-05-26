@@ -6,7 +6,7 @@
     android:orientation="vertical"
 
     android:background="#F4F9FD"
-    tools:context=".MedicalControlActivity">
+    tools:context=".enfermera.MedicalControlActivity">
 
     <!-- Encabezado -->
     <androidx.constraintlayout.widget.ConstraintLayout
