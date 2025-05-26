@@ -141,100 +141,119 @@ class GraficasSignosActivity : AppCompatActivity() {
 
 
 
-// Función para graficar los datos
-private fun graficar(
-    lista: List<SignosVitales>,
-    chartId: Int,
-    selector: (SignosVitales) -> Float,
-    rango: Long
-) {
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-    val now = LocalDateTime.now()
+    // Función para graficar los datos
+    private fun graficar(
+        lista: List<SignosVitales>,
+        chartId: Int,
+        selector: (SignosVitales) -> Float,
+        rango: Long
+    ) {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val now = LocalDateTime.now()
 
-    val entries = lista.mapNotNull {
-        try {
-            val fecha = LocalDateTime.parse(it.fecha, formatter)
-            val x = when (rango) {
-                1L -> {
-                    if (fecha.toLocalDate() == now.toLocalDate()) {
+        // 1. Generar entradas X/Y seguras
+        val entries = lista.mapNotNull {
+            try {
+                val fecha = LocalDateTime.parse(it.fecha, formatter)
+                val x = when (rango) {
+                    1L -> {
+                        if (fecha.toLocalDate() != now.toLocalDate()) return@mapNotNull null
                         fecha.hour + (fecha.minute / 60.0)
-                    } else {
-                        return@mapNotNull null
                     }
-                }
-                5L -> ChronoUnit.DAYS.between(fecha.toLocalDate(), now.toLocalDate()).toDouble()
-                30L -> fecha.dayOfMonth.toDouble()
-                365L -> ((fecha.monthValue - 1) / 2.0)
-                else -> 0.0
-            }.toFloat()
+                    5L -> {
+                        val dias = ChronoUnit.DAYS.between(fecha.toLocalDate(), now.toLocalDate()).toDouble()
+                        if (dias < 0) return@mapNotNull null else dias
+                    }
+                    30L -> {
+                        if (fecha.isAfter(now)) return@mapNotNull null
+                        fecha.dayOfMonth.toDouble()
+                    }
+                    365L -> {
+                        if (fecha.isAfter(now)) return@mapNotNull null
+                        ((fecha.monthValue - 1) / 2.0)
+                    }
+                    else -> return@mapNotNull null
+                }.toFloat()
+
+                val y = selector(it)
+                if (x.isNaN() || y.isNaN() || x < 0 || y < 0) return@mapNotNull null
+                Entry(x, y)
+            } catch (e: Exception) {
+                Log.e("Graficar", "Error al parsear: ${e.message}")
+                null
+            }
+        }.sortedBy { it.x }
+
+        // 2. Validar entradas
+        val chart = findViewById<LineChart>(chartId)
+        if (entries.size < 2) {
+            chart.clear()
+            chart.setNoDataText("Se requieren mínimo 2 datos para graficar.")
+            Log.w("Graficar", "Abortado $chartId: menos de 2 puntos válidos.")
+            return
+        }
+
+        val xMin = entries.first().x
+        val xMax = entries.last().x
+        if (xMax - xMin <= 0f) {
+            chart.clear()
+            chart.setNoDataText("Rango de datos inválido.")
+            Log.e("Graficar", "Abortado $chartId: xMin=$xMin, xMax=$xMax")
+            return
+        }
+
+        // 3. Crear el dataset
+        val dataSet = LineDataSet(entries, "").apply {
+            setDrawFilled(true)
+            fillColor = Color.parseColor("#BBDEFB")
+            color = Color.parseColor("#1E88E5")
+            setDrawCircles(true)
+            lineWidth = 2f
+            mode = LineDataSet.Mode.LINEAR
+            setDrawValues(true)
+            valueTextSize = 10f
+        }
+
+        // 4. Configurar el chart
+        chart.data = LineData(dataSet)
+        chart.setTouchEnabled(false)
+        chart.setDragEnabled(false)
+        chart.setScaleEnabled(false)
+        chart.setPinchZoom(false)
+        chart.setDoubleTapToZoomEnabled(false)
 
 
-            val y = selector(it)
+        chart.axisLeft.apply {
+            axisMinimum = 0f
+            axisMaximum = when (chartId) {
+                R.id.chartTemperatura -> 45f
+                R.id.chartFrecuenciaCardiaca, R.id.chartFrecuenciaRespiratoria -> 200f
+                R.id.chartPresionArterial -> 200f
+                R.id.chartIMC -> 60f
+                R.id.chartPeso -> 200f
+                R.id.chartSaturacionOxigeno -> 100f
+                R.id.chartEscalaDolor -> 10f
+                else -> 100f
+            }
+            labelCount = 6
+            granularity = 1f
+        }
 
-            if (x.isNaN() || y.isNaN() || x < 0 || y < 0) null else Entry(x, y)
+        chart.axisRight.isEnabled = false
+        chart.description.isEnabled = false
+        configurarEjeX(chart.xAxis, rango, now)
+
+        try {
+            chart.invalidate()
         } catch (e: Exception) {
-            Log.e("Graficar", "Error al generar entrada para gráfica: ${e.message}")
-            null
+            chart.clear()
+            chart.setNoDataText("Error al graficar.")
+            Log.e("Graficar", "Crash al renderizar: ${e.message}")
         }
     }
 
-    val validEntries = entries.filter { !it.x.isNaN() && !it.y.isNaN() && it.x >= 0 && it.y >= 0 }
-    val chart = findViewById<LineChart>(chartId)
 
-    if (validEntries.isEmpty()) {
-        chart.clear()
-        chart.setNoDataText("No hay datos válidos para graficar.")
-        return
-    }
 
-    val dataSet = LineDataSet(validEntries, "").apply {
-        setDrawFilled(true)
-        fillColor = Color.parseColor("#BBDEFB")
-        color = Color.parseColor("#1E88E5")
-        setDrawCircles(true)
-        lineWidth = 2f
-        mode = LineDataSet.Mode.LINEAR
-        setDrawValues(true)
-        valueTextSize = 10f
-    }
-
-    chart.data = LineData(dataSet)
-
-    chart.setTouchEnabled(false)
-    chart.setDragEnabled(false)
-    chart.setScaleEnabled(false)
-    chart.setPinchZoom(false)
-    chart.setDoubleTapToZoomEnabled(false)
-
-    chart.axisLeft.apply {
-        axisMinimum = 0f
-        axisMaximum = when (chartId) {
-            R.id.chartTemperatura -> 45f
-            R.id.chartFrecuenciaCardiaca, R.id.chartFrecuenciaRespiratoria -> 200f
-            R.id.chartPresionArterial -> 200f
-            R.id.chartIMC -> 60f
-            R.id.chartPeso -> 200f
-            R.id.chartSaturacionOxigeno -> 100f
-            R.id.chartEscalaDolor -> 10f
-            else -> 100f
-        }
-        labelCount = 6
-        granularity = 1f
-    }
-
-    chart.axisRight.isEnabled = false
-    chart.description.isEnabled = false
-
-    configurarEjeX(chart.xAxis, rango, now)
-
-    try {
-        chart.invalidate()
-    } catch (e: Exception) {
-        Log.e("Graficar", "Error al renderizar gráfico: ${e.message}")
-        chart.clear()
-        chart.setNoDataText("No se pudo graficar por datos inválidos.")
-    }
-}
 
 
 
@@ -276,28 +295,28 @@ private fun graficar(
 
 
 
-    // Función para filtrar los datos por rango de tiempo (en días)
     private fun filtrarPorDias(lista: List<SignosVitales>, dias: Long): List<SignosVitales> {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val ahora = LocalDateTime.now()
 
-        // Filtramos los datos según los días
-        val datosFiltrados = lista.filter {
+        val datosFiltrados = lista.filter { signo ->
             try {
-                val fecha = LocalDateTime.parse(it.fecha, formatter)
-                val diasTranscurridos = ChronoUnit.DAYS.between(fecha, ahora)
-                Log.d("FiltrarPorDias", "Fecha: ${it.fecha}, Días transcurridos: $diasTranscurridos, Rango: $dias")
-                diasTranscurridos <= dias
+                val fechaSigno = LocalDateTime.parse(signo.fecha, formatter)
+                val diasTranscurridos = ChronoUnit.DAYS.between(fechaSigno, ahora)
+
+                // ✅ Solo incluir si la fecha es hoy o en el pasado, dentro del rango de días
+                diasTranscurridos in 0..dias
             } catch (e: Exception) {
-                Log.e("FiltrarPorDias", "Error al procesar la fecha: ${it.fecha}", e)
+                Log.e("FiltrarPorDias", "Error al parsear la fecha: ${signo.fecha}", e)
                 false
             }
         }
 
-        // Verifica cuántos datos se están filtrando
-        Log.d("FiltrarPorDias", "Datos filtrados: ${datosFiltrados.size}")
-        return if (datosFiltrados.isEmpty()) lista else datosFiltrados
+        Log.d("FiltrarPorDias", "Datos válidos dentro de los últimos $dias días: ${datosFiltrados.size}")
+
+        return datosFiltrados
     }
+
 
 
 
